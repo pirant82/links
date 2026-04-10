@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울 웨딩 베뉴</title>
+<style>
+  :root {
+    --green:       #2D5A27;
+    --green-light: #4A7C43;
+    --gold:        #8B6914;
+    --gold-light:  #C49A1E;
+    --bg:          #FAFAF7;
+    --card-bg:     #FFFFFF;
+    --text:        #1A1A1A;
+    --sub:         #6B7280;
+    --border:      #E5E7EB;
+    --shadow:      0 2px 8px rgba(0,0,0,.08);
+    --shadow-lg:   0 8px 32px rgba(0,0,0,.16);
+    --radius:      16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--green);
+    color: #fff;
+    text-align: center;
+    padding: 56px 24px 48px;
+  }
+  header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -.5px;
+    margin-bottom: 10px;
+  }
+  header p {
+    font-size: .95rem;
+    opacity: .75;
+  }
+
+  /* ── Grid ── */
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: var(--shadow);
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--green);
+  }
+
+  .card-icon {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--green);
+  }
+
+  .card-desc {
+    font-size: .875rem;
+    color: var(--sub);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .card-badge {
+    display: inline-block;
+    font-size: .7rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    align-self: flex-start;
+  }
+  .badge-ready {
+    background: #D1FAE5;
+    color: #065F46;
+  }
+  .badge-tbd {
+    background: #F3F4F6;
+    color: #9CA3AF;
+  }
+
+  .card-arrow {
+    font-size: .85rem;
+    color: var(--green-light);
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  /* TBD 카드는 클릭 안 됨 */
+  .card.tbd {
+    cursor: default;
+    opacity: .6;
+  }
+  .card.tbd:hover {
+    transform: none;
+    box-shadow: var(--shadow);
+    border-color: var(--border);
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: .8rem;
+    color: var(--sub);
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>서울 웨딩 베뉴</h1>
+  <p>서울 야외 웨딩 베뉴 리서치 모음</p>
+</header>
+
+<main>
+  <div class="grid">
+
+    <!-- 웨딩 베뉴 가이드 -->
+    <a class="card" href="wedding_guide.html">
+      <div class="card-icon">🌿</div>
+      <div class="card-title">야외 웨딩 베뉴 가이드</div>
+      <div class="card-desc">서울 74개 야외 웨딩 베뉴 상세 분석. 공원·호텔·한옥·가든 전 유형 비교, 견적·인원·평점 필터 제공.</div>
+      <span class="card-badge badge-ready">✓ 완료 · 74개소</span>
+      <div class="card-arrow">바로가기 →</div>
+    </a>
+
+    <!-- TBD 1 -->
+    <div class="card tbd">
+      <div class="card-icon">📋</div>
+      <div class="card-title">TBD</div>
+      <div class="card-desc">준비 중입니다.</div>
+      <span class="card-badge badge-tbd">Coming Soon</span>
+    </div>
+
+    <!-- TBD 2 -->
+    <div class="card tbd">
+      <div class="card-icon">📋</div>
+      <div class="card-title">TBD</div>
+      <div class="card-desc">준비 중입니다.</div>
+      <span class="card-badge badge-tbd">Coming Soon</span>
+    </div>
+
+    <!-- TBD 3 -->
+    <div class="card tbd">
+      <div class="card-icon">📋</div>
+      <div class="card-title">TBD</div>
+      <div class="card-desc">준비 중입니다.</div>
+      <span class="card-badge badge-tbd">Coming Soon</span>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  서울 웨딩 베뉴 리서치
+</footer>
+
+</body>
+</html>
