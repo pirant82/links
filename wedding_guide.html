@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌿 서울 야외 웨딩 베뉴 가이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:       #2D5A27;
+  --green-light: #4A7C43;
+  --gold:        #8B6914;
+  --gold-light:  #C49A1E;
+  --bg:          #FAFAF7;
+  --card-bg:     #FFFFFF;
+  --text:        #1A1A1A;
+  --sub:         #6B7280;
+  --border:      #E5E7EB;
+  --shadow:      0 2px 8px rgba(0,0,0,.08);
+  --shadow-lg:   0 8px 32px rgba(0,0,0,.16);
+  --radius:      12px;
+  --radius-sm:   8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ── Hero ── */
+.hero {
+  background: linear-gradient(135deg, #1a3a17 0%, #2D5A27 50%, #3d7a35 100%);
+  color: #fff;
+  padding: 48px 24px 40px;
+  text-align: center;
+}
+.hero h1 { font-family: 'Noto Serif KR', Georgia, serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; margin-bottom: 8px; }
+.hero p  { font-size: .95rem; opacity: .8; margin-bottom: 24px; }
+.hero-stats { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+.stat { text-align: center; }
+.stat-num { font-size: 1.8rem; font-weight: 700; color: #C9E88C; }
+.stat-label { font-size: .75rem; opacity: .75; }
+
+/* ── Filter Bar ── */
+.filter-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 20px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.search-wrap { position: relative; flex: 1; min-width: 200px; }
+.search-wrap input {
+  width: 100%; padding: 8px 12px 8px 36px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: .9rem; outline: none; transition: border-color .2s;
+}
+.search-wrap input:focus { border-color: var(--green); }
+.search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--sub); font-size: 1rem; }
+.filter-chips { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.chip {
+  padding: 5px 12px; border-radius: 20px; font-size: .8rem; cursor: pointer;
+  border: 1.5px solid var(--border); background: #fff;
+  transition: all .2s; user-select: none; white-space: nowrap;
+}
+.chip:hover { border-color: var(--green); color: var(--green); }
+.chip.active { background: var(--green); color: #fff; border-color: var(--green); }
+.chip.fav-chip.active { background: #e74c3c; border-color: #e74c3c; }
+
+.sort-select {
+  padding: 6px 10px; border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: .85rem; outline: none; cursor: pointer;
+  background: #fff; color: var(--text);
+}
+
+.view-toggle { display: flex; gap: 4px; }
+.view-btn {
+  padding: 6px 10px; border: 1.5px solid var(--border); background: #fff;
+  border-radius: 8px; cursor: pointer; font-size: 1rem; transition: all .2s;
+}
+.view-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+
+.result-count { font-size: .82rem; color: var(--sub); white-space: nowrap; }
+
+/* ── Card Grid ── */
+#card-view { padding: 24px 20px; }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+.venue-card {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 20px;
+  cursor: pointer; transition: transform .2s, box-shadow .2s;
+  border: 1.5px solid transparent; position: relative;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.venue-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--green); }
+
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.card-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge {
+  font-size: .7rem; font-weight: 600; padding: 3px 8px; border-radius: 12px;
+}
+.badge-공공장소  { background: #D1FAE5; color: #065F46; }
+.badge-호텔      { background: #DBEAFE; color: #1E40AF; }
+.badge-전문웨딩홀{ background: #FEF3C7; color: #92400E; }
+.badge-가든\/하우스{ background: #FCE7F3; color: #9D174D; }
+.badge-한옥\/전통 { background: #F3F4F6; color: #374151; }
+.badge-기타      { background: #F3F4F6; color: #374151; }
+
+.card-actions { display: flex; gap: 6px; align-items: center; }
+.fav-btn {
+  background: none; border: none; font-size: 1.2rem; cursor: pointer;
+  transition: transform .2s; line-height: 1;
+}
+.fav-btn:hover { transform: scale(1.2); }
+.compare-btn {
+  width: 22px; height: 22px; border-radius: 4px; border: 1.5px solid var(--border);
+  background: #fff; cursor: pointer; font-size: .7rem; display: flex; align-items: center;
+  justify-content: center; transition: all .2s; font-weight: 700;
+}
+.compare-btn:hover { border-color: var(--green); color: var(--green); }
+.compare-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+
+.card-name { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+.card-tagline {
+  font-size: .82rem; color: var(--sub); line-height: 1.5;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.card-meta { display: flex; gap: 12px; flex-wrap: wrap; font-size: .82rem; color: var(--sub); }
+.card-meta span { display: flex; align-items: center; gap: 4px; }
+
+.card-rating { display: flex; align-items: center; gap: 4px; }
+.stars { color: #F59E0B; font-size: .9rem; }
+.rating-num { font-weight: 700; font-size: .9rem; color: var(--text); }
+
+.card-district { font-size: .75rem; color: var(--sub); }
+.card-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 8px; border-top: 1px solid var(--border); margin-top: auto;
+}
+.card-footer .detail-link {
+  font-size: .8rem; color: var(--green); font-weight: 600; text-decoration: none;
+}
+.no-detail-badge { font-size: .7rem; color: #9CA3AF; background: #F3F4F6; padding: 2px 8px; border-radius: 8px; }
+
+/* ── Table View ── */
+#table-view { padding: 20px; overflow-x: auto; display: none; }
+.venue-table {
+  width: 100%; border-collapse: collapse; font-size: .85rem; background: #fff;
+  border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+}
+.venue-table th {
+  background: var(--green); color: #fff; padding: 12px 14px; text-align: left;
+  font-weight: 600; cursor: pointer; user-select: none; white-space: nowrap;
+}
+.venue-table th:hover { background: var(--green-light); }
+.venue-table th .sort-arrow { margin-left: 4px; opacity: .6; }
+.venue-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.venue-table tr:hover td { background: #F9FFF9; cursor: pointer; }
+.venue-table tr:last-child td { border-bottom: none; }
+.table-name { font-weight: 600; color: var(--green); }
+
+/* ── Modal ── */
+.overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5);
+  z-index: 1000; overflow-y: auto; padding: 20px;
+  backdrop-filter: blur(4px);
+}
+.overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+.modal {
+  background: #fff; border-radius: 16px; max-width: 720px; width: 100%;
+  box-shadow: var(--shadow-lg); overflow: hidden; margin: auto;
+}
+.modal-header {
+  padding: 24px 28px 20px;
+  background: linear-gradient(135deg, #1a3a17, var(--green));
+  color: #fff; position: relative;
+}
+.modal-header h2 { font-family: 'Noto Serif KR', Georgia, serif; font-size: 1.4rem; margin-bottom: 6px; }
+.modal-header .modal-badges { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+.modal-close {
+  position: absolute; top: 16px; right: 20px; background: rgba(255,255,255,.2);
+  border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%;
+  cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.modal-close:hover { background: rgba(255,255,255,.35); }
+.modal-tagline {
+  font-style: italic; opacity: .9; font-size: .9rem;
+  border-left: 3px solid rgba(255,255,255,.5); padding-left: 12px; margin-top: 8px;
+}
+.modal-meta {
+  display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap; font-size: .85rem; opacity: .85;
+}
+.modal-body { padding: 24px 28px; display: flex; flex-direction: column; gap: 20px; }
+.modal-section h3 {
+  font-size: .8rem; font-weight: 700; color: var(--sub); text-transform: uppercase;
+  letter-spacing: .08em; margin-bottom: 10px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.modal-section ul { padding-left: 18px; }
+.modal-section li { margin-bottom: 6px; font-size: .9rem; }
+.modal-section p { font-size: .9rem; color: #374151; margin-bottom: 6px; }
+.modal-section strong { color: var(--text); }
+
+.pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pros-box, .cons-box { padding: 12px; border-radius: 8px; font-size: .85rem; line-height: 1.6; }
+.pros-box { background: #F0FDF4; border: 1px solid #BBF7D0; }
+.cons-box { background: #FFF7ED; border: 1px solid #FED7AA; }
+.pros-box h4 { color: #166534; margin-bottom: 6px; font-size: .85rem; }
+.cons-box h4 { color: #9A3412; margin-bottom: 6px; font-size: .85rem; }
+
+.tip-box {
+  background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px;
+  padding: 14px 16px; font-size: .88rem; line-height: 1.6; color: #78350F;
+  position: relative;
+}
+.tip-box::before { content: "💡 "; }
+
+.links-list { display: flex; flex-direction: column; gap: 6px; }
+.link-item {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--green); font-size: .85rem; text-decoration: none; font-weight: 500;
+}
+.link-item:hover { text-decoration: underline; }
+
+.no-detail-notice {
+  background: #F9FAFB; border: 1px dashed var(--border); border-radius: 8px;
+  padding: 20px; text-align: center; color: var(--sub); font-size: .9rem;
+}
+
+/* ── Compare Bar ── */
+.compare-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  background: #1a3a17; color: #fff; padding: 12px 20px;
+  display: none; align-items: center; gap: 12px; flex-wrap: wrap;
+  box-shadow: 0 -4px 16px rgba(0,0,0,.2);
+}
+.compare-bar.open { display: flex; }
+.compare-previews { display: flex; gap: 8px; flex: 1; flex-wrap: wrap; }
+.compare-preview {
+  background: rgba(255,255,255,.15); border-radius: 6px; padding: 4px 10px;
+  font-size: .82rem; display: flex; align-items: center; gap: 6px;
+}
+.compare-preview .rm { cursor: pointer; opacity: .6; }
+.compare-preview .rm:hover { opacity: 1; }
+.compare-action-btn {
+  padding: 8px 18px; background: var(--gold); color: #fff; border: none;
+  border-radius: 8px; cursor: pointer; font-weight: 600; font-size: .88rem;
+}
+.compare-clear { background: none; border: 1px solid rgba(255,255,255,.3); color: #fff; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: .82rem; }
+
+/* ── Compare Modal ── */
+.compare-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+.compare-table th { background: var(--green); color: #fff; padding: 10px 14px; text-align: left; }
+.compare-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.compare-table tr:nth-child(even) td { background: #F9FFF9; }
+.compare-table .label { font-weight: 600; color: var(--sub); white-space: nowrap; }
+
+/* ── Empty State ── */
+.empty-state { text-align: center; padding: 60px 20px; color: var(--sub); }
+.empty-state .emoji { font-size: 3rem; margin-bottom: 12px; }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .filter-bar { gap: 8px; }
+  .pros-cons { grid-template-columns: 1fr; }
+  .modal-body { padding: 16px; }
+  .modal-header { padding: 16px; }
+  .hero-stats { gap: 20px; }
+  #table-view { font-size: .78rem; }
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #aaa; border-radius: 3px; }
+
+/* ── 인쇄 ── */
+@media print {
+  .filter-bar, .compare-bar, .card-actions { display: none !important; }
+  .venue-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+  .overlay { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>🌿 서울 야외 웨딩 베뉴 가이드</h1>
+  <p>공원·호텔·가든·한옥 총 74개소 심층 분석 리포트</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num" id="stat-filtered">74</div><div class="stat-label">검색 결과</div></div>
+    <div class="stat"><div class="stat-num">74</div><div class="stat-label">총 베뉴</div></div>
+    <div class="stat"><div class="stat-num">4.56</div><div class="stat-label">평균 평점</div></div>
+  </div>
+  <div class="hero-stats" id="category-stats" style="margin-top:16px"></div>
+</section>
+
+<!-- Filter Bar -->
+<div class="filter-bar">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search-input" placeholder="베뉴명, 지역, 특징으로 검색...">
+  </div>
+  <div class="filter-chips">
+    <button class="chip active" data-cat="all">전체</button><button class="chip" data-cat="가든/하우스">가든/하우스</button><button class="chip" data-cat="공공장소">공공장소</button><button class="chip" data-cat="기타">기타</button><button class="chip" data-cat="전문웨딩홀">전문웨딩홀</button><button class="chip" data-cat="한옥/전통">한옥/전통</button><button class="chip" data-cat="호텔">호텔</button>
+    <button class="chip fav-chip" id="fav-chip">❤️ 즐겨찾기</button>
+  </div>
+  <select class="sort-select" id="sort-select">
+    <option value="rating">평점 높은순</option>
+    <option value="cost_asc">견적 낮은순</option>
+    <option value="cost_desc">견적 높은순</option>
+    <option value="meal">식대 낮은순</option>
+    <option value="guests">인원 적은순</option>
+  </select>
+  <div class="view-toggle">
+    <button class="view-btn active" data-view="card" title="카드뷰">⊞</button>
+    <button class="view-btn" data-view="table" title="테이블뷰">≡</button>
+  </div>
+  <span class="result-count"></span>
+</div>
+
+<!-- Card View -->
+<div id="card-view">
+  <div class="card-grid"></div>
+</div>
+
+<!-- Table View -->
+<div id="table-view"></div>
+
+<!-- Venue Detail Modal -->
+<div class="overlay" id="venue-modal">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<!-- Compare Modal -->
+<div class="overlay" id="compare-modal">
+  <div class="modal" id="compare-content"></div>
+</div>
+
+<!-- Compare Bar -->
+<div class="compare-bar" id="compare-bar">
+  <span style="font-size:.85rem;font-weight:600;white-space:nowrap">비교 중:</span>
+  <div class="compare-previews" id="compare-previews"></div>
+  <button class="compare-action-btn" onclick="openCompare()">비교하기</button>
+  <button class="compare-clear" onclick="clearCompare()">초기화</button>
+</div>
+
+<script>
+const VENUES = [{"id": "북서울꿈의숲", "name": "북서울꿈의숲", "type_raw": "공용(공원)", "category": "공공장소", "district": "강북구", "guests_str": "100~200명", "guests_min": 100, "guests_max": 200, "cost_str": "200~500만", "cost_min": 200.0, "cost_max": 500.0, "meal_str": "5~6.5만", "meal_min": 5.0, "meal_max": 6.5, "rating": 4.5, "notes": "한옥배경, 주차386대, 오르막길주의", "tagline": "고즈넉한 한옥과 대나무 숲이 어우러진 최고의 분위기, 하지만 하객들의 오르막길 고행은 각오해야 하는 곳", "reservation_html": "<ul><li><strong>서울 마이웨딩(패밀리서울)</strong> 홈페이지(wedding.seoulwomen.or.kr)를 통한 온라인 신청</li><li>매년 2월경 다음 해 전체 예식 예약 오픈 (토요일 골든타임은 오픈 직후 마감)</li><li>선정 후 6개 협력 웨딩업체 중 선택하여 세부 기획 상담 진행: 들꽃웨딩(02-2644-5902), 좋은날(02-515-9924), 베라체 by 베라웨딩(02-761-1551), 그린웨딩(1577-8470), 미그린웨딩이벤트(02-511-2175), 르안 플레르(010-3220-6839)</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료 (서울시민/서울 생활권자 기준)</li><li><strong>기획 및 꽃장식</strong>: 약 200~500만원 대 (커스텀 정도에 따라 상이, 서울시 비품비 100만원 지원 가능)</li><li><strong>평균 식대</strong>: 50,000원 ~ 65,000원 (출장 뷔페 또는 인근 중식당 '메이린' 이용)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 서울시 지원 사업으로 진행 시 100만원 상당의 비품 지원 혜택이 핵심.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 100~150명 (공식 수용 범위 100~200명, 한옥 마당의 특성상 150명 내외가 가장 쾌적함)</li><li><strong>주차 및 교통</strong>: 주차장 자체는 <strong>386대 규모로 여유 충분</strong>. 단, 주차장에서 식장까지 <strong>도보 5~10분의 가파른 오르막길</strong>이 있어 어르신 하객에게 큰 불편(안내문 필수). 지하철역에서 멀고 버스 환승 필수.</li><li><strong>2026년 예식 공백</strong>: 4월 4일~5월 15일은 장소 사정으로 예식 일정 없음 (해당 기간 제외 3월 2주~6월, 8월 3주~11월 2주 가능).</li></ul><p>-</p>", "pros": "문화재(한옥) 배경의 독보적인 감성, 높은 예식 자유도, 시간 제한 없는 여유로운 진행.\n    -", "cons": "편의시설(탈의실, 화장실) 노후 및 협소, ATM 기기 멀음, 등산 수준의 접근성, 일반 나들이객의 강제 구경", "tip": "2027년 상반기 시설 정비로 대관 불가 확정 (2027년 9월부터 재운영). 현재 시점(2026년)에서는 하반기(8월 3주~11월) 예식 잔여석 확인을 우선 권장. 예식 예정일 90일 이내 신청 불가. 우천 시 파라솔/천막 비용 별도 예산 책정 필요.", "links": [{"text": "서울 마이웨딩 공식 홈페이지", "url": "https://wedding.seoulwomen.or.kr/"}, {"text": "네이버 블로그 - 북서울꿈의숲 창녕위궁재사 야외웨딩 후기", "url": "https://search.naver.com/search.naver?query=%EB%B6%81%EC%84%9C%EC%9A%B8%EA%BF%88%EC%9D%98%EC%88%B2+%EC%B0%BD%EB%85%95%EC%9C%84%EA%B6%81%EC%9E%AC%EC%82%AC+%EC%9B%A8%EB%94%A9+%ED%9B%84%EA%B8%B0"}], "has_detail": true}, {"id": "선유도공원", "name": "선유도공원", "type_raw": "공용(공원)", "category": "공공장소", "district": "영등포구", "guests_str": "100~200명", "guests_min": 100, "guests_max": 200, "cost_str": "300~800만", "cost_min": 300.0, "cost_max": 800.0, "meal_str": "5~7만", "meal_min": 5.0, "meal_max": 7.0, "rating": 4.2, "notes": "주차불가, 비가열식사", "tagline": "한강 위 원형 무대의 독보적인 시각적 미감, 하지만 '주차 지옥'과 '비가열 음식'이라는 장벽을 넘어야 하는 곳", "reservation_html": "<ul><li><strong>서울 마이웨딩(패밀리서울)</strong> 홈페이지(wedding.seoulwomen.or.kr)를 통한 온라인 신청</li><li>연간 약 10회 내외로 극히 제한적으로 운영되며, 보통 1년 전 예약이 이미 마감됨</li><li>서울시 지정 전담 업체(로메릭, 제이제이 가든스튜디오 등)와 상세 견적 및 기획 상담 필수</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료</li><li><strong>기획 및 꽃장식</strong>: 약 300~800만원 대 (무대를 새로 꾸며야 하므로 기본 세팅비가 높은 편)</li><li><strong>평균 식대</strong>: 50,000원 ~ 70,000원 (비가열식 도시락, 샌드위치, 콜드 뷔페만 가능)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 협력업체의 '에코 웨딩' 패키지 활용 시 친환경 연출 지원 가능.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 100~200명 (원형 무대 구조상 하객들이 무대를 둘러싸는 형태로 집중도 높음)</li><li><strong>주차 및 교통</strong>: <strong>공원 내 일반 주차 절대 불가</strong>. 하객들은 양화한강공원 제3주차장에 주차 후 선유교를 건너 10~15분 도보 이동 필수(어르신 배려 필수).</li></ul><p>-</p>", "pros": "산업 유산과 자연이 어우러진 빈티지한 배경으로 스냅 사진 퀄리티 최상, 환경을 생각하는 특별한 결혼식.\n    -", "cons": "하객들의 주차 및 이동 불편 호소, 가열 음식 불가로 인한 식사 만족도 저하, 공원 방문객들의 무분별한 사진 촬영", "tip": "현재 2026년 예약까지 마감된 것으로 파악되나, 취소 타임을 노리거나 하반기 추가 공고를 확인해야 함. 식사는 가급적 퀄리티 높은 프리미엄 도시락을 추천.", "links": [{"text": "서울 마이웨딩 - 선유도공원 안내", "url": "https://wedding.seoulwomen.or.kr/"}, {"text": "네이버 블로그 - 선유도공원 야외결혼식 실제 후기", "url": "https://search.naver.com/search.naver?query=%EC%84%A0%EC%9C%A0%EB%8F%84%EA%B3%B5%EC%9B%90+%EC%9B%90%ED%98%95%EB%AC%B4%EB%8C%80+%EC%9B%A8%EB%94%A9+%ED%9B%84%EA%B8%B0"}], "has_detail": true}, {"id": "서울숲", "name": "서울숲", "type_raw": "공용(공원)", "category": "공공장소", "district": "성동구", "guests_str": "80~120명", "guests_min": 80, "guests_max": 120, "cost_str": "300~700만", "cost_min": 300.0, "cost_max": 700.0, "meal_str": "5~7만", "meal_min": 5.0, "meal_max": 7.0, "rating": 4.6, "notes": "포플러나무숲, 예약치열", "tagline": "높게 뻗은 포플러 나무 사이로 쏟아지는 햇살, 서울에서 가장 이국적인 '숲속 결혼식'을 실현할 수 있는 곳", "reservation_html": "<ul><li><strong>패밀리서울(서울 마이웨딩)</strong> 또는 <strong>서울시 공공서비스예약</strong> 홈페이지를 통한 신청</li><li>보통 전년도 8~10월경 이듬해 전체 일정을 일괄 모집하며, 경쟁이 매우 치열한 '웨딩 티케팅' 지역</li><li>선정 후 서울시 협력 업체(디렉팅/꽃장식) 중 한 곳을 선택하여 진행</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료</li><li><strong>기획 및 꽃장식</strong>: 약 300~700만원 대 (커스텀 정도에 따라 상이)</li><li><strong>평균 식대</strong>: 50,000원 ~ 70,000원 (공원 내 취사 불가로 주로 프리미엄 도시락 또는 외부 케이터링 활용)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 서울시 비품 지원금(100만원) 활용 가능 여부를 협력업체와 상의.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 80~120명 (공간 구조상 100명 내외일 때 가장 아름답고 집중도가 높음)</li><li><strong>주차 및 교통</strong>: 서울숲 주차장이 있으나 주말에는 매우 혼잡하여 하객들에게 대중교통(수인분당선 서울숲역) 이용 강력 권장 필수.</li></ul><p>-</p>", "pros": "압도적인 자연 경관(포플러 나무 숲), 정형화되지 않은 자유로운 예식 분위기, 여유로운 예식 시간(3~4시간).\n    -", "cons": "전용 편의시설(신부대기실, 화장실) 전무하여 텐트 사용, 나들이객의 사진 촬영 및 소음 간섭, 우천 시 대안 비용 발생", "tip": "2026년은 서울숲 내 국제정원박람회(5~11월) 일정과 겹칠 수 있으므로 예식 가능 구역과 시간 제한 여부를 사전 확인 필수. 패밀리서울 카카오톡 채널 알림 설정이 가장 빠른 예약 방법.", "links": [{"text": "패밀리서울 나만의 결혼식 - 서울숲 안내", "url": "https://familyseoul.or.kr/"}, {"text": "네이버 블로그 - 서울숲 포플러정원 실제 예식 후기", "url": "https://search.naver.com/search.naver?query=%EC%84%9C%EC%9A%B8%EC%88%B2+%ED%8F%AC%ED%94%8C%EB%9F%AC%EC%A0%95%EC%9B%90+%EC%9B%90%EB%83%A4%EC%9B%A8%EB%94%A9+%ED%9B%84%EA%B8%B0"}], "has_detail": true}, {"id": "용산가족공원", "name": "용산가족공원", "type_raw": "공용(공원)", "category": "공공장소", "district": "용산구", "guests_str": "80~120명", "guests_min": 80, "guests_max": 120, "cost_str": "500~800만", "cost_min": 500.0, "cost_max": 800.0, "meal_str": "5~6만", "meal_min": 5.0, "meal_max": 6.0, "rating": 4.8, "notes": "150명제한, 버드나무배경", "tagline": "버드나무 늘어진 연못가의 환상적인 풍경, 하지만 하객 150명 제한과 식당 이동의 번거로움을 감수해야 하는 진정한 스몰웨딩의 성지", "reservation_html": "<ul><li><strong>서울시 공공서비스예약</strong>(yeyak.seoul.go.kr)에서 '그린웨딩'으로 검색하여 온라인 접수</li><li>매년 11월경 이듬해 전체 예식을 선착순으로 모집하며, 1일 1예식만 진행하여 경쟁이 매우 치열함</li><li>선정 후 협력업체(들꽃웨딩, 좋은날 등)와 연출 상담 진행</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료</li><li><strong>기획 및 꽃장식</strong>: 약 500~800만원 대 (야외 세팅 전체를 담당하므로 기본 비용이 있는 편)</li><li><strong>평균 식대</strong>: 50,000원 ~ 60,000원 (공원 내 취식 불가로 도시락 지급 또는 국립중앙박물관 내 식당 등 인근 식당 예약 필수)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 1일 1팀 단독 사용으로 대관 시간의 제약이 거의 없다는 것이 가장 큰 무형의 혜택.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 80~120명 (<strong>최대 150명 엄격 제한</strong>, 초과 시 진행 불가)</li><li><strong>주차 및 교통</strong>: 공원 주차장이 약 50대 규모로 매우 협소함. 주말에는 만차인 경우가 많아 하객들에게 인근 국립중앙박물관 주차장 이용 또는 대중교통 권장 필수.</li></ul><p>-</p>", "pros": "연못과 버드나무 배경의 압도적인 미감(스냅 사진 만족도 최상), 하루 한 팀만 사용하는 프라이빗함, 친환경 그린웨딩의 상징성.\n    -", "cons": "공원 내 식사 불가로 인한 하객 이동 불편, 협소한 주차 공간, 야외 간이 시설(신부대기실 등)의 열악함", "tip": "하객 수가 100명 내외인 경우 가장 만족도가 높음. 식사 장소로 국립중앙박물관 내 거울못 식당 등을 미리 선점하는 것이 하객 만족도의 핵심.", "links": [{"text": "서울시 공공서비스예약 - 용산가족공원 그린웨딩", "url": "https://yeyak.seoul.go.kr/"}, {"text": "네이버 블로그 - 용산가족공원 야외결혼식 실제 견적 및 후기", "url": "https://search.naver.com/search.naver?query=%EC%9A%A9%EC%82%B0%EA%B0%80%EC%A1%B1%EA%B3%B5%EC%9B%90+%EC%97%B0%EB%AA%BB%EA%B4%91%EC%9E%A5+%EC%9B%A8%EB%94%A9+%ED%9B%84%EA%B8%B0"}], "has_detail": true}, {"id": "월드컵공원", "name": "월드컵공원", "type_raw": "공용(공원)", "category": "공공장소", "district": "마포구", "guests_str": "100~200명", "guests_min": 100, "guests_max": 200, "cost_str": "300~600만", "cost_min": 300.0, "cost_max": 600.0, "meal_str": "4~6만", "meal_min": 4.0, "meal_max": 6.0, "rating": 4.4, "notes": "4시간단독, 친환경예식", "tagline": "광활한 잔디밭과 호수 배경의 개방감, '소풍'처럼 여유로운 4시간의 단독 예식이 가능한 가성비 베뉴", "reservation_html": "<ul><li><strong>서울 마이 웨딩(공공예식장)</strong> 홈페이지(smw.seoul.go.kr) 또는 협력업체(그린웨딩포럼, 들꽃웨딩 등)를 통해 신청</li><li>보통 전년도 하반기 또는 당해 연도 초에 모집하며, 2026년 예식은 2025년 7월 1일부터 상담 및 접수 시작 예정</li><li>'소풍결혼식' 취지에 맞춰 에코 웨딩(친환경) 형태로 진행 권장</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료 (공원 이용료 약 2~3만원 발생 가능)</li><li><strong>기획 및 꽃장식</strong>: 약 300~600만원 대 (친환경 예식 규정에 따라 생화 장식에 일부 제한이 있을 수 있음)</li><li><strong>평균 식대</strong>: 40,000원 ~ 60,000원 (공원 내 가열 조리 불가로 도시락 또는 비가열 출장 뷔페 위주)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 1일 1~2팀 단독 사용으로 4시간 이상의 넉넉한 대관 시간 제공.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 100~200명 (공간이 매우 넓어 하객 수가 많아도 수용 가능하나, 150명 내외가 시각적으로 가장 풍성해 보임)</li><li><strong>주차 및 교통</strong>: 평화의 공원 주차장이 넓으나 주말 나들이객 및 마라톤 등 대형 행사와 겹칠 경우 주차 지옥 경험 가능(행사 일정 사전 확인 필수).</li></ul><p>-</p>", "pros": "탁 트인 호수 배경의 개방감, 하루 한 팀(또는 오전/오후)만 진행하는 여유로움, 신랑·신부의 취향을 100% 반영한 자유로운 기획.\n    -", "cons": "음식 퀄리티(가열 불가)에 대한 호불호, 주말 주차 전쟁, 우천 시 실내 대체 장소(회의실 등)의 분위기 저하", "tip": "친환경 예식 규정을 미리 숙지해야 하며, 주말 공원 행사 일정을 반드시 체크할 것. 그린웨딩포럼 등 공공웨딩 전문 업체의 노하우를 활용하는 것을 추천.", "links": [{"text": "서울 마이 웨딩 - 월드컵공원 소풍결혼식", "url": "https://smw.seoul.go.kr/"}, {"text": "네이버 블로그 - 월드컵공원 평화잔디광장 실제 예식 후기", "url": "https://search.naver.com/search.naver?query=%EC%9B%94%EB%93%9C%EC%BB%B5%EA%B3%B5%EC%9B%90+%ED%8F%89%ED%99%94%EC%9E%94%EB%94%94%EA%B4%91%EC%9E%A5+%EC%9B%A8%EB%94%A9+%ED%9B%84%EA%B8%B0"}], "has_detail": true}, {"id": "서울식물원", "name": "서울식물원", "type_raw": "공용(공원)", "category": "공공장소", "district": "강서구", "guests_str": "50~100명", "guests_min": 50, "guests_max": 100, "cost_str": "300~700만", "cost_min": 300.0, "cost_max": 700.0, "meal_str": "3~5만", "meal_min": 3.0, "meal_max": 5.0, "rating": 4.3, "notes": "식물원배경, 공사일정확인", "tagline": "현대적인 식물원 건축물과 드넓은 잔디가 어우러진 이색 베뉴, 마곡의 세련된 분위기를 품은 가성비 야외 웨딩", "reservation_html": "<ul><li><strong>서울 마이 웨딩(공공예식장)</strong> 홈페이지(wedding.seoul.go.kr)를 통해 상시 접수</li><li>인기 날짜는 보통 1년 전 오픈 직후 마감되므로 조기 신청 필수</li><li>서울시 지정 협력업체(로메릭, 베라체 등)와 상담을 통해 예식 컨셉 및 견적 확정</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료</li><li><strong>기획 및 꽃장식</strong>: 약 300~700만원 대 (꽃장식 구성 및 하객 편의시설 렌탈 범위에 따라 상이)</li><li><strong>평균 식대</strong>: 30,000원 ~ 50,000원 (잔디마당 내 도시락 이용 또는 인근 마곡나루역 대형 식당 예약 권장)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 서울시 비품 지원 혜택(100만원) 적용 가능 여부 확인.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 50~100명 (잔디마당의 탁 트인 개방감을 살리기에 가장 적합한 인원 규모)</li><li><strong>주차 및 교통</strong>: 주말 식물원 방문객으로 인해 주차장(184대)이 매우 혼잡함. 9호선/공항철도 마곡나루역과 직결되어 있어 하객들에게 대중교통 이용 안내 필수.</li></ul><p>-</p>", "pros": "식물원의 이국적인 풍경 덕분에 스냅 사진 만족도 매우 높음, 도심 속 자연을 만끽하는 여유로운 예식 가능, 높은 접근성(마곡나루역).\n    -", "cons": "2026년 상반기까지 인근 공사로 인한 소음 및 시야 방해 가능성(사전 확인 필수), 일반 방문객의 예식 구경, 야외 간이 탈의실 이용의 불편함", "tip": "도시락 식사가 불편하다면 도보 거리의 마곡나루역 인근 대형 중식당이나 뷔페를 피로연 장소로 별도 섭외하는 것이 하객 만족도의 핵심. 2026년 예식은 공사 일정을 반드시 상담센터에 재확인할 것.", "links": [{"text": "서울 마이 웨딩 - 서울식물원 안내", "url": "https://wedding.seoul.go.kr/"}, {"text": "네이버 블로그 - 서울식물원 야외웨딩 실제 후기", "url": "https://search.naver.com/search.naver?query=%EC%84%9C%EC%9A%B8%EC%8B%9D%EB%AC%BC%EC%9B%90+%EC%9E%94%EB%94%94%EB%A7%88%EB%8B%B9+%EC%9B%A8%EB%94%A9+%ED%9B%84%EA%B8%B0"}], "has_detail": true}, {"id": "어린이대공원", "name": "어린이대공원", "type_raw": "공용(공원)", "category": "공공장소", "district": "광진구", "guests_str": "80~150명", "guests_min": 80, "guests_max": 150, "cost_str": "350~700만", "cost_min": 350.0, "cost_max": 700.0, "meal_str": "4~6만", "meal_min": 4.0, "meal_max": 6.0, "rating": 4.1, "notes": "주차매우불편, 정원배경", "tagline": "사계절 꽃들로 가득한 정원에서의 동화 같은 웨딩, 하지만 주말 '주차 지옥'이라는 거대한 벽을 넘어야 하는 곳", "reservation_html": "<ul><li><strong>서울시 공공서비스예약</strong>(yeyak.seoul.go.kr) 홈페이지에서 온라인 신청</li><li>주로 봄(4~6월)과 가을(9~10월) 시즌에만 한시적으로 운영되며, 전년도 하반기 정기 모집 시 신청하는 것이 가장 확실함</li><li>선정 후 서울시 지정 협력업체(들꽃웨딩, 웨딩두잇 등)와 상세 연출 및 피로연 방식 상담</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료</li><li><strong>기획 및 꽃장식</strong>: 약 350~700만원 대 (정원의 기본 꽃들과 어우러지는 추가 생화 연출 범위에 따라 상이)</li><li><strong>평균 식대</strong>: 40,000원 ~ 60,000원 (공원 내 취사 불가로 도시락 지급 또는 외부 케이터링 위주)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 공공예식장 비품 지원 사업(100만원 상당) 혜택 적용 가능성 확인 필수.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 80~150명 (정원 내 통로와 좌석 배치 구조상 120명 내외가 가장 쾌적함)</li><li><strong>주차 및 교통</strong>: <strong>최대 단점</strong>. 어린이대공원 공영주차장은 주말 나들이객으로 인해 오전부터 만차인 경우가 대부분임. 하객들에게 7호선 어린이대공원역 이용을 강력 권고하고 안내문에 별도 표기 필수.</li></ul><p>-</p>", "pros": "잘 관리된 사계절 정원의 풍성한 조경, 어린이대공원 특유의 밝고 경쾌한 분위기, 합리적인 비용의 커스텀 웨딩.\n    -", "cons": "하객들의 주차 원성(주말 주차 대기 1시간 이상 다반사), 일반 방문객들의 과도한 구경 및 소음, 간이 신부대기실/탈의실의 협소함", "tip": "주말 주차 문제를 해결하기 위해 예식 시간을 가급적 첫 타임(오전)으로 잡거나, 인근 사설 주차장을 미리 섭외하여 하객들에게 안내하는 노력이 필요함. 도시락은 프리미엄급으로 준비하여 식사 만족도를 보완할 것.", "links": [{"text": "서울시 공공서비스예약 - 어린이대공원 포시즌가든", "url": "https://yeyak.seoul.go.kr/"}, {"text": "네이버 블로그 - 어린이대공원 야외결혼식 실제 후기", "url": "https://search.naver.com/search.naver?query=%EC%96%B4%EB%A6%B0%EC%9D%B4%EB%8C%80%EA%B3%B5%EC%9B%90+%ED%8F%AC%EC%8B%9C%EC%A6%8C%EA%B0%80%EB%93%A0+%EC%9B%A8%EB%94%A9+%ED%9B%84%EA%B8%B0"}], "has_detail": true}, {"id": "마곡광장", "name": "마곡광장", "type_raw": "공용(광장)", "category": "공공장소", "district": "강서구", "guests_str": "100~200명", "guests_min": 100, "guests_max": 200, "cost_str": "300~600만", "cost_min": 300.0, "cost_max": 600.0, "meal_str": "4.5~6만", "meal_min": 4.5, "meal_max": 6.0, "rating": 4.2, "notes": "역직결, 전광판무료", "tagline": "지하철역과 직결된 압도적인 접근성, LED 전광판 서비스까지 갖춘 도심 속 이색 원형 광장 베뉴", "reservation_html": "<ul><li><strong>서울시 공공예식장(더 아름다운 결혼식)</strong> 홈페이지 또는 상담센터(1899-2154)를 통해 상시 접수</li><li>2026년 예식은 2025년 2월 말부터 이미 접수 시작됨 (최소 예식 90일 전 신청 필수)</li><li>마곡광장 전담 협력업체(로메릭, 미그린웨딩 등)와 세부 패키지 상담 및 계약 진행</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료</li><li><strong>기획 및 꽃장식</strong>: 약 300~600만원 대 (썬큰 구조에 맞는 수직적 연출이나 그늘막 설치 시 비용 추가 가능)</li><li><strong>평균 식대</strong>: 45,000원 ~ 60,000원 (인근 식당 연계 또는 케이터링 활용)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 서울시 비품 지원금(최대 100만원) 및 <strong>대형 LED 전광판 식전 영상 송출 무료 서비스</strong>.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 100~200명 (원형 썬큰 광장 구조로 하객들이 위에서 내려다보는 형태의 입체적 예식 연출 가능)</li><li><strong>주차 및 교통</strong>: <strong>접근성 최상</strong>. 9호선/공항철도 마곡나루역 출구와 광장이 바로 연결됨. 주차는 인근 공영주차장(200대) 이용 가능하나 유료(하객 본인 부담)임.</li></ul><p>-</p>", "pros": "지하철역 직결로 하객들의 교통 만족도 매우 높음, LED 전광판을 활용한 화려한 시각 효과, 도심 속이지만 아늑한 썬큰 구조.\n    -", "cons": "사방이 트여 있어 일반 행인들의 시선에 완전히 노출됨, 여름철 직사광선이 강해 그늘막 없이는 하객 불편 초래, 유료 주차에 대한 아쉬움", "tip": "썬큰 구조 특성상 소리가 울릴 수 있으므로 음향 업체의 세밀한 조정이 필요함. 하객용 양산이나 선글라스를 답례품/비치용으로 준비하는 센스가 돋보일 수 있는 곳.", "links": [{"text": "서울시 공공예식장 - 마곡광장 안내", "url": "https://wedding.seoul.go.kr/"}, {"text": "네이버 블로그 - 마곡광장 썬큰마당 실제 예식 후기", "url": "https://search.naver.com/search.naver?query=%EB%A7%88%EA%B3%A1%EA%B4%91%EC%9E%A5+%EC%8D%AC%ED%81%B0%EB%A7%88%EB%8B%B9+%EC%9B%A8%EB%94%A9+%ED%9B%84%EA%B8%B0"}], "has_detail": true}, {"id": "문화비축기지", "name": "문화비축기지", "type_raw": "공용(공원)", "category": "공공장소", "district": "마포구", "guests_str": "100~200명", "guests_min": 100, "guests_max": 200, "cost_str": "300~600만", "cost_min": 300.0, "cost_max": 600.0, "meal_str": "5~7만", "meal_min": 5.0, "meal_max": 7.0, "rating": 4.3, "notes": "탱크배경, 이색분위기", "tagline": "거대한 석유 탱크 배경의 압도적 웅장함, 산업 유산의 빈티지한 감성을 그대로 품은 세상에 없던 웨딩", "reservation_html": "<ul><li><strong>서울 마이 웨딩(공공예식장)</strong> 홈페이지(wedding.seoulwomen.or.kr) 또는 상담센터(1899-2154)를 통해 신청</li><li>예식 예정일 기준 최소 90일 전까지 예약을 완료해야 하며, 협력업체(베라체, 루디아프로젝트 등) 중 한 곳을 선택하여 진행</li><li>1일 1~2팀 단독 사용으로 여유로운 시간 보장</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료</li><li><strong>기획 및 꽃장식</strong>: 약 300~600만원 대 (산업 유산의 거친 느낌과 조화를 이루는 볼륨감 있는 연출 권장)</li><li><strong>평균 식대</strong>: 50,000원 ~ 70,000원 (탱크 내 취사 불가로 주로 도시락이나 프리미엄 케이터링 위주)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 서울시 비품 지원 혜택(100만원 상당) 적용 가능.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 100~200명 (탱크 T2 야외공연장의 넓은 부지를 활용하여 대규모 야외 웨딩도 가능)</li><li><strong>주차 및 교통</strong>: 내부 주차장이 매우 협소함. 하객들에게 6호선 월드컵경기장역 이용을 강력 권장하고, 안내문에 인근 월드컵경기장 주차장 정보를 명기해야 함.</li></ul><p>-</p>", "pros": "어디에서도 볼 수 없는 독보적인 공간의 웅장함, 시간 제약 없는 여유로운 파티 분위기, 높은 예식 자유도.\n    -", "cons": "식사 만족도(가열 불가)에 대한 리스크, 협소한 주차 공간으로 인한 하객 불편, 우천 시 넓은 야외 공간 전체에 대한 대처의 어려움", "tip": "공간의 색채가 강하므로 플라워 연출 시 원색보다는 화이트/그린 또는 파스텔 톤으로 대비를 주는 것이 세련되어 보임. 하객 이동 동선에 '문화비축기지' 특유의 미로 같은 느낌이 있으므로 안내 표지판 설치에 신경 써야 함.", "links": [{"text": "서울 마이 웨딩 - 문화비축기지 안내", "url": "https://wedding.seoulwomen.or.kr/"}, {"text": "네이버 블로그 - 문화비축기지 야외결혼식 실제 후기", "url": "https://search.naver.com/search.naver?query=%EB%AC%B8%ED%99%94%EB%B9%84%EC%B6%95%EA%B8%B0%EC%A7%80+%EC%9B%A8%EB%94%A9+%ED%9B%84%EA%B8%B0"}], "has_detail": true}, {"id": "물빛무대", "name": "물빛무대", "type_raw": "공용(한강)", "category": "공공장소", "district": "영등포구", "guests_str": "100~300명", "guests_min": 100, "guests_max": 300, "cost_str": "150~500만", "cost_min": 150.0, "cost_max": 500.0, "meal_str": "5~7만", "meal_min": 5.0, "meal_max": 7.0, "rating": 4.0, "notes": "수상무대, 주차지옥", "tagline": "한강 수변 위에 떠 있는 환상적인 수상 무대, 도심 야경과 분수쇼가 어우러지는 나이트 웨딩의 로망을 실현할 수 있는 곳", "reservation_html": "<ul><li><strong>패밀리서울(더 아름다운 결혼식)</strong> 홈페이지(familyseoul.or.kr)를 통해 상담 신청</li><li>전담 웨딩 플래너 배정 후 서울시 지정 협력업체(들꽃웨딩, 웨딩두잇 등)와 상세 계약 진행</li><li>한강공원 행사 일정 및 수위 변화에 민감하므로 1년 전 조기 예약 권장</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료</li><li><strong>시스템 운영비</strong>: 약 150만원 (음향, 조명, 무대 개폐 장치 운영비)</li><li><strong>기획 및 꽃장식/식대</strong>: 약 1,000~1,500만원 내외 (하객 100명 기준, 무대 연출 및 케이터링 포함)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 돔 개폐 장치 및 기본 음향/조명 시스템 활용 가능.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 100~300명 (무대 앞 계단식 좌석 200석 내외 활용 가능하며, 개방된 공간이라 하객 수에 유연함)</li><li><strong>주차 및 교통</strong>: <strong>최악의 주차 여건</strong>. 주말 여의도 한강공원 주차장은 사실상 이용 불가 수준임. 하객들에게 5호선 여의나루역(도보 10분) 이용을 강력 권고하고 안내문에 명기 필수.</li></ul><p>-</p>", "pros": "세계 최초 수상 무대의 상징성, 저녁 예식 시 한강 야경과 분수쇼의 시너지 효과, 축제 같은 분위기의 이색 예식 가능.\n    -", "cons": "장마철이나 팔당댐 방류 시 한강 수위 상승으로 인한 예식 취소 리스크(매우 중요), 극심한 주차난, 일반 시민들의 무분별한 구경 및 소음", "tip": "날씨와 수위 리스크를 최소화하기 위해 7~8월 장마철은 피하는 것이 상책. 나이트 웨딩으로 진행 시 분수 가동 시간과 맞추면 영화 같은 연출이 가능함.", "links": [{"text": "패밀리서울 - 여의도 물빛무대 안내", "url": "https://familyseoul.or.kr/"}, {"text": "네이버 블로그 - 여의도 물빛무대 야외결혼식 실제 후기", "url": "https://search.naver.com/search.naver?query=%EC%97%AC%EC%9D%98%EB%8F%84+%ED%95%9C%EA%B0%95%EA%B3%B5%EC%9B%90+%EB%AC%BC%EB%B9%9B%EB%AC%B4%EB%8C%80+%EC%9B%A8%EB%94%A9+%ED%9B%84%EA%B8%B0"}], "has_detail": true}, {"id": "서울대_교수회관", "name": "서울대 교수회관", "type_raw": "대학(잔디)", "category": "공공장소", "district": "관악구", "guests_str": "250명 이상", "guests_min": 250, "guests_max": 250, "cost_str": "1500~2000만", "cost_min": 1500.0, "cost_max": 2000.0, "meal_str": "7~8만", "meal_min": 7.0, "meal_max": 8.0, "rating": 4.9, "notes": "갈비탕맛집, 프리미엄연출", "tagline": "서울대 교정의 상징성과 럭셔리한 플라워 연출이 만난 하이엔드 야외 웨딩, '갈비탕 맛집'으로 통하는 확실한 식사 만족도까지 갖춘 곳", "reservation_html": "<ul><li><strong>서울대 교수회관 공식 홈페이지</strong>(snufacultyclub.com)를 통한 온라인 예약</li><li><strong>매달 첫 번째 영업일 오전 10시</strong>에 1년 뒤 예식이 오픈되며, '웨딩 티켓팅'이라 불릴 만큼 경쟁이 치열함</li><li>서울대 교직원, 동문 및 동문 자녀 등 특정 자격 제한이 있으므로 사전 확인 필수</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료(야외)</strong>: 약 1,800만원 (잔디광장 대관, 무대 연출, 프리미엄 꽃 디렉팅 포함)</li><li><strong>식대</strong>: 60,000원 / 70,000원 / 90,000원 (한상차림 메뉴에 따라 상이)</li><li><strong>특이사항</strong>: 실내 예식 대비 대관료가 약 4배가량 높으나, 그랜드하얏트 헤드 플로리스트 출신 디렉터의 고퀄리티 연출이 포함됨</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 250명 이상 (잔디광장이 넓어 대규모 하객 수용에 최적화되어 있으며, 300명 이상도 충분히 가능)</li><li><strong>주차 및 교통</strong>: 교정 내 주차 공간은 넉넉하나 관악산 깊숙이 위치해 대중교통 이용 하객은 낙성대역 셔틀버스 환승 필수.</li></ul><p>-</p>", "pros": "압도적인 생화 장식 퀄리티(꽃 추가가 필요 없을 정도), 정갈하고 맛있는 갈비탕 한상차림(하객 만족도 최상), 서울대 동문 예식의 자부심과 웅장한 자연경관.\n    -", "cons": "실내 예식 대비 매우 높은 비용 부담, 우천 시 반야외 로비 또는 실내 홀로 변경되는 리스크, 엄격한 예약 자격 제한", "tip": "야외 웨딩은 골든타임 선점이 매우 어려우므로 예약 오픈일 10시 정각에 맞춰 '광클'을 준비해야 하며, 비가 올 경우를 대비해 1층 로비 연출안도 미리 확인해두는 것이 마음 편함.", "links": [{"text": "서울대 교수회관 공식 홈페이지", "url": "https://snufacultyclub.com/"}, {"text": "네이버 블로그 - 서울대 교수회관 야외웨딩 실제 견적 및 진행 후기", "url": "https://search.naver.com/search.naver?query=%EC%84%9C%EC%9A%B8%EB%8C%80+%EA%B5%90%EC%88%98%ED%9A%8C%EA%B4%80+%EC%95%BC%EC%9Wait%EB%94%94+%ED%9B%84%EA%B8%B0"}], "has_detail": true}, {"id": "반얀트리_오아시스", "name": "반얀트리 오아시스", "type_raw": "호텔(풀사이드)", "category": "호텔", "district": "중구", "guests_str": "100~150명", "guests_min": 100, "guests_max": 150, "cost_str": "3000~6000만+", "cost_min": 3000.0, "cost_max": 6000.0, "meal_str": "18~25만", "meal_min": 18.0, "meal_max": 25.0, "rating": 5.0, "notes": "국내 최고가, 리조트 감성, 수영장 배경", "tagline": "서울 한복판에서 즐기는 이국적인 리조트 웨딩, 남산 타워를 배경으로 한 독보적인 풀사이드 감성", "reservation_html": "<ul><li>호텔 웨딩팀 전용 번호(02-2250-8048 / 8057)로 전화 상담 예약</li><li>최소 1년 전 예약 권장, 야외 수영장 운영 시즌(여름) 예식 가능 여부 사전 확인 필수</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/꽃장식: 약 2,000만 원 ~ 4,000만 원 이상 (꽃장식 커스터마이징에 따라 상한선 없음)</li><li>평균 식대: 180,000원 ~ 250,000원 (코스 요리 기준, 주류 및 음료 별도)</li><li>당일 계약 혜택 및 할인 팁: 비수기(금요일, 일요일 저녁) 예식 시 대관료 할인이나 객실 업그레이드 프로모션 적용 가능성 있음</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 100~150명 (공간 특성상 소규모~중규모 예식에 최적화)</li><li>주차 및 교통: 남산 중턱 위치로 대중교통 접근성은 낮으나, 넓은 주차 공간과 셔틀버스 운행으로 보완</li></ul><p>-</p>", "pros": "해외 리조트 같은 이국적인 분위기, 하루 1~2팀 진행으로 매우 여유롭고 프라이빗함, 식사 퀄리티 및 서비스 만족도 최상위권\n    -", "cons": "매우 높은 견적, 야외 특유의 날씨 리스크(우천 시 실내 홀 변경의 아쉬움), 계절에 따른 야외 이용 제약", "tip": "수영장 시즌(7~8월)에는 예식이 제한될 수 있으므로 5, 6, 9, 10월 골든타임을 노린다면 1년 2개월 전부터 움직이는 것을 추천", "links": [{"text": "반얀트리 서울 공식 홈페이지 웨딩 섹션", "url": "https://www.banyantree.com"}], "has_detail": true}, {"id": "워커힐_애스톤하우스", "name": "워커힐 애스톤하우스", "type_raw": "호텔(정원)", "category": "호텔", "district": "광진구", "guests_str": "150~200명", "guests_min": 150, "guests_max": 200, "cost_str": "6500~9000만+", "cost_min": 6500.0, "cost_max": 9000.0, "meal_str": "28~35만", "meal_min": 28.0, "meal_max": 35.0, "rating": 4.9, "notes": "한강뷰 대저택, 연예인 선호, 1일 1팀 단독, 최고가 라인", "tagline": "대한민국 럭셔리 웨딩의 정점, 한강을 내려다보는 대저택에서의 완벽한 프라이빗 가든 파티", "reservation_html": "<ul><li>워커힐 호텔 웨딩 센터(02-450-4548~9) 직접 전화 상담</li><li>최소 1년 전 예약이 필수적이며, 인기 연예인 및 유명 인사의 예약이 몰리는 곳이므로 상시 잔여 타임 확인 필요</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/꽃장식: 대관료 약 4,000만 원 (1일 1팀 단독 사용) / 꽃장식 최소 2,500만 원 ~ 5,000만 원 이상</li><li>평균 식대: 280,000원 ~ 350,000원 이상 (최고급 커스텀 코스 메뉴 구성 가능)</li><li>당일 계약 혜택 및 할인 팁: 정가 정책이 매우 확고하여 할인은 거의 없으나, 평일 또는 비수기 상담 시 연출 옵션 추가 혜택 가능성 있음</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 야외 200명 내외 (최대 250명까지 가능하나 200명일 때 가장 쾌적), 실내 mansion 활용 시 50~150명 소규모 적합</li><li>주차 및 교통: 호텔 본관과 분리된 아차산 중턱 위치, 철저한 출입 통제로 보안 우수, 셔틀버스 또는 자가용 이동 필수</li></ul><p>-</p>", "pros": "국내 최고의 한강 조망권, 외부인 출입이 차단된 독보적인 보안과 프라이빗함, 시간에 구애받지 않는 여유로운 예식 및 애프터 파티\n    -", "cons": "국내 최고 수준의 압도적인 비용 부담, 우천 시 실내 이동 시 야외의 개방감을 대체하기 어려움, 하객 동선의 번거로움", "tip": "현빈·손예진 웨딩 등으로 인해 인지도가 급상승하여 예약 난이도가 최상임. 26년 예식을 계획한다면 현재 시점에서의 빠른 상담이 필수", "links": [{"text": "워커힐 애스톤하우스 공식 정보", "url": "https://www.walkerhill.com"}], "has_detail": true}, {"id": "라움_그라스가든", "name": "라움 그라스가든", "type_raw": "웨딩홀(가든)", "category": "전문웨딩홀", "district": "강남구", "guests_str": "300~500명", "guests_min": 300, "guests_max": 500, "cost_str": "2000~3500만", "cost_min": 2000.0, "cost_max": 3500.0, "meal_str": "12~20만", "meal_min": 12.0, "meal_max": 20.0, "rating": 4.8, "notes": "유럽 성곽 감성, 하이엔드 커스텀, 강남 랜드마크", "tagline": "강남 한복판에서 실현하는 유럽 성곽의 로망, 도심 속 하이엔드 가든 웨딩의 정석", "reservation_html": "<ul><li>공식 홈페이지 또는 대표번호(02-538-3366)를 통한 유선 상담 예약 필수</li><li>1:1 전담 큐레이터 시스템으로 운영되며, 최소 1년 전부터의 조기 예약이 일반적임</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/꽃장식: 대관료 약 500~1,000만 원 / 꽃장식 1,500~2,500만 원 이상 (커스터마이징에 따라 상이)</li><li>평균 식대: 120,000원 ~ 200,000원대 (양식 코스 기준, 음주류 별도)</li><li>당일 계약 혜택 및 할인 팁: 비수기(여름, 겨울) 및 일요일 예식 시 대관료 상당 부분 할인 및 서비스 연출 제공 사례 다수</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 300~500명 (마제스틱 볼룸 기준), 가든 웨딩 시 200~300명 규모가 가장 적정</li><li>주차 및 교통: 지하철 9호선/수인분당선 선정릉역 도보 가능, 주말 강남 교통 정체 및 주차 공간(약 350대)은 하객 수 대비 다소 타이트함</li></ul><p>-</p>", "pros": "독보적인 유럽풍 건축미와 정원 분위기, 경건한 채플부터 화려한 파티까지 다양한 컨셉 구현 가능, 큐레이팅 서비스의 높은 전문성\n    -", "cons": "대관료 및 꽃장식 비용이 일반 웨딩홀 대비 매우 높음, 야외 예식 시 우천 대비 실내 홀 병행 예약에 따른 추가 비용 부담", "tip": "야외 폰드 가든(Pond Garden)과 그라스 가든(Grass Garden) 중 원하는 무드에 따라 선택 가능하며, 나이트 웨딩 시 전구 연출이 매우 환상적", "links": [{"text": "라움아트센터 공식 홈페이지", "url": "https://www.theraum.co.kr"}], "has_detail": true}, {"id": "메이필드_벨타워", "name": "메이필드 벨타워", "type_raw": "호텔(정원)", "category": "호텔", "district": "강서구", "guests_str": "200~600명", "guests_min": 200, "guests_max": 600, "cost_str": "3500~4500만", "cost_min": 3500.0, "cost_max": 4500.0, "meal_str": "16~18만", "meal_min": 16.0, "meal_max": 18.0, "rating": 4.6, "notes": "정통 가든웨딩, 유럽 종탑 배경, 대규모 수용 가능", "tagline": "종탑 건물을 배경으로 펼쳐지는 광활한 잔디밭, 서울 속에서 즐기는 가장 이국적인 대규모 가든 웨딩", "reservation_html": "<ul><li>호텔 웨딩 예약실(02-2660-9200~2) 또는 이메일(wedding@mayfield.co.kr) 상담 신청</li><li>강서 지역의 대표적인 야외 웨딩 명소로 봄/가을 골든타임은 1년 전 예약 필수</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/연출료: 약 2,000만 원 ~ 2,500만 원 내외</li><li>꽃장식: 약 1,500만 원 ~ 2,000만 원 이상 (야외 특성상 꽃장식 필수 및 비중 높음)</li><li>평균 식대: 160,000원 ~ 180,000원 (한식 또는 양식 코스, 음주류 별도)</li><li>당일 계약 혜택 및 할인 팁: 비수기 프로모션 활용 시 대관료 할인이나 부대 시설 이용 혜택 제공 가능성 있음</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 200~600명 (서울 내 야외 베뉴 중 드물게 대규모 하객 수용 가능)</li><li>주차 및 교통: 지하철 5호선 김포공항역/우장산역 인근에서 셔틀버스 운행, 강서구 끝자락이라 타 지역에서의 접근성은 다소 낮으나 넓은 주차 공간 확보</li></ul><p>-</p>", "pros": "압도적인 개방감과 유럽풍 건축미의 조화, 매우 긴 버진로드와 화려한 입장 연출 가능, 5시간 이상의 여유로운 예식 간격\n    -", "cons": "필수 꽃장식 및 대관료 등 초기 비용 부담이 큼, 우천 시 실내 이동에 따른 분위기 차이 발생, 하절기 벌레 및 동절기 기온 문제", "tip": "벨타워 가든 외에도 '아트리움'이나 '소나무 정원' 등 다양한 컨셉의 야외 베뉴가 호텔 내에 있으니 규모에 맞춰 선택 가능", "links": [{"text": "메이필드 호텔 공식 홈페이지", "url": "https://www.mayfield.co.kr"}], "has_detail": true}, {"id": "신라호텔_영빈관", "name": "신라호텔 영빈관", "type_raw": "호텔(가든)", "category": "호텔", "district": "중구", "guests_str": "200~330명", "guests_min": 200, "guests_max": 330, "cost_str": "1억2000만 이상", "cost_min": 12000, "cost_max": null, "meal_str": "16~30만", "meal_min": 16.0, "meal_max": 30.0, "rating": 4.9, "notes": "한옥 영빈관 배경 야외가든, 셀럽 웨딩 성지, 포브스 5스타", "tagline": "한국 웨딩의 끝판왕 — 한옥 영빈관을 배경으로 한 야외 가든에서 장동건·전지현이 선택한 일생에 한 번의 예식", "reservation_html": "<ul><li>호텔 웨딩팀 직통 전화: 02-6273-1000</li><li>공식 웹사이트(shilla.net) 웨딩 상담 신청</li><li>인기 봄·가을 시즌 골든타임(토요일 낮)은 <strong>15~18개월 전</strong> 문의 필수, 일반적으로 12~14개월 전 예약 오픈</li></ul><p>-</p>", "cost_detail_html": "<ul><li>대관료: 약 2,200만원 (세금 포함 / 비수기 시즌 30~70% 할인 적용 가능)</li><li>연출료: 550만원</li><li>꽃장식(생화): 3,850만원 기본 ~ 최대 1억원 이상 (야외 특성상 버진로드·홀 내부·로비·신부대기실 전체 세팅 필수)</li><li>평균 식대: 160,000원 ~ 300,000원 (라연 한식 미쉐린 3스타 / 팔선 중식 / 프렌치 콘티넨탈 양식 중 선택)</li><li>음주류: 당일 소모량 별도 청구</li><li><strong>총 예상 비용</strong>: 하객 300명·20만원 식대 기준 약 <strong>1억 2,000만원 이상</strong>, 꽃 풀옵션 시 <strong>2억원 내외</strong></li><li>당일 계약 혜택: 예식 당일 스위트룸 무료, 공항 샌딩, 1주년 식사권 등 (패키지에 따라 상이)</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 200~330명 (최소 보증 200명, 착석 기준 최대 330명 / 소규모 예식은 구조적으로 불가)</li><li>공간 구성: 영빈관 내 Ruby·Topaz·Emerald룸 + Internal Garden(실내 중정) + Exterior Garden(야외 가든) 복합 운영, 실내·야외 동시 예식 가능</li><li>주차: 700대 (서울 호텔 중 최상급 주차 규모)</li><li>교통: 동대입구역 도보 10분, 장충동 위치로 대중교통 다소 불편 / 자차 및 셔틀버스 이용 권장</li></ul><p>-</p>", "pros": "국내 유일 한옥 영빈관 건물을 배경으로 한 압도적 전통미, 한국 유일 포브스 트래블 가이드 파이브 스타 호텔의 서비스 수준, 미쉐린 3스타 라연(한식)·팔선(중식)·프렌치 콘티넨탈 등 국내 최정상급 식사 품질, 700대 주차 및 여유로운 야외 공간\n    -", "cons": "총 비용이 1억 2,000만원부터 시작하는 압도적 가격 부담, 최소 200명 보증으로 소규모·스몰 웨딩 불가, 비수기에도 꽃장식 비용이 상당하여 총 견적 조정 폭이 제한적", "tip": "장동건·고소영, 전지현, 황정음이 선택한 웨딩 장소로 셀럽 선호도 최상위권. 비수기(1·2·7·8월)나 평일·일요일 저녁 예식 시 대관료 30~70% 할인이 적용되어 총비용을 상당히 줄일 수 있음. 예산이 허락한다면 국내 웨딩 경험 중 가장 압도적인 선택", "links": [{"text": "신라호텔 공식 영빈관 웨딩 페이지", "url": "https://www.shilla.net/seoul/meetingEvent/wdYeongBinGwan.do?lang=ko"}, {"text": "다이렉트웨딩 - 호텔신라 상세 견적", "url": "https://www.directwedding.co.kr/weddinghall/hall0530"}, {"text": "아이웨딩 - 호텔신라 정보", "url": "https://www.iwedding.co.kr/enterprise/info/1118452967"}, {"text": "아시아경제 - 신라호텔 웨딩 비용 실태 보도", "url": "https://www.asiae.co.kr/article/2024042507295232115"}], "has_detail": true}, {"id": "포시즌스_가든테라스", "name": "포시즌스 가든테라스", "type_raw": "호텔(루프탑)", "category": "호텔", "district": "종로구", "guests_str": "50~80명", "guests_min": 50, "guests_max": 80, "cost_str": "2000~3000만+", "cost_min": 2000.0, "cost_max": 3000.0, "meal_str": "20~30만", "meal_min": 20.0, "meal_max": 30.0, "rating": 4.8, "notes": "광화문 고궁뷰, 선셋웨딩, 최상급 서비스", "tagline": "광화문 빌딩 숲 사이로 펼쳐지는 경복궁 뷰, 가장 한국적이면서도 세계적인 럭셔리 루프탑 웨딩", "reservation_html": "<ul><li>호텔 대표번호(02-6388-5000) 웨딩 상담 요청 또는 공식 홈페이지 문의</li><li>하이엔드 스몰 웨딩의 대명사로 봄/가을 시즌은 최소 1년 2개월 전 예약 권장</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/꽃장식: 꽃장식 약 1,500만 원 ~ 2,500만 원 이상 (기획 및 연출에 따라 상한선 높음)</li><li>평균 식대: 200,000원 중반대 ~ 300,000원 초반대 (최고급 코스 요리 기준, 주류 별도)</li><li>당일 계약 혜택 및 할인 팁: 당일 계약 시 메뉴 업그레이드 또는 포시즌스 시그니처 향수/선물 세트 증정 등 럭셔리 서비스 위주 혜택</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 50~80명 (최대 100명 수용 가능하나 쾌적한 동선을 위해 80명 이하 추천)</li><li>주차 및 교통: 광화문 사거리 위치로 접근성 우수, 포시즌스만의 최상급 발렛 및 주차 서비스 제공</li></ul><p>-</p>", "pros": "경복궁과 인왕산이 내려다보이는 독보적인 조망권, 세계적 수준의 식사 퀄리티와 세심한 밀착 서비스, 프라이빗하고 럭셔리한 파티 분위기\n    -", "cons": "하객 수 대비 매우 높은 총 견적(낮은 가성비), 15층 고층 야외 공간으로 인한 강한 바람 및 날씨 영향, 우천 시 실내 홀 대안의 아쉬움", "tip": "낮 예식보다는 경복궁의 야경과 도심의 불빛이 어우러지는 선셋/나이트 웨딩의 만족도가 압도적으로 높음", "links": [{"text": "포시즌스 호텔 서울 공식 홈페이지", "url": "https://www.fourseasons.com/seoul"}], "has_detail": true}, {"id": "엘타워_엘하우스", "name": "엘타워 엘하우스", "type_raw": "웨딩홀(하우스)", "category": "전문웨딩홀", "district": "서초구", "guests_str": "150~200명", "guests_min": 150, "guests_max": 200, "cost_str": "500~1000만", "cost_min": 500.0, "cost_max": 1000.0, "meal_str": "9~11만", "meal_min": 9.0, "meal_max": 11.0, "rating": 4.7, "notes": "양재역 최상 접근성, 통창 하우스웨딩, 식사 퀄리티 보장(밥타워)", "tagline": "양재역 초역세권의 편리함과 8층 최상층 '천상 정원'의 밝고 화사한 하우스 웨딩 감성", "reservation_html": "<ul><li>대표번호(02-526-8600) 또는 공식 홈페이지 상담 신청</li><li>양재역 인근 랜드마크 베뉴로 골든타임 예약이 매우 빠르므로 1년 전 예약 권장</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/꽃장식: 약 500만 원 ~ 800만 원대 (시즌 및 요일에 따라 프로모션 폭 큼)</li><li>평균 식대: 85,000원 ~ 110,000원 (양식 또는 한식 코스, 주류 별도)</li><li>당일 계약 혜택 및 할인 팁: 당일 계약 시 대관료 추가 할인, 메뉴 업그레이드 또는 잔치국수 무료 서비스 제공 사례 많음</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 150~200명 (최소 보증 인원 80~100명부터 가능하여 스몰~중규모 적합)</li><li>주차 및 교통: 지하철 3호선/신분당선 양재역 9번 출구 바로 앞, 지방 하객 접근성 최상, 건물 내 주차 공간은 넉넉하나 타 홀 하객과 겹쳐 혼잡할 수 있음</li></ul><p>-</p>", "pros": "전면 통유리창을 통한 풍부한 자연광과 탁 트인 조망, '밥타워'라는 별명답게 매우 높은 식사 만족도, 3시간의 여유로운 동시 예식 시간\n    -", "cons": "고층(8층) 이동을 위한 엘리베이터 대기 시간 발생, 하우스 웨딩 특성상 대형 홀 대비 협소한 로비 공간", "tip": "저녁 타임 나이트 웨딩 시 도심 야경이 매우 아름다우며, 저녁 예식 전용 프로모션을 활용하면 합리적인 하이엔드 웨딩 가능", "links": [{"text": "엘타워 공식 홈페이지", "url": "http://www.eltower.com"}], "has_detail": true}, {"id": "노보텔_동대문", "name": "노보텔 동대문", "type_raw": "호텔(루프탑)", "category": "호텔", "district": "중구", "guests_str": "50~80명", "guests_min": 50, "guests_max": 80, "cost_str": "500~1000만", "cost_min": 500.0, "cost_max": 1000.0, "meal_str": "11~15만", "meal_min": 11.0, "meal_max": 15.0, "rating": 4.3, "notes": "가성비 호텔야외, 시티뷰, 선셋웨딩 추천", "tagline": "서울 도심이 한눈에 내려다보이는 21층 루프탑의 탁 트인 파노라마 뷰와 트렌디한 풀사이드 웨딩", "reservation_html": "<ul><li>호텔 연회 예약실(02-3425-8000)을 통한 직접 상담 예약</li><li>루프탑 특성상 운영 시기가 한정적일 수 있으므로 최소 6개월~1년 전 잔여 타임 확인 필수</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/꽃장식: 꽃장식 약 500만 원 ~ 1,000만 원 내외 (하객 규모 및 연출에 따라 상이)</li><li>평균 식대: 110,000원 ~ 150,000원 (코스 요리 또는 뷔페 중 선택 가능)</li><li>당일 계약 혜택 및 할인 팁: 호텔 자체 웨딩 쇼케이스 기간 예약 시 꽃장식 업그레이드 또는 객실 제공 프로모션 혜택 가능</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 50~80명 (스몰 웨딩에 최적화, 100명 이상 시 다소 협소할 수 있음)</li><li>주차 및 교통: 지하철 동대문역사문화공원역 인근으로 대중교통 접근성 우수, 다만 투숙객과 겹치는 엘리베이터 이용으로 혼잡도 발생 가능</li></ul><p>-</p>", "pros": "남산 타워가 보이는 압도적인 시티뷰, '선셋 웨딩'이나 '나이트 웨딩' 시 환상적인 분위기 연출, 이국적인 루프탑 수영장 배경의 힙한 감성\n    -", "cons": "고층 루프탑 특유의 강한 바람 리스크, 우천 시 백업 플랜(실내 홀) 이용 시 야외의 메리트 급감, 소규모 인원 위주의 공간 제약", "tip": "노을이 가장 예쁜 시간대를 공략하여 선셋 웨딩을 진행하는 것을 강력 추천하며, 바람이 강할 수 있으니 신부 헤어 및 베일 세팅 시 유의 필요", "links": [{"text": "노보텔 동대문 공식 홈페이지 웨딩 정보", "url": "https://www.ambatel.com"}], "has_detail": true}, {"id": "몬드리안_풀사이드", "name": "몬드리안 풀사이드", "type_raw": "호텔(풀사이드)", "category": "호텔", "district": "용산구", "guests_str": "150~200명", "guests_min": 150, "guests_max": 200, "cost_str": "1600~2000만", "cost_min": 1600.0, "cost_max": 2000.0, "meal_str": "13~15만", "meal_min": 13.0, "meal_max": 15.0, "rating": 4.5, "notes": "이국적 풀사이드, 힙한 감성, 낮은 층고 주의", "tagline": "아시아 최초의 몬드리안다운 힙하고 트렌디한 감성, 이국적인 수영장 배경의 유니크한 웨딩", "reservation_html": "<ul><li>호텔 웨딩팀 대표번호(02-330-7700) 또는 이메일 상담 예약</li><li>웨딩북, 아이웨딩 등 주요 웨딩 플랫폼을 통한 상담 예약 및 잔여 타임 확인 가능</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/꽃장식: 대관료 약 500~520만원 / 꽃장식 1,100~1,300만원 이상 (커스터마이징에 따라 상이)</li><li>평균 식대: 130,000원 ~ 150,000원 (양식 코스, 주류 별도)</li><li>당일 계약 혜택 및 할인 팁: 일요일 및 비수기 예식 시 대관료 할인 및 메뉴 업그레이드 혜택 제공 사례 있음</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 150~200명 (최대 350명 수용 가능하나 로비 및 공간 혼잡도 고려 시 200명 내외 최적)</li><li>주차 및 교통: 지하철 6호선 녹사평역에서 도보 이동은 다소 불편(셔틀 운행), 주차 공간(약 250대)이 하객 수 대비 여유롭지 않음</li></ul><p>-</p>", "pros": "감각적이고 이국적인 풀사이드 분위기, 단독 층 사용의 프라이빗함, 하객용 꽃 래핑 서비스 만족도 최상\n    -", "cons": "호텔 예식치고 낮은 층고로 인한 개방감 부족, 대중교통 접근성 및 주차 혼잡", "tip": "26년 가을 시즌 인기 타임은 이미 예약이 활발함. 밝은 분위기와 어두운 분위기 연출이 모두 가능하므로 상담 시 포트폴리오 확인 필수", "links": [{"text": "웨딩북 몬드리안 서울 이태원 정보", "url": "https://www.weddingbook.com"}, {"text": "아이웨딩 몬드리안 서울 이태원 페이지", "url": "https://www.iwedding.co.kr"}], "has_detail": true}, {"id": "오크우드_테라스", "name": "오크우드 테라스", "type_raw": "호텔(테라스)", "category": "호텔", "district": "강남구", "guests_str": "50~120명", "guests_min": 50, "guests_max": 120, "cost_str": "800~2000만", "cost_min": 800.0, "cost_max": 2000.0, "meal_str": "13~18만", "meal_min": 13.0, "meal_max": 18.0, "rating": 4.2, "notes": "삼성동 중심, 시티뷰 테라스, 프라이빗 스몰", "tagline": "삼성동 초고층 빌딩 숲 사이 프라이빗한 잔디 테라스에서 즐기는 이국적인 시티 가든 웨딩", "reservation_html": "<ul><li>호텔 연회 예약실(02-3466-7001) 직접 전화 상담 예약</li><li>강남 중심가 소규모 야외 베뉴로 인기가 높으므로 최소 6개월~1년 전 예약 권장</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/연출비: 약 300만 원 ~ 500만 원 내외</li><li>꽃장식: 약 500만 원 ~ 1,500만 원 이상 (커스터마이징 수준에 따라 변동폭 큼)</li><li>평균 식대: 130,000원 ~ 180,000원 (양식 또는 한식 코스, 음주류 별도)</li><li>당일 계약 혜택 및 할인 팁: 비수기(여름, 겨울) 또는 평일 예식 시 프로모션 할인 혜택 확인 필요</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 50~120명 (공간 규모상 100명 내외일 때 가장 여유롭고 프라이빗함)</li><li>주차 및 교통: 지하철 2호선 삼성역/9호선 봉은사역 인접, 코엑스 단지 내 위치하여 주차장 진입 및 구역 안내는 다소 세심한 주의 필요</li></ul><p>-</p>", "pros": "도심 한복판 빌딩 숲과 대비되는 잔디 테라스의 이국적 무드, 소규모 인원 위주의 여유로운 파티 감성, 호텔다운 안정적인 식사 및 서비스 퀄리티\n    -", "cons": "야외 노출 공간으로 우천 및 기온 영향 큼, 하객 인원이 많아질 경우(150명 이상) 공간이 다소 답답하게 느껴질 수 있음", "tip": "화사한 자연광을 활용한 낮 예식도 좋지만, 빌딩 숲의 조명을 배경으로 한 나이트 웨딩이 도시적이고 세련된 느낌을 극대화함", "links": [{"text": "오크우드 프리미어 코엑스 공식 홈페이지", "url": "https://www.oakwoodpremier.co.kr"}], "has_detail": true}, {"id": "한강버스_루프탑", "name": "한강버스 루프탑", "type_raw": "공용(한강)", "category": "공공장소", "district": "여의도/잠실 등", "guests_str": "50~80명", "guests_min": 50, "guests_max": 80, "cost_str": "200~500만", "cost_min": 200.0, "cost_max": 500.0, "meal_str": "5~7만", "meal_min": 5.0, "meal_max": 7.0, "rating": 4.4, "notes": "한강뷰, 소규모 특화, 90일전 예약", "tagline": "한강의 노을을 배경으로 영화 같은 순간을 선사하지만, 50~80명의 소규모 인원과 '날씨 운'이 따라줘야 하는 로맨틱 베뉴", "reservation_html": "<ul><li><strong>서울시 공공예식장 '더 아름다운 결혼식'</strong> 홈페이지(wedding.seoulwomen.or.kr)를 통한 온라인 신청</li><li>상담센터(☎1899-2154)를 통해 선착순 예약 진행</li><li>예식 예정일 기준 최소 90일 전까지 예약 필수 (90일 이내 임박 날짜 불가)</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료</li><li><strong>운영비</strong>: 약 150만원 내외 (음향, 조명 등 시스템 운영비 발생 가능)</li><li><strong>기획 및 꽃장식</strong>: 약 200~500만원 대 (협력업체 구성에 따라 상이)</li><li><strong>평균 식대</strong>: 50,000원 ~ 70,000원 (케이터링 또는 도시락 형태)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 서울시 지원 사업 연계 시 연출비(최대 300만원) 또는 스드메 비용(최대 100만원) 지원 가능 여부 확인 필수.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 50~80명 (루프탑 공간이 협소하여 100명 이상은 혼잡도가 매우 높음)</li><li><strong>주차 및 교통</strong>: 한강공원 공영주차장 이용. 주말 나들이객과 겹칠 경우 주차가 매우 어렵고, 망원 등 일부 선착장은 지하철역에서 도보 거리가 멀어 셔틀버스 고려 필요.</li></ul><p>-</p>", "pros": "한강과 노을, 대교 배경의 압도적인 뷰, 가성비 높은 대관 조건, 프라이빗한 파티 분위기.\n    -", "cons": "우천·강풍 등 날씨 리스크에 매우 취약, 전용 편의시설(신부대기실 등) 부족, 하객 수 제한", "tip": "노을이 가장 아름다운 16~17시 타임을 강력 추천하며, 잠실(롯데타워 배경)이나 망원(성산대교 배경)이 사진 촬영에 가장 인기가 많음.", "links": [{"text": "서울시 공공예식장 공식 홈페이지", "url": "https://wedding.seoulwomen.or.kr"}, {"text": "뉴스 - 한강 리버버스 선착장 루프탑 웨딩 개방", "url": "https://www.hani.co.kr/arti/area/capital/1141348.html"}], "has_detail": true}, {"id": "수상레포츠센터", "name": "수상레포츠센터", "type_raw": "공용(한강)", "category": "공공장소", "district": "마포구(난지)", "guests_str": "50~100명", "guests_min": 50, "guests_max": 100, "cost_str": "300~600만", "cost_min": 300.0, "cost_max": 600.0, "meal_str": "5~6.5만", "meal_min": 5.0, "meal_max": 6.5, "rating": 4.3, "notes": "신축루프탑, 파노라마뷰, 접근성아쉬움", "tagline": "한강 한복판에 떠 있는 듯한 착각을 불러일으키는 파노라마 뷰, 난지한강공원의 여유로움을 담은 프라이빗 루프탑 베뉴", "reservation_html": "<ul><li><strong>패밀리서울(나만의 결혼식)</strong> 홈페이지(familyseoul.or.kr/wedding)를 통한 온라인 신청</li><li>홈페이지 내 예약 현황 달력 확인 후 상담 신청 -> 코디네이터/협력업체 상담 -> 최종 계약</li><li>예식 예정일 기준 최소 90일 전 예약 권장</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료 (3층 루프탑 공간)</li><li><strong>기획 및 꽃장식</strong>: 약 300~600만원 대 (서울시 지정 협력업체별 표준 가격 준수)</li><li><strong>평균 식대</strong>: 50,000원 ~ 65,000원 (출장 뷔페 또는 케이터링 방식)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 공공예식장 활성화 사업에 따라 시즌별로 연출비 지원 혜택이 있을 수 있으니 신청 시점의 공고 확인 필수.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 50~100명 (스몰 웨딩에 최적화된 규모로 80명 내외일 때 동선이 가장 여유로움)</li><li><strong>주차 및 교통</strong>: 난지한강공원 주차장(351대) 이용 가능하나 주말 혼잡도가 높음. 6호선 월드컵경기장역에서 이동 시 대중교통보다는 택시나 셔틀 운영을 강력 추천.</li></ul><p>-</p>", "pros": "시야 방해 없는 압도적인 한강 전망, 신축 시설의 깔끔함, 신랑·신부의 취향을 반영한 높은 연출 자유도.\n    -", "cons": "야외 루프탑 특유의 날씨 리스크, 대중교통 접근성 저조, 공원 방문객 소음 간섭 가능성", "tip": "한강의 노을과 밤경치가 특히 아름다우므로 토요일 오후 5시 이후 '나이트 웨딩'으로 기획하여 파티 분위기를 연출하는 것이 가장 만족도가 높음.", "links": [{"text": "패밀리서울 - 서울수상레포츠센터 안내", "url": "https://familyseoul.or.kr/wedding"}, {"text": "뉴스 - 서울수상레포츠센터 루프탑 웨딩 현장", "url": "https://www.nocutnews.co.kr/news/6154696"}], "has_detail": true}, {"id": "한성백제박물관", "name": "한성백제박물관", "type_raw": "공용(박물관)", "category": "공공장소", "district": "송파구", "guests_str": "50~70명", "guests_min": 50, "guests_max": 70, "cost_str": "300~500만", "cost_min": 300.0, "cost_max": 500.0, "meal_str": "5~7만", "meal_min": 5.0, "meal_max": 7.0, "rating": 4.5, "notes": "올림픽공원뷰, 역세권, 비가열음식", "tagline": "올림픽공원의 평화로운 풍경과 몽촌토성을 한눈에 담는 도심 속 루프탑, 세련된 현대식 건축미와 자연이 조화를 이루는 곳", "reservation_html": "<ul><li><strong>패밀리서울(서울 공공예식장)</strong> 홈페이지(familyseoul.or.kr)를 통한 온라인 신청</li><li>원하는 날짜의 예약 가능 여부 확인 후 상담 신청 -> 서울시 지정 협력업체(웨딩두잇, 가온바이보다 등)와 세부 견적 상담 및 계약</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료</li><li><strong>기획 및 꽃장식</strong>: 약 300~500만원 대 (커스텀 범위 및 생화 비중 선택에 따라 상이)</li><li><strong>평균 식대</strong>: 50,000원 ~ 70,000원 (박물관 내 화기 사용 금지로 인해 '비가열/콜드 뷔페' 위주의 케이터링 진행)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 협력업체의 조기 예약 프로모션 또는 서울시 비품 지원금 혜택 적용 여부 확인.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 50~70명 (공간 구조상 100명 이상 시 다소 혼잡할 수 있으며, 60명 내외가 가장 쾌적함)</li><li><strong>주차 및 교통</strong>: <strong>우수한 접근성</strong>. 9호선 한성백제역 도보 5분 거리이며, 박물관 내 주차장(약 150대) 이용 가능하여 하객 만족도 높음.</li></ul><p>-</p>", "pros": "올림픽공원과 몽촌토성 배경의 독보적인 뷰, 하루 2팀 한정의 프라이빗한 진행, 깔끔한 박물관 부대시설 이용 가능.\n    -", "cons": "루프탑 내 그늘 부족으로 여름철 더위에 취약, 화기 사용 불가로 인한 식사 메뉴(따뜻한 음식 부족)의 한계, 우천 시 실내 대체 공간(로비 등)의 개방감 저하", "tip": "햇빛이 너무 강한 한여름보다는 4~5월 또는 9~10월 예식을 강력 추천하며, 식사는 퀄리티 높은 프리미엄 도시락이나 콜드 케이터링 전문 업체를 선택하는 것이 하객 만족도의 핵심.", "links": [{"text": "패밀리서울 - 한성백제박물관 안내", "url": "https://familyseoul.or.kr/"}, {"text": "네이버 블로그 - 한성백제박물관 하늘정원 실제 예식 후기", "url": "https://search.naver.com/search.naver?query=%ED%95%9C%EC%84%B1%EB%B0%B1%EC%A0%9C%EB%B0%95%EB%AC%BC%EA%B4%80+%ED%95%98%EB%8A%98%EC%A0%95%EC%9B%90+%EC%9B%A8%EB%94%A9+%ED%9B%84%EA%B8%B0"}], "has_detail": true}, {"id": "남산_한남웨딩가든", "name": "남산 한남웨딩가든", "type_raw": "공용(정원)", "category": "공공장소", "district": "용산구", "guests_str": "80~150명", "guests_min": 80, "guests_max": 150, "cost_str": "300~600만", "cost_min": 300.0, "cost_max": 600.0, "meal_str": "5.5~7만", "meal_min": 5.5, "meal_max": 7.0, "rating": 4.7, "notes": "남산타워뷰, 리모델링완료, 주차불편", "tagline": "남산타워를 배경으로 한 완벽한 시티뷰 정원, 2025년 리모델링으로 더욱 세련되게 거듭난 공공예식장의 '대장주'", "reservation_html": "<ul><li><strong>서울시 공공예식장 '더 아름다운 결혼식'</strong> 홈페이지(wedding.seoulwomen.or.kr)를 통한 온라인 신청</li><li>상담센터(☎1899-2154)를 통해 예약 현황 확인 및 상담 신청</li><li>인기 베뉴로 조기 마감이 잦으므로 예식 희망일 기준 1년 전부터 공지 확인 필수</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료 (공공예식장 지원 대상)</li><li><strong>기획 및 꽃장식</strong>: 약 300~600만원 대 (커스텀 연출 및 생화 볼륨에 따라 상이)</li><li><strong>평균 식대</strong>: 55,000원 ~ 70,000원 (케이터링 방식)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 공공예식장 연출비 지원 사업(최대 300만원) 또는 스드메 지원(최대 100만원) 적용 가능 여부 반드시 확인.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 80~120명 (잔디마당 공간 특성상 100명 내외가 시각적으로 가장 풍성하며, 최대 150명까지 수용 가능)</li><li><strong>주차 및 교통</strong>: <strong>최대 단점</strong>. 전용 주차장 부재로 인근 소규모 공영주차장(약 33대) 이용 필수. 소월로 언덕에 위치해 지하철역(한강진역 등) 도보 이동 불가하며 셔틀버스나 택시 이용 권장.</li></ul><p>-</p>", "pros": "남산타워가 보이는 압도적인 정원 감성, 리모델링 후 쾌적해진 실내 부대시설, 야간 예식 시 낭만적인 조명 연출.\n    -", "cons": "극심한 주차난 및 하객 접근성 불편, 공공예식장 특유의 화환 반입 제한, 치열한 예약 경쟁", "tip": "예약 성공 자체가 '로또'라 불릴 만큼 경쟁이 치열하므로, 오픈 일정을 미리 파악해 광클이 필요함. 주차 문제를 해결하기 위해 하객들에게 인근 공영주차장 위치와 버스 노선을 상세히 안내하는 것이 필수.", "links": [{"text": "서울시 공공예식장 - 남산 한남 웨딩가든 안내", "url": "https://wedding.seoulwomen.or.kr"}, {"text": "뉴스 - 서울시 인기 공공예식장 순위 및 특징", "url": "https://www.edaily.co.kr/news/read?newsId=02660086638821968"}], "has_detail": true}, {"id": "남산_호현당", "name": "남산 호현당", "type_raw": "공용(한옥)", "category": "공공장소", "district": "중구", "guests_str": "50명 내외", "guests_min": 50, "guests_max": 50, "cost_str": "200~500만", "cost_min": 200.0, "cost_max": 500.0, "meal_str": "4~6만", "meal_min": 4.0, "meal_max": 6.0, "rating": 4.4, "notes": "고즈넉한한옥, 도시락필수, 관광객노출", "tagline": "남산 성곽길의 정기를 품은 고즈넉한 한옥 베뉴, 하객 50명 내외의 진정한 '의미 있는 스몰 웨딩'을 꿈꾸는 이들을 위한 성지", "reservation_html": "<ul><li><strong>패밀리서울(나만의 결혼식)</strong> 홈페이지(familyseoul.or.kr/wedding)를 통해 온라인 신청</li><li>홈페이지 내 예약 현황 확인 후 상담 신청 -> 서울시 지정 협력업체(디렉팅 업체)와 상담 및 계약</li><li>매년 상/하반기 정기 모집 기간에 신청하는 것이 유리함</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료 (문화재 보호 구역 내 공공시설)</li><li><strong>기획 및 꽃장식</strong>: 약 200~500만원 대 (한옥 구조를 살린 전통적/현대적 연출 선택 가능)</li><li><strong>평균 식대</strong>: 40,000원 ~ 60,000원 (<strong>취사 및 가열 조리 엄격 금지</strong>로 인해 프리미엄 도시락 또는 샌드위치 박스 형태로 진행)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 친환경 에코 웨딩 취지에 동참 시 서울시 지원 혜택 적용 가능성 확인.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 50명 내외 (한옥 마당 공간이 협소하여 50~60명이 가장 아름답게 수용되며, 100명 초과 시 진행 불가 수준)</li><li><strong>주차 및 교통</strong>: <strong>매우 불편</strong>. 전용 주차장 부재로 남산공원 주차장 또는 회현동 공영주차장 이용 후 도보 이동 필수. 대중교통 이용 시에도 언덕길 이동이 있어 하객 안내가 매우 중요함.</li></ul><p>-</p>", "pros": "한옥과 남산 자연경관의 환상적인 조화(스냅 사진 맛집), 하루 2팀만 진행하는 여유로운 예식 시간, 전통 혼례와 현대식 예식의 절묘한 결합 가능.\n    -", "cons": "화기 사용 불가로 인한 식사 메뉴(따뜻한 음식)의 한계, 전용 화장실 부재(공원 공용 화장실 이용), 등산객 및 관광객의 시선 노출, 우천 시 천막 설치 필수", "tip": "하객 수가 적고 양가 어르신들이 한옥의 정취를 좋아하시는 경우 추천하며, 식사는 가급적 최고급 프리미엄 도시락을 준비하여 '대접받는 느낌'을 주는 것이 성공의 핵심임.", "links": [{"text": "패밀리서울 - 남산 호현 웨딩가든 안내", "url": "https://familyseoul.or.kr/wedding"}, {"text": "네이버 블로그 - 남산 호현당 한옥웨딩 실제 후기", "url": "https://search.naver.com/search.naver?query=%EB%82%A8%EC%82%B0+%ED%98%B8%ED%98%84%EB%8B%B9+%EC%9B%A8%EB%94%A9+%ED%9B%84%EA%B8%B0"}], "has_detail": true}, {"id": "고궁박물관", "name": "고궁박물관", "type_raw": "공용(고궁)", "category": "공공장소", "district": "종로구", "guests_str": "100명 내외", "guests_min": 100, "guests_max": 100, "cost_str": "100만 지원", "cost_min": 100.0, "cost_max": null, "meal_str": "5~7만", "meal_min": 5.0, "meal_max": 7.0, "rating": 4.8, "notes": "가을은행나무, 16쌍한정, 역세권", "tagline": "경복궁의 정취와 황금빛 은행나무 아래에서 올리는 생애 단 한 번의 고궁 웨딩, 2026년 가을 한정으로 열리는 특별한 기회", "reservation_html": "<ul><li><strong>국립고궁박물관</strong> 누리집(gogung.go.kr)에서 신청 양식 다운로드 후 전자우편(이메일) 접수</li><li><strong>2026년 4월 초(약 1주일간)</strong> 한시적 모집하며, 지원 동기 검토 및 추첨을 통해 최종 16쌍 선정</li><li>사회적 배려 대상자 우선 선발 비율이 있으므로 공고문 상세 확인 필수</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료 (야외 예식장 및 실내 피로연장 포함)</li><li><strong>기획 및 꽃장식</strong>: 기본 비품비 <strong>100만원 지원</strong> (초과분 본인 부담)</li><li><strong>평균 식대</strong>: 50,000원 ~ 70,000원 (박물관 별관 실내 공간에서 출장 뷔페로 진행)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 국가유산청 지원 사업으로 선정 시 대관료 무료 및 100만원 지원금이 핵심 혜택임.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 100명 내외 (고궁의 정온한 분위기를 유지하기 위해 소규모 인원 제한 엄격)</li><li><strong>주차 및 교통</strong>: 경복궁역(3호선)에서 매우 가까워 대중교통 접근성 최상. 박물관 주차장 이용 가능하나 주말 경복궁 방문객으로 매우 혼잡하므로 대중교통 이용 안내 필수.</li></ul><p>-</p>", "pros": "가을 은행나무 단풍과 고궁 건물이 어우러진 압도적 미감, 높은 경제성(무료 대관+지원금), 국가유산에서의 특별한 예식 경험.\n    -", "cons": "매우 높은 경쟁률(당첨 확률 희박), 전문 웨딩홀이 아니어서 직접 챙겨야 할 세부 사항이 많음, 야외 예식의 날씨 변수", "tip": "2026년 10월 예식을 목표로 한다면 4월 신청 기간을 절대 놓치지 말아야 하며, 지원 동기 작성 시 두 사람의 사연이나 고궁 웨딩의 의미를 진정성 있게 담는 것이 선정 확률을 높이는 비결임.", "links": [{"text": "국립고궁박물관 공식 공지사항", "url": "https://www.gogung.go.kr"}, {"text": "뉴스 - 2026년 고궁 박물관 야외 웨딩 지원 사업 안내", "url": "https://www.news1.kr/articles/?5376841"}], "has_detail": true}, {"id": "성북_예향재", "name": "성북 예향재", "type_raw": "공용(한옥)", "category": "공공장소", "district": "성북구", "guests_str": "100~120명", "guests_min": 100, "guests_max": 120, "cost_str": "400~700만", "cost_min": 400.0, "cost_max": 700.0, "meal_str": "5~6만", "meal_min": 5.0, "meal_max": 6.0, "rating": 4.5, "notes": "1일1팀단독, 셔틀필수, 주차불가", "tagline": "하루 단 한 팀에게만 허락된 프라이빗한 한옥 잔치, 아담한 마당과 정갈한 한옥이 선사하는 스몰 웨딩의 정석", "reservation_html": "<ul><li><strong>패밀리서울(더 아름다운 결혼식)</strong> 홈페이지(familyseoul.or.kr)를 통한 온라인 신청</li><li>홈페이지 내 예약 현황 달력 확인 후 상담 신청 -> 서울시 지정 협력업체(루디아 프로젝트, 가온 바이 보다 등) 중 한 곳 선택하여 상세 상담 및 계약</li><li>인기가 많아 보통 1년 전 예약이 마감되므로 조기 확인 필수</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 50만원 (서울시 공공예식장 표준 가격)</li><li><strong>기획 및 꽃장식</strong>: 약 300~500만원 대 (마당 규모에 맞춘 집중도 있는 연출 권장)</li><li><strong>평균 식대</strong>: 50,000원 ~ 60,000원 (한상차림 또는 뷔페 방식 선택 가능)</li><li><strong>추가 비용</strong>: 셔틀버스 운행비(약 40~50만원) 필수 발생</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 100~120명 (마당이 아담하여 150명 초과 시 매우 혼잡하며, 100명 내외일 때 가장 여유로움)</li><li><strong>주차 및 교통</strong>: <strong>최대 취약점</strong>. 골목이 매우 좁고 내부 주차 절대 불가. 혼주 차량 외 모든 하객은 인근 외부 주차장 이용 후 <strong>셔틀버스로 이동 필수</strong>. 대형 버스 진입 불가로 소형 셔틀 여러 번 운행해야 함.</li></ul><p>-</p>", "pros": "하루 한 팀 전관 대관의 프라이빗함, 한옥 마당의 따뜻하고 포근한 분위기(스냅 사진 매우 우수), 신랑·신부의 취향을 담은 커스텀 웨딩 가능.\n    -", "cons": "하객들의 주차 및 접근성 불편 호소, 협소한 실내 피로연 공간(인원 많을 시 실내외 분산 식사), 날씨에 따른 만족도 편차", "tip": "주차와 접근성 문제가 확실한 만큼, 청첩장에 셔틀버스 이용 안내를 매우 상세히 기재해야 함. 하객 규모를 100명 이하로 잡고 '홈파티' 같은 분위기로 연출할 때 만족도가 극대화되는 곳.", "links": [{"text": "패밀리서울 - 성북 예향재 안내", "url": "https://familyseoul.or.kr"}, {"text": "네이버 블로그 - 성북 예향재 실제 한옥웨딩 견적 및 후기", "url": "https://search.naver.com/search.naver?query=%EC%84%B1%EB%B6%81+%EC%98%88%ED%96%A5%EC%9E%AC+%EC%9B%A8%EB%94%A9+%ED%9B%84%EA%B8%B0"}], "has_detail": true}, {"id": "백인제가옥", "name": "백인제가옥", "type_raw": "공용(한옥)", "category": "공공장소", "district": "종로구", "guests_str": "50명 이하", "guests_min": 50, "guests_max": 50, "cost_str": "200~500만", "cost_min": 200.0, "cost_max": 500.0, "meal_str": "외부식당", "meal_min": 0.0, "meal_max": null, "rating": 4.6, "notes": "북촌스몰웨딩, 피로연불가, 50명제한", "tagline": "북촌의 정취를 오롯이 담은 근대 한옥의 미학, 하객 50명 이하의 가장 프라이빗하고 고급스러운 초스몰 웨딩을 위한 베뉴", "reservation_html": "<ul><li><strong>서울시 공공예식장 '더 아름다운 결혼식'</strong> 홈페이지(is.seoul.go.kr)를 통한 온라인 신청</li><li>홈페이지 내 상담 신청 -> 전담 상담사 유선 상담 -> 서울시 지정 협력업체(루디아 프로젝트, 미그린웨딩 등) 매칭 및 계약</li><li>일요일에만 예식을 진행하므로 예약 난이도가 매우 높음</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 무료 (서울시 민속문화재 제22호)</li><li><strong>기획 및 꽃장식</strong>: 약 200~500만원 대 (가옥 고유의 미감을 살리는 절제된 연출 권장)</li><li><strong>평균 식대</strong>: <strong>가옥 내 식사 및 취사 절대 불가</strong>. 인근 북촌 한정식 또는 레스토랑 개별 예약 필수 (1인당 5~10만원 선)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 협력업체의 '초스몰 패키지' 활용 시 합리적인 연출 가능.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: <strong>최대 50명 이하</strong> (공간 협소로 인해 50명 초과 시 진행 자체가 불가함)</li><li><strong>주차 및 교통</strong>: <strong>매우 열악</strong>. 가옥 내 주차 단 2대(혼주용) 가능. 모든 하객은 안국역 인근 공영주차장이나 현대계동사옥 주차장 이용 후 도보 이동 필수.</li></ul><p>-</p>", "pros": "어디서도 흉내 낼 수 없는 북촌 근대 한옥의 압도적 분위기(스냅 사진 만족도 최상), 하루 단 1팀만 진행하는 극강의 프라이빗함, 높은 희소성.\n    -", "cons": "피로연 불가로 인한 하객 이동의 번거로움, 극히 적은 하객 수 제한, 북촌 특유의 복잡한 교통 및 주차난", "tip": "가장 친한 지인과 직계 가족만 초대하는 초스몰 웨딩에만 적합하며, 식사 장소를 가옥에서 도보 5분 이내의 인근 고급 한정식집으로 미리 선점하는 것이 하객 만족도의 관건임.", "links": [{"text": "서울시 공공예식장 - 백인제가옥 안내", "url": "https://is.seoul.go.kr"}, {"text": "브런치 - 백인제가옥 실제 웨딩 진행 후기", "url": "https://brunch.co.kr/@wedding-story/12"}], "has_detail": true}, {"id": "은평한옥박물관", "name": "은평한옥박물관", "type_raw": "공용(한옥)", "category": "공공장소", "district": "은평구", "guests_str": "80~150명", "guests_min": 80, "guests_max": 150, "cost_str": "300~800만", "cost_min": 300.0, "cost_max": 800.0, "meal_str": "5~7만", "meal_min": 5.0, "meal_max": 7.0, "rating": 4.7, "notes": "북한산뷰, 현대적한옥, 대관료초저렴", "tagline": "북한산의 웅장한 능선과 현대적 한옥의 조형미가 어우러진 압도적 풍경, 서울에서 가장 인기 있는 '가성비 한옥 야외 웨딩'의 성지", "reservation_html": "<ul><li><strong>서울 마이웨딩</strong> 홈페이지(smwedding.seoul.go.kr)를 통한 온라인 신청</li><li>인기 베뉴로 '오픈런'이 필수이며, 보통 1년 전 예약이 이미 마감되므로 잔여 타임 수시 확인 필요</li><li>서울시 지정 협력업체(좋은날, 로메릭 등)와 상세 기획 상담 및 계약 진행</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>대관료</strong>: 77,000원 (4시간 기준, 부가세 포함)</li><li><strong>기획 및 꽃장식</strong>: 약 300~800만원 대 (마당이 넓어 볼륨감 있는 연출 시 비용 상승 가능)</li><li><strong>평균 식대</strong>: 50,000원 ~ 70,000원 (도시락 또는 케이터링 형태)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 압도적으로 저렴한 대관료 자체가 가장 큰 혜택이며, 서울시 비품 지원금 적용 여부 확인 필수.</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 80~150명 (공간이 넓어 하객 수에 유연하며, 120명 내외일 때 시각적으로 가장 풍성함)</li><li><strong>주차 및 교통</strong>: <strong>불편</strong>. 박물관 내 주차장이 매우 협소하여 하객들은 인근 공영주차장 이용 필수. 대중교통(연신내역 등)에서 버스 환승이 필요하여 접근성이 다소 낮음.</li></ul><p>-</p>", "pros": "북한산 배경의 압도적인 미감(스냅 사진 만족도 최상), 현대적이고 깔끔한 한옥 건물, 4시간 단독 사용의 여유로움.\n    -", "cons": "그늘 없는 야외 마당으로 한여름/한겨울 예식 불가 수준, 주차장 부족 및 무료 주차 지원 불가, 우천 시 텐트 설치 등 추가 비용 발생", "tip": "햇빛을 피할 곳이 없으므로 5월 중순이나 9월 말~10월 초 예식을 강력 추천하며, 하객들을 위한 양산이나 선글라스를 비치하는 센스가 돋보일 수 있는 곳임.", "links": [{"text": "서울 마이웨딩 - 은평역사한옥박물관 안내", "url": "https://smwedding.seoul.go.kr/"}, {"text": "네이버 블로그 - 은평역사한옥박물관 은평마당 야외웨딩 실제 후기", "url": "https://search.naver.com/search.naver?query=%EC%9D%80%ED%8F%89%EC%97%AD%EC%82%AC%ED%95%9C%EC%98%A5%EB%B0%95%EB%AC%BC%EA%B4%80+%EC%9D%80%ED%8F%89%EB%A7%88%EB%8B%B9+%EC%9B%A8%EB%94%A9+%ED%9B%84%EA%B8%B0"}], "has_detail": true}, {"id": "연세대_알렌관", "name": "연세대 알렌관", "type_raw": "대학(잔디)", "category": "공공장소", "district": "서대문구", "guests_str": "200~250명", "guests_min": 200, "guests_max": 250, "cost_str": "800~1000만", "cost_min": 800.0, "cost_max": 1000.0, "meal_str": "6~7만", "meal_min": 6.0, "meal_max": 7.0, "rating": 4.6, "notes": "주류반입금지, 동문한정, 감성스냅", "tagline": "고풍스러운 연세대학교 캠퍼스의 감성과 프라이빗한 정원 예식을 동시에 누릴 수 있는 곳 (단, 음주는 불가)", "reservation_html": "<ul><li><strong>자격</strong>: 신랑/신부 본인 또는 양가 부모님 중 연세대 동문(졸업생) 및 교직원만 가능</li><li><strong>방법</strong>: 알렌관 사무실 유선 문의 (02-2123-4101~2)</li><li><strong>시기</strong>: 예식 희망일 기준 1년 전 오픈 (4~5월, 9~10월 골든타임 예약 치열)</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>예상 대관료/꽃장식</strong>: 대관료(및 시설료) 약 120~200만원 + 꽃장식 600~800만원 대 (커스텀에 따라 변동)</li><li><strong>평균 식대</strong>: 약 60,000원 ~ 70,000원 (뷔페 기준, 한화푸디스트 등 전문 업체 케이터링)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 학교 발전기금(기부금 약 50만원) 별도 확인 필요, 일요일 타임이 토요일보다 여유로움</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 200~250명 (공간이 아담하여 300명 이상 시 매우 혼잡)</li><li><strong>주차 및 교통</strong>: 주차 공간은 넓으나 하객 주차비가 유료(사후 정산 필요), 신촌역에서 도보 이동이 힘들어 셔틀/택시 필수</li></ul><p>-</p>", "pros": "하루 2팀 단독 사용으로 여유로운 예식, 캠퍼스 내 고풍스러운 배경으로 스냅 사진 퀄리티 최상, 음식이 학교 예식치고 매우 맛있음\n    -", "cons": "**교내 주류 반입 절대 금지** (하객들의 불만 요소), 야외 신부대기실 및 우천 시 실내 변경 시 만족도 급락, 편의시설 노후", "tip": "주류가 없어도 괜찮은 기독교 집안이나 소규모 가든 파티 분위기를 원하는 커플에게 최적. 예약 오픈일에 맞춰 신속한 전화 예약 필수.", "links": [{"text": "알렌관 공식문의", "url": "https://www.yonsei.ac.kr"}, {"text": "웨딩북 후기", "url": "https://www.weddingbook.com"}, {"text": "티스토리 블로그 리포트", "url": "https://tistory.com"}], "has_detail": true}, {"id": "시립대_자작마루", "name": "시립대 자작마루", "type_raw": "대학(공유)", "category": "공공장소", "district": "동대문구", "guests_str": "150~200명", "guests_min": 150, "guests_max": 200, "cost_str": "400~600만", "cost_min": 400.0, "cost_max": 600.0, "meal_str": "5.5~6.5만", "meal_min": 5.5, "meal_max": 6.5, "rating": 4.4, "notes": "벽돌감성, 대관료무료, 200명미만추천", "tagline": "근대 건축물과 숲이 어우러진 클래식한 무드, 서울시 지원으로 실속까지 챙길 수 있는 공공 베뉴", "reservation_html": "<ul><li><strong>플랫폼</strong>: '서울 마이웨딩' (패밀리서울 홈페이지) 온라인 신청</li><li><strong>문의</strong>: 서울시 공공예식장 상담센터 (1899-2154)</li><li><strong>시기</strong>: 상반기(전년 11월경), 하반기(당해 5월경) 예약 오픈</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>예상 대관료/꽃장식</strong>: 대관료 무료 (2024년 7월부터 정책 변경) / 꽃장식 및 세팅 약 400~600만원 (공동 부담 시 절감 가능)</li><li><strong>평균 식대</strong>: 약 55,000원 ~ 65,000원 (협력 업체 케이터링 이용)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 서울시 비품 운영비 지원(최대 100만원), 하루 2팀 진행 시 꽃장식 쉐어링으로 비용 30~40% 절감 가능</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 150~200명 (실제 좌석은 100석 내외로 소규모에 적합)</li><li><strong>주차 및 교통</strong>: 대학교 내 900대 이상 주차 가능 (매우 여유로움), 시립대 정문에서 도보 이동 가능</li></ul><p>-</p>", "pros": "1930년대 지어진 붉은 벽돌 건물의 빈티지하고 유니크한 분위기, 3~4시간의 넉넉한 대관 시간, 주차 걱정 없음\n    -", "cons": "우천 시 실내 공간(자작마루 내부)이 다소 협소하고 시설이 노후됨, 음향 등 전문 장비 세팅을 직접 챙겨야 함", "tip": "전형적인 예식보다 커스터마이징된 '나만의 예식'을 선호하는 분들에게 강력 추천. 꽃장식 공동 부담 팀을 매칭하는 것이 가장 큰 비용 절감 포인트.", "links": [{"text": "패밀리서울", "url": "https://familyseoul.or.kr"}, {"text": "서울시립대 공식", "url": "https://www.uos.ac.kr"}, {"text": "네이버 블로그 후기", "url": "https://naver.com"}], "has_detail": true}, {"id": "어대공_숲속의무대", "name": "어대공 숲속의무대", "type_raw": "공용(공원)", "category": "공공장소", "district": "광진구", "guests_str": "100~200명", "guests_min": 100, "guests_max": 200, "cost_str": "300~600만", "cost_min": 300.0, "cost_max": 600.0, "meal_str": "4.5~6만", "meal_min": 4.5, "meal_max": 6.0, "rating": 4.0, "notes": "대형공연장, 주차난심각, 나들이객노출", "tagline": "숲속 대규모 야외 공연장에서 펼쳐지는 웅장한 웨딩, 단 주말 주차 지옥과 나들이객의 시선은 감수해야 함", "reservation_html": "<ul><li><strong>플랫폼</strong>: 서울시 '더 아름다운 결혼식' (wedding.seoul.go.kr) 온라인 신청</li><li><strong>절차</strong>: 장소 신청 후 선정된 협력 디렉팅 업체와 세부 계약 진행</li><li><strong>시기</strong>: 예식일 기준 최소 90일 전 신청 필수 (상/하반기 공고 확인)</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>예상 대관료/꽃장식</strong>: 대관료 무료 (공공예식장 지정 시) / 꽃장식 및 무대 세팅 300~600만원 이상 (장소 규모가 커서 기본 세팅비가 높은 편)</li><li><strong>평균 식대</strong>: 약 45,000원 ~ 60,000원 (도시락 또는 케이터링 뷔페 형태)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 서울시 비품 지원 제도 활용 가능, 에코 웨딩(친환경) 컨셉 권장</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 100~200명 (무대 자체는 크지만 웨딩 집중도를 위해 중규모 권장)</li><li><strong>주차 및 교통</strong>: <strong>주말 주차 매우 혼잡 (최악 수준)</strong>, 7호선 어린이대공원역 역세권이므로 대중교통 이용 강력 권장</li></ul><p>-</p>", "pros": "압도적인 개방감과 자연 친화적인 분위기, 넓은 무대를 활용한 이색적인 연출 가능, 대관료 부담 제로\n    -", "cons": "일반 나들이객(어린이, 가족 등)의 구경과 소음 노출, 주말 주차 진입 자체가 어려움, 화장실 등 편의시설이 멀어 동선 불편", "tip": "하객들에게 청첩장 단계부터 '대중교통 필수'를 강력히 고지해야 함. 프라이빗함보다 축제 같은 분위기를 즐기고 싶은 커플에게 적합.", "links": [{"text": "서울시설공단", "url": "https://www.sisul.or.kr"}, {"text": "서울시 더 아름다운 결혼식", "url": "https://wedding.seoul.go.kr"}, {"text": "웨딩 카페 후기", "url": "https://naver.com"}], "has_detail": true}, {"id": "도봉_평화울림터", "name": "도봉 평화울림터", "type_raw": "공용(공유)", "category": "공공장소", "district": "도봉구", "guests_str": "50~100명", "guests_min": 50, "guests_max": 100, "cost_str": "250~450만", "cost_min": 250.0, "cost_max": 450.0, "meal_str": "4~5.5만", "meal_min": 4.0, "meal_max": 5.5, "rating": 4.3, "notes": "군사시설재생, 빈티지감성, 스몰웨딩추천", "tagline": "대전차 방호벽을 개조한 빈티지한 노출 콘크리트 감성, 힙한 예술가 스타일의 스몰 웨딩을 꿈꾼다면 최적의 장소", "reservation_html": "<ul><li><strong>플랫폼</strong>: 서울시 '더 아름다운 결혼식' (wedding.seoulwomen.or.kr) 온라인 신청</li><li><strong>문의</strong>: 공공예식장 상담센터 (1899-2154)</li><li><strong>시기</strong>: 연중 수시 신청 가능하나 봄/가을 시즌은 최소 6개월 전 권장</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>예상 대관료/꽃장식</strong>: 대관료 무료 / 꽃장식 및 세팅 약 250~450만원 (하객 규모에 따라 상이)</li><li><strong>평균 식대</strong>: 약 40,000원 ~ 55,000원 (도시락 또는 세미 케이터링 위주)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 비품 운영비 최대 100만원 지원, 협력 업체 패키지 이용 시 합리적 구성 가능</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 50~100명 내외 (소규모 예식에 특화된 공간)</li><li><strong>주차 및 교통</strong>: 1, 7호선 도봉산역 인근으로 대중교통 접근성은 양호하나, 부지 내 주차 공간은 협소하여 공영주차장 안내 필수</li></ul><p>-</p>", "pros": "어디서도 볼 수 없는 독특한 역사적 배경과 건축미, 인더스트리얼 감성의 스냅 사진, 하루 1~2팀만 진행하는 프라이빗함\n    -", "cons": "전문 식당 부재로 고퀄리티 뷔페 기대 불가, 날씨(바람, 우천)에 매우 민감한 탁 트인 야외, 신부대기실 등 편의시설이 간이 형태임", "tip": "전통적인 예식의 격식보다는 자유롭고 예술적인 분위기를 추구하는 커플에게 추천. 도봉산 배경의 자연광을 활용한 낮 예식이 특히 아름다움.", "links": [{"text": "평화문화진지 공식", "url": "https://culturebunker.or.kr"}, {"text": "패밀리서울", "url": "https://familyseoul.or.kr"}, {"text": "유튜브 리서치 영상", "url": "https://youtube.com"}], "has_detail": true}, {"id": "푸른수목원", "name": "푸른수목원", "type_raw": "공용(공원)", "category": "공공장소", "district": "구로구", "guests_str": "30~50명", "guests_min": 30, "guests_max": 50, "cost_str": "200~400만", "cost_min": 200.0, "cost_max": 400.0, "meal_str": "3.5~5만", "meal_min": 3.5, "meal_max": 5.0, "rating": 4.5, "notes": "언덕배경, 초소규모특화, 주차매우불편", "tagline": "수목원의 푸른 숲과 탁 트인 언덕 위에서 올리는 동화 같은 웨딩, 단 하객 50명 내외의 아주 작은 결혼식에만 적합", "reservation_html": "<ul><li><strong>플랫폼</strong>: 서울시 '서울 마이웨딩' (wedding.seoulwomen.or.kr) 온라인 신청</li><li><strong>시기</strong>: 예식일 기준 최소 90일 전 신청 (상/하반기 정기 접수 기간 활용 권장)</li><li><strong>제약</strong>: 하절기(7~8월) 및 동절기(12~3월) 예식 불가</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>예상 대관료/꽃장식</strong>: 대관료 무료 / 꽃장식 및 연출 약 200~400만원 (규모가 작아 상대적으로 저렴)</li><li><strong>평균 식대</strong>: 약 35,000원 ~ 50,000원 (공원 내 취사 불가로 주로 고퀄리티 도시락 형태)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 서울시 비품 지원 제도 활용 가능, 50명 미만 초소규모 진행 시 가성비 극대화</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 30~50명 (공간 및 관리 규정상 대규모 하객 수용 절대 불가)</li><li><strong>주차 및 교통</strong>: 주차 공간(140대)이 수목원 방문객과 겹쳐 주말에는 <strong>주차 불가능 수준</strong>, 하객들에게 인근 온수역 이용 안내 필수</li></ul><p>-</p>", "pros": "'바람의 언덕' 특유의 압도적인 개방감과 숲 배경, 영화 속 스몰 웨딩을 그대로 재현한 듯한 분위기, 공공 베뉴 중 가장 높은 감성 만족도\n    -", "cons": "우천 시 대안이 매우 빈약함, 일반 방문객들의 시선 노출(등산객, 가족 단위), 정식 뷔페가 아닌 도시락 식사에 대한 호불호", "tip": "양가 가족과 정말 친한 지인들만 모시는 '진짜 스몰 웨딩'을 원하는 분들에게 최적. 주차 문제로 하객들의 원성을 살 수 있으니 대중교통 이용을 여러 번 강조할 것.", "links": [{"text": "서울시 더 아름다운 결혼식", "url": "https://wedding.seoulwomen.or.kr"}, {"text": "푸른수목원 공식", "url": "https://parks.seoul.go.kr"}, {"text": "네이버 블로그 리얼 후기", "url": "https://naver.com"}], "has_detail": true}, {"id": "광나루_장미원", "name": "광나루 장미원", "type_raw": "공용(한강)", "category": "공공장소", "district": "강동구", "guests_str": "100~150명", "guests_min": 100, "guests_max": 150, "cost_str": "300~500만", "cost_min": 300.0, "cost_max": 500.0, "meal_str": "3.5~5만", "meal_min": 3.5, "meal_max": 5.0, "rating": 4.4, "notes": "장미만개(5-6월), 한강뷰, 대관료무료", "tagline": "5~6월 수만 송이 장미가 만개한 정원에서 올리는 로맨틱한 웨딩, 한강의 시원한 뷰는 덤", "reservation_html": "<ul><li><strong>플랫폼</strong>: 서울시 '서울 마이웨딩' (smw.seoul.go.kr) 온라인 신청</li><li><strong>시기</strong>: 예식일 기준 최소 90일 전 신청 (장미 시즌인 5~6월은 1년 전부터 경쟁 치열)</li><li><strong>자격</strong>: 서울 시민 또는 서울 생활권자</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>예상 대관료/꽃장식</strong>: 대관료 무료 / 꽃장식 및 기본 연출 약 300~500만원 (이미 장미가 많아 추가 생화 비용 절감 가능)</li><li><strong>평균 식대</strong>: 약 35,000원 ~ 50,000원 (공원 내 가열 조리 불가로 도시락 형태 권장)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 서울시 비품 지원 활용, 장미 만개 시기(5월 중순~6월 초) 선택 시 꽃장식 가성비 극대화</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 100~150명 (공원 내 오픈된 공간이라 인원 조절이 비교적 자유로움)</li><li><strong>주차 및 교통</strong>: 광나루 2주차장 이용, 주말 나들이객으로 매우 혼잡하여 '주차 전쟁' 필수 대비, 대중교통 이용 안내 필수</li></ul><p>-</p>", "pros": "별도의 화려한 장식 없이도 장미 정원 자체로 완벽한 포토존, 한강을 배경으로 한 여유로운 야외 분위기, 대관료 무료의 경제성\n    -", "cons": "5월 낮 예식 시 그늘이 없어 하객들이 더위에 노출됨(양산/텐트 필수), 공공장소라 지나가는 시민들의 구경과 소음, 고정된 화장실 외 편의시설 부족", "tip": "장미가 가장 아름다운 5월 하순~6월 초 토요일 오전 타임을 강력 추천. 하객들을 위한 시원한 음료와 양산 준비는 필수 매너.", "links": [{"text": "서울 마이웨딩", "url": "https://smw.seoul.go.kr"}, {"text": "한강사업본부", "url": "https://hangang.seoul.go.kr"}, {"text": "웨딩 디렉팅 블로그", "url": "https://bodadirecting.com"}], "has_detail": true}, {"id": "양재시민의숲", "name": "양재시민의숲", "type_raw": "공용(공원)", "category": "공공장소", "district": "서초구", "guests_str": "100~150명", "guests_min": 100, "guests_max": 150, "cost_str": "400~700만", "cost_min": 400.0, "cost_max": 700.0, "meal_str": "5~6.5만", "meal_min": 5.0, "meal_max": 6.5, "rating": 4.7, "notes": "1일1팀단독, 나무터널감성, 도시락필수", "tagline": "서울에서 가장 울창한 나무 터널을 배경으로 올리는 '진짜 숲속 결혼식', 1일 1팀의 압도적 프라이빗함", "reservation_html": "<ul><li><strong>플랫폼</strong>: '패밀리서울' (familyseoul.or.kr) 또는 '서울 마이웨딩' 온라인 신청</li><li><strong>문의</strong>: 공공예식장 상담센터 (1899-2154)</li><li><strong>시기</strong>: 매년 초(1~2월) 해당 연도 예식 전체 접수, 잔여 타임 수시 확인 필요</li><li><strong>자격</strong>: 서울 시민 또는 서울 소재 직장인</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>예상 대관료/꽃장식</strong>: 대관료 무료(실비 수준) / 꽃장식 및 연출 약 400~700만원 (숲이 넓어 풍성한 세팅 권장)</li><li><strong>평균 식대</strong>: 약 50,000원 ~ 65,000원 (환경 보호를 위해 가열 조리 및 국물 음식 절대 금지, 고급 도시락만 가능)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 하루 1팀 단독 진행으로 시간 제약 없음, 비품 운영비 최대 100만원 지원</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 100~150명 (조용한 숲 분위기를 위해 소~중규모 추천)</li><li><strong>주차 및 교통</strong>: 공원 주차장 매우 협소, 하객들은 '양재 꽃시장 주차장(유료)' 이용 후 도보 이동 필수 (청첩장 기재 권장)</li></ul><p>-</p>", "pros": "타 예식장과 비교 불가한 울창한 나무 배경과 피톤치드 가득한 분위기, 쫓기지 않는 여유로운 예식 시간, 신랑신부의 취향을 100% 반영한 커스텀 연출\n    -", "cons": "**식사 제약(도시락만 가능)**에 대한 어르신들의 호불호, 주차장과의 거리 및 유료 주차 부담, 확성기 소음 규제(65dB 이하)로 인한 음향 제약, 화환 반입 금지", "tip": "도시락 식사가 마음에 걸린다면 답례품 퀄리티를 높이는 전략 추천. 숲이 가장 울창한 5~6월 또는 단풍이 드는 10월 하순이 베스트 시즌.", "links": [{"text": "패밀리서울", "url": "https://familyseoul.or.kr"}, {"text": "디렉팅 업체 후기", "url": "https://bodadirecting.com"}, {"text": "티스토리 블로그 리포트", "url": "https://tistory.com"}], "has_detail": true}, {"id": "열린송현광장", "name": "열린송현광장", "type_raw": "공용(광장)", "category": "공공장소", "district": "종로구", "guests_str": "100~300명", "guests_min": 100, "guests_max": 300, "cost_str": "400~1000만", "cost_min": 400.0, "cost_max": 1000.0, "meal_str": "4.5~6.5만", "meal_min": 4.5, "meal_max": 6.5, "rating": 4.5, "notes": "경복궁뷰, 주차불가, 공사일정확인필수", "tagline": "경복궁과 인왕산이 파노라마로 펼쳐지는 서울 심장부의 열린 공간, 단 2025년부터는 이건희 기증관 공사로 예약 확인 필수", "reservation_html": "<ul><li><strong>플랫폼</strong>: 서울시 '서울 마이웨딩' (familyseoul.or.kr) 온라인 신청</li><li><strong>주의</strong>: 부지 내 건립 공사 일정에 따라 2025년 이후 예식 가능 여부가 불투명하므로 반드시 상담센터(1899-2154) 사전 확인 요망</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>예상 대관료/꽃장식</strong>: 대관료 무료 / 꽃장식 및 대형 무대 세팅 약 400~1,000만원 (광장이 매우 넓어 공간을 채우는 데 비용이 많이 드는 편)</li><li><strong>평균 식대</strong>: 약 45,000원 ~ 65,000원 (출장 뷔페 또는 케이터링 업체 조율)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 서울 시민 비품 지원(최대 100만원) 가능, 도심 한복판의 상징적 장소 대관이라는 큰 메리트</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 100~300명 (광장이 매우 넓어 대규모 하객도 수용 가능하나 집중도가 떨어질 수 있음)</li><li><strong>주차 및 교통</strong>: <strong>부지 내 주차 절대 불가</strong>, 안국역(3호선) 바로 앞 최상의 역세권이나 하객들의 유료 주차 부담이 매우 큼</li></ul><p>-</p>", "pros": "경복궁 배경의 압도적인 뷰와 개방감, 안국역 도보 1분이라는 최상의 접근성, 정형화되지 않은 대형 야외 축제 같은 연출 가능\n    -", "cons": "주차 공간 전무, 공사 구역 근접 시 소음 및 시각적 방해 우려, 지나가는 수많은 관광객과 시민들에게 100% 노출되는 부담감", "tip": "전통과 현대가 어우러진 종로의 감성을 사랑하는 커플에게 추천. 하객들에게 주차장 안내보다 '안국역 이용'을 강력하게 권고하는 것이 최고의 배려.", "links": [{"text": "서울 마이웨딩", "url": "https://familyseoul.or.kr/wedding"}, {"text": "열린송현 공식", "url": "https://parks.seoul.go.kr"}, {"text": "유튜브 리서치 영상", "url": "https://youtube.com"}], "has_detail": true}, {"id": "한방진흥센터", "name": "한방진흥센터", "type_raw": "공용(한옥)", "category": "공공장소", "district": "동대문구", "guests_str": "100~150명", "guests_min": 100, "guests_max": 150, "cost_str": "400~800만", "cost_min": 400.0, "cost_max": 800.0, "meal_str": "5~6.5만", "meal_min": 5.0, "meal_max": 6.5, "rating": 4.6, "notes": "대통령상건축, 한옥감성, 이색체험가능", "tagline": "웅장한 한옥 처마 아래서 펼쳐지는 전통과 현대의 조화, 하객들을 위한 한방차 체험이 매력적인 이색 베뉴", "reservation_html": "<ul><li><strong>플랫폼</strong>: '패밀리서울' (familyseoul.or.kr) 온라인 신청</li><li><strong>문의</strong>: 서울시 공공예식장 상담센터 (1899-2154)</li><li><strong>시기</strong>: 예식 희망일 기준 최소 6개월 전 신청 권장</li><li><strong>자격</strong>: 서울 시민 또는 서울 생활권자</li></ul><p>-</p>", "cost_detail_html": "<ul><li><strong>예상 대관료/꽃장식</strong>: 야외 마당 대관료 무료 / 꽃장식 및 한옥 맞춤형 연출 약 400~800만원 (한옥의 미를 살리기 위한 목공 및 조화/생화 믹스 연출 위주)</li><li><strong>평균 식대</strong>: 약 50,000원 ~ 65,000원 (3층 다목적홀 피로연 진행 시 별도 대관료 약 36만원 발생)</li><li><strong>당일 계약 혜택 및 할인 팁</strong>: 한방진흥센터 연계 프로그램(체험 등) 할인 가능 여부 확인, 비품 지원비 활용</li></ul><p>-</p>", "capacity_html": "<ul><li><strong>실제 권장 하객수</strong>: 100~150명 (한옥 마당의 구조상 너무 많은 인원은 시야가 가려질 수 있음)</li><li><strong>주차 및 교통</strong>: 자체 지하 주차장(약 200대) 보유로 공공 베뉴 중 양호한 편이나, 만차 시 약령시 공영주차장 이용 필요</li></ul><p>-</p>", "pros": "대통령상 수상 건축물의 압도적인 한옥미, 한방차 체험 등 하객들에게 기억에 남는 특별한 이벤트 가능, 정성스러운 한식 기반 피로연 메뉴\n    -", "cons": "1층 마당(본식)에서 3층(식사)으로 이동하는 동선의 불편함(엘리베이터 병목), 한옥 특유의 기둥들로 인한 하객 시야 방해 가능성, 야외 예식의 고질적인 날씨 리스크", "tip": "전통 혼례의 느낌을 현대적으로 재해석하고 싶은 커플에게 강력 추천. 3층 한방 카페와 연계하여 하객들에게 웰컴 드링크를 제공하는 센스를 발휘해볼 것.", "links": [{"text": "서울한방진흥센터 공식", "url": "https://kmedi.ddm.go.kr"}, {"text": "패밀리서울", "url": "https://familyseoul.or.kr"}, {"text": "웨딩 디렉팅 후기", "url": "https://bodadirecting.com"}], "has_detail": true}, {"id": "그랜드_하얏트", "name": "그랜드 하얏트", "type_raw": "호텔(통창)", "category": "호텔", "district": "용산구", "guests_str": "70~100명", "guests_min": 70, "guests_max": 100, "cost_str": "1500~2000만", "cost_min": 1500.0, "cost_max": 2000.0, "meal_str": "17~20만", "meal_min": 17.0, "meal_max": 20.0, "rating": 4.7, "notes": "남산뷰 통창, 베르사유 감성, 소규모 프리미엄", "tagline": "남산의 사계절을 통창으로 담아낸 로맨틱의 정수, 하지만 하객 대비 높은 견적은 감수해야 할 곳", "reservation_html": "<ul><li>호텔 웨딩팀 유선 상담 (02-797-1234)</li><li>공식 홈페이지 'Request for Proposal' 등록</li><li>최소 1년~8개월 전 예약 권장 (주말 낮 타임 경쟁 치열)</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/연출비: 약 650만원 대</li><li>꽃장식: 최소 960만원부터 (커스텀에 따라 2,000만원 이상 가능)</li><li>평균 식대: 170,000원 ~ 200,000원 (양식 코스)</li><li>당일 계약 혜택 및 할인 팁: 비수기(1, 2, 7, 8월)나 평일/일요일 저녁 예식 시 대관료 및 식대 할인 협상 가능</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 70~100명 (최대 120명 수용 가능하나 공간 및 로비 혼잡)</li><li>주차 및 교통: 호텔 주차장 이용 가능하나 주말 예식 겹칠 시 매우 혼잡. 한강진역/이태원역 셔틀버스 적극 활용 필요.</li></ul><p>-</p>", "pros": "베르사유 궁전 별궁 컨셉의 독보적인 화사함, 전면 통창을 통한 파노라마 남산 뷰, 소규모 특화의 프라이빗함.\n    -", "cons": "로비가 협소해 타 홀 하객과 섞임, 높은 꽃장식 단가, 호텔의 고지대 위치로 인한 대중교통 접근성 아쉬움", "tip": "햇살이 예쁜 낮 예식도 좋지만, 야경이 훌륭한 나이트 웨딩(저녁 6시 이후)은 견적 혜택과 분위기 두 마리 토끼를 잡을 수 있음", "links": [{"text": "그랜드 하얏트 서울 공식 웨딩 페이지", "url": "https://www.hyatt.com/ko-KR/hotel/south-korea/grand-hyatt-seoul/selrs/special-events/weddings"}, {"text": "네이버 블로그 - 트리아농 드 남산 실제 견적 및 후기", "url": "https://blog.naver.com/Search.naver?query=%EA%B7%B8%EB%9E%9C%EB%93%9C+%ED%95%98%EC%96%AC%ED%8A%B8+%ED%8A%B8%EB%A6%AC%EC%95%84%EB%86%8D+%EA%B2%AC%EC%A0%81"}], "has_detail": true}, {"id": "AC_호텔_강남", "name": "AC 호텔 강남", "type_raw": "호텔(루프탑)", "category": "호텔", "district": "강남구", "guests_str": "50~100명", "guests_min": 50, "guests_max": 100, "cost_str": "1500~2000만", "cost_min": 1500.0, "cost_max": 2000.0, "meal_str": "14~20만", "meal_min": 14.0, "meal_max": 20.0, "rating": 4.4, "notes": "역삼역 도보1분, 도심뷰, 주차협소주의", "tagline": "강남 한복판 21층에서 즐기는 힙하고 이국적인 스카이뷰 파티 웨딩", "reservation_html": "<ul><li>호텔 웨딩팀 유선 상담 (02-2050-6000 / 6034)</li><li>이메일 문의 (rsvn@acseoulgangnam.com)</li><li>루북(Roovook) 등 온라인 웨딩 플랫폼 예약 가능</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/연출비: 약 880만원</li><li>꽃장식: 최소 600만원부터 (커스터마이징 가능)</li><li>평균 식대: 137,000원 ~ 198,000원 (뷔페 또는 양식 코스)</li><li>당일 계약 혜택 및 할인 팁: 웨딩 페어 기간 계약 시 대관료 할인 및 객실 숙박권(프라이머 룸 등) 증정 혜택 존재</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 50~80명 (최대 100명 수용 시 다소 복잡할 수 있음)</li><li>주차 및 교통: 역삼역 도보 1분으로 대중교통 최상. 단, 호텔 내 주차가 약 50대 내외로 매우 협소하여 하객들에게 대중교통 이용 안내 필수.</li></ul><p>-</p>", "pros": "강남 도심과 남산타워가 동시에 보이는 독보적 뷰, 야외 수영장(풀사이드) 느낌의 힙한 분위기, 하루 1~2팀만 진행하는 여유로움.\n    -", "cons": "주차난 심각, 기상 악화 시 실내 홀(2층) 이동 시 분위기 차이 큼, 고층 이동 엘리베이터 대기 시간 발생", "tip": "역삼역 초역세권이므로 하객들에게 '대중교통 권장'을 강력히 안내하는 것이 주차 컴플레인을 줄이는 핵심", "links": [{"text": "AC 호텔 바이 메리어트 서울 강남 공식 사이트", "url": "https://www.marriott.com/en-us/hotels/selac-ac-hotel-seoul-gangnam/events/"}, {"text": "아이웨딩 - AC 호텔 강남 루프탑 상세 정보", "url": "https://www.iwedding.co.kr/enterprise/info/ac_hotel_gangnam"}], "has_detail": true}, {"id": "L7_명동", "name": "L7 명동", "type_raw": "호텔(루프탑)", "category": "호텔", "district": "중구", "guests_str": "40~60명", "guests_min": 40, "guests_max": 60, "cost_str": "800~1500만", "cost_min": 800.0, "cost_max": 1500.0, "meal_str": "8~10만", "meal_min": 8.0, "meal_max": 10.0, "rating": 4.5, "notes": "남산타워 정면뷰, 명동역 9번출구, 나이트웨딩추천", "tagline": "남산타워가 손에 잡힐 듯한 압도적 뷰, 힙한 감성의 소규모 나이트 파티 웨딩에 최적화된 곳", "reservation_html": "<ul><li>호텔 대표번호 (02-6310-1000) 상담 요청</li><li>'오딩(Oding)' 등 제휴 스몰 웨딩 디렉팅 업체를 통한 통합 예약 권장 (데코 및 진행 포함)</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료: 약 100~200만원 (요일/시간대별 차등)</li><li>꽃장식: 최소 300~500만원부터 (스몰 웨딩 특성상 커스텀 필수)</li><li>평균 식대: 80,000원 ~ 100,000원 (세미 뷔페 또는 코스)</li><li>당일 계약 혜택 및 할인 팁: 디렉팅 업체 패키지 이용 시 대관료 면제 또는 할인 혜택 확인 필요</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 40~60명 (최대 80명 수용 가능하나 이동 동선 및 버진로드 고려 시 50명 내외 추천)</li><li>주차 및 교통: 명동역 도보 1분으로 대중교통 매우 편리. 단, 호텔 자체 주차장이 매우 협소하여 하객 주차 지원이 거의 불가능함(인근 유료 주차장 안내 필수).</li></ul><p>-</p>", "pros": "서울 시내 루프탑 중 남산타워 뷰가 가장 정면으로 보임, 세련된 바(Bar) 분위기에서 즐기는 자유로운 예식, 사진 만족도 매우 높음.\n    -", "cons": "주차난 최악(명동 특성), 우천 시 루프탑 메리트 상실, 하객이 많을 경우 엘리베이터 혼잡 및 대기 발생", "tip": "남산타워 조명이 켜지는 일몰 직전 예식을 잡아 '선셋+야경'을 모두 누리는 나이트 웨딩을 강력 추천", "links": [{"text": "L7 명동 공식 사이트", "url": "https://www.lottel7hotel.com/myeongdong/ko/facilities/rooftop-floating.html"}, {"text": "오딩 - L7 명동 루프탑 실시간 견적", "url": "https://oding.co.kr/venue/detail/33"}], "has_detail": true}, {"id": "코트야드_남대문", "name": "코트야드 남대문", "type_raw": "호텔(테라스)", "category": "호텔", "district": "중구", "guests_str": "60~80명", "guests_min": 60, "guests_max": 80, "cost_str": "1000~1500만", "cost_min": 1000.0, "cost_max": 1500.0, "meal_str": "10~12만", "meal_min": 10.0, "meal_max": 12.0, "rating": 4.4, "notes": "남대문뷰, 6시간 대관, 긴 테라스구조 주의", "tagline": "숭례문과 N서울타워 뷰를 19층 루프탑에서 독점하는 4시간 단독 프라이빗 스몰 웨딩", "reservation_html": "<ul><li>호텔 웨딩팀 유선 상담 (02-2211-8000 / 직통 02-2211-8115)</li><li>아이웨딩, 웨딩북, 다이렉트웨딩 등 플랫폼 통한 상담 및 캐시백 혜택 가능</li><li>정기 웨딩 쇼케이스 참석 시 당일 계약 혜택 최대 (식대 인당 5% 할인 등)</li><li>예식일 기준 12~14개월 전 예약 오픈, 상담 신청 후 3일 이내 연락</li></ul><p>-</p>", "cost_detail_html": "<ul><li>대관료(홀사용료): 880만원 (필수 항목)</li><li>꽃장식: 880만원 (필수 항목) → 대관+꽃 합산 약 1,760만원</li><li>평균 식대: 100,000원 ~ 120,000원 (한식/양식 코스 중 선택)</li><li>음주류: 당일 소모량 별도</li><li>당일 계약 혜택: 쇼케이스 당일 계약 시 식대 5% 할인, 객실 업그레이드, 공항 샌딩, 1주년 식사권 제공 사례 있음</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 50~60명 (착석 기준 60명이 가장 쾌적), 최소 보증 40명, 최대 150명 수용 가능하나 좁고 긴 테라스 구조상 100명 초과 시 시야 제한 좌석 다수 발생</li><li>주차 및 교통: 시청역/회현역 도보 거리로 접근성 양호. 호텔 주차장은 60대 수용으로 하객 수 대비 제한적 — 만차 시 인근 외부 주차장 이용 불편. 대중교통 이용 강력 권장.</li><li>신부대기실: 19층 스위트룸과 연결되어 이국적인 하우스웨딩 분위기 연출 가능</li></ul><p>-</p>", "pros": "숭례문·N서울타워 파노라마 뷰, 하루 1팀 단독 4시간 대관으로 여유로운 진행, 스위트룸 신부대기실로 프라이빗한 하우스웨딩 감성, 안정적인 메리어트 식사 퀄리티\n    -", "cons": "테라스 폭이 좁고 긴 구조로 인해 100명 초과 시 시야 제한 좌석 다수 발생, 주차 60대로 하객 주차 지원 제한적, 고층 이동 엘리베이터 대기 발생", "tip": "착석 기준 60명에 최적화된 공간이므로 하객이 80명을 초과한다면 현장 답사 후 좌석 배치를 반드시 확인할 것. 쇼케이스 당일 계약 시 식대 할인+부대 혜택이 가장 실속 있음", "links": [{"text": "코트야드 메리어트 서울 남대문 공식 웨딩 이벤트", "url": "https://www.marriott.com/ko/hotels/selsn-courtyard-seoul-namdaemun/events/"}, {"text": "다이렉트웨딩 - 코트야드 남대문 상세 견적", "url": "https://www.directwedding.co.kr/weddinghall/hall0467"}, {"text": "아이웨딩 - 코트야드 남대문 테라스194", "url": "https://www.iwedding.co.kr/enterprise/info/1544776620"}], "has_detail": true}, {"id": "호텔_카푸치노", "name": "호텔 카푸치노", "type_raw": "호텔(루프탑)", "category": "호텔", "district": "강남구", "guests_str": "30~50명", "guests_min": 30, "guests_max": 50, "cost_str": "500~1000만", "cost_min": 500.0, "cost_max": 1000.0, "meal_str": "8~12만", "meal_min": 8.0, "meal_max": 12.0, "rating": 4.3, "notes": "반려견 동반가능, 시티뷰, 힙한 감성, 주차협소", "tagline": "반려견과 함께 강남 스카이라인을 배경으로 즐기는 가장 힙하고 자유로운 스몰 웨딩", "reservation_html": "<ul><li>호텔 대표번호 또는 레스토랑/루프탑바 직통 (02-2038-9618)</li><li>스몰 웨딩 전문 디렉팅 업체(오딩 등)를 통한 예약 및 연출 상담 권장</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료: 호텔 대관료 별도 협의 (시즌별 상이)</li><li>꽃장식/디렉팅: 약 300~600만원 (외부 업체 이용 시)</li><li>평균 식대: 80,000원 ~ 120,000원 (코스 요리 또는 세미 뷔페)</li><li>당일 계약 혜택 및 할인 팁: 평일 예식 또는 비수기 대관 시 파격적인 대관료 할인 가능성 있음</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 30~50명 (최대 80명 수용 가능하나 공간 구조상 50명 내외가 가장 쾌적함)</li><li>주차 및 교통: 언주역(9호선) 바로 앞으로 대중교통 매우 편리. 주차는 기계식 주차 위주로 대형 SUV나 하객 차량이 많을 경우 혼잡 예상.</li></ul><p>-</p>", "pros": "**강남권 유일의 본격 반려견 동반 웨딩 가능**, 17층 루프탑의 탁 트인 시티뷰와 노을 맛집, 격식 없는 파티 분위기.\n    -", "cons": "우천 시 대안 공간(실내 레스토랑)의 개방감이 야외보다 떨어짐, 전문 웨딩홀이 아니어서 신부대기실 등 부대시설 미흡, 엘리베이터 대기 발생", "tip": "반려견과 함께하는 특별한 예식을 원한다면 국내 최적의 장소. 공간이 아담하므로 하객 리스트를 정예(50명 이하)로 꾸릴 때 만족도가 극대화됨", "links": [{"text": "호텔 카푸치노 공식 루프탑 안내", "url": "https://hotelcappuccino.co.kr/taste/rooftop-bar/"}, {"text": "오딩 - 호텔 카푸치노 루프탑 실시간 견적", "url": "https://oding.co.kr/venue/detail/34"}], "has_detail": true}, {"id": "코트야드_영등포", "name": "코트야드 영등포", "type_raw": "호텔(테라스)", "category": "호텔", "district": "영등포구", "guests_str": "80~120명", "guests_min": 80, "guests_max": 120, "cost_str": "800~1500만", "cost_min": 800.0, "cost_max": 1500.0, "meal_str": "9~11만", "meal_min": 9.0, "meal_max": 11.0, "rating": 4.5, "notes": "영등포역 직결, 가든감성, 주말 주차지옥 주의", "tagline": "지방 하객 접근성 최강(영등포역), 타임스퀘어의 주차 지옥만 통과하면 만나는 도심 속 정원", "reservation_html": "<ul><li>호텔 웨딩팀 유선 상담 (02-2638-3000)</li><li>방문 상담 예약 필수 (주말 예식 시간대 방문 권장)</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 꽃장식: 약 400~700만원 (기본형~풍성형)</li><li>평균 식대: 90,000원 ~ 110,000원 (코스 또는 뷔페)</li><li>당일 계약 혜택 및 할인 팁: 상담 당일 계약 시 와인 서비스, 객실 업그레이드, 식대 미세 할인 등 프로모션 제공 빈도 높음</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 80~120명 (최대 150명 수용 가능하나 테라스 면적상 100명 내외가 가장 예쁨)</li><li>주차 및 교통: 영등포역(KTX/1호선) 직결로 지방 하객에게 최고의 위치. 단, 주말 타임스퀘어 주차장 진입에 30분~1시간 소요될 수 있어 하객들에게 사전 공지 필수.</li></ul><p>-</p>", "pros": "15층 루프탑 테라스의 탁 트인 개방감과 채광, 메리어트 특유의 안정적인 식사 퀄리티, 쇼핑몰 연계로 하객들의 뒤풀이 용이.\n    -", "cons": "주말 타임스퀘어 인근 극심한 교통 정체, 호텔 입구 찾기가 다소 복잡함(쇼핑몰 내 동선), 우천 시 천막 설치로 인한 뷰 저하", "tip": "하객들에게 '주말 타임스퀘어 주차 혼잡'을 청첩장에 반드시 명기하고, 가급적 대중교통 이용을 권장해야 원활한 예식 진행이 가능함", "links": [{"text": "코트야드 메리어트 서울 타임스퀘어 공식 사이트", "url": "https://www.marriott.com/ko/hotels/selcy-courtyard-seoul-times-square/events/"}, {"text": "네이버 블로그 - 영등포 코트야드 테라스 웨딩 투어 후기", "url": "https://blog.naver.com/Search.naver?query=%EC%98%81%EB%93%B1%ED%8F%AC+%EC%BD%94%ED%8A%B8%EC%95%BC%EB%93%9C+%ED%85%8C%EB%9D%BC%EC%8A%A4+%EC%9B%A8%EB%94%A9+%EA%B2%AC%EC%A0%81"}], "has_detail": true}, {"id": "웨스틴_조선", "name": "웨스틴 조선", "type_raw": "호텔(통창)", "category": "호텔", "district": "중구", "guests_str": "100~130명", "guests_min": 100, "guests_max": 130, "cost_str": "2000~3000만", "cost_min": 2000.0, "cost_max": 3000.0, "meal_str": "16~21만", "meal_min": 16.0, "meal_max": 21.0, "rating": 4.8, "notes": "환구단 고궁뷰, 최상급 식사, 은하수조명", "tagline": "환구단의 고풍스러운 전경을 통창에 담은, 한국적 미와 현대적 럭셔리가 공존하는 독보적 베뉴", "reservation_html": "<ul><li>호텔 웨딩 센터 유선 상담 (02-317-0066)</li><li>이메일 문의 (wjswd@josunhotel.com)</li><li>인기 일자의 경우 최소 1년 전 예약 권장 (현재 26년 상반기 예약 진행 중)</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 꽃장식: 약 1,300만원 ~ 1,500만원 이상 (라일락 홀 기준)</li><li>평균 식대: 160,000원 ~ 210,000원 (한식/양식/중식 코스 중 선택)</li><li>당일 계약 혜택 및 할인 팁: 비수기(1, 2, 7, 8월) 또는 일요일 저녁 예식 시 식대 프로모션 가능성 있음</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 100~130명 (최대 150명 수용 가능하나 공간 여유를 위해 120명 내외 추천)</li><li>주차 및 교통: 시청역(1, 2호선) 도보 거리로 접근성 우수. 도심 한복판 특성상 주말 교통 체증이 심하며 주차장 진입로가 다소 좁음.</li></ul><p>-</p>", "pros": "통창 너머로 보이는 국가지정문화재 '환구단'의 압도적 전경, 조선호텔 명성에 걸맞은 최상급 식사 퀄리티(특히 한식 평이 좋음), 천장의 은하수 조명이 주는 몽환적 분위기.\n    -", "cons": "공간 구조상 버진 로드가 짧은 편, 호텔 정문에서 홀까지의 동선이 초행길 하객에게 다소 복잡할 수 있음, 높은 꽃장식 단가", "tip": "전통과 현대의 조화를 원하는 예비부부에게 최고의 선택지. 낮 예식의 환구단 뷰도 훌륭하지만, 조명이 켜진 저녁 예식의 은하수 조명 연출도 매우 인기가 높음", "links": [{"text": "웨스틴 조선 서울 공식 웨딩 페이지", "url": "https://www.josunhotel.com/wedding/westinSeoul.do"}, {"text": "웨딩북 - 웨스틴 조선 서울 실제 투어 후기", "url": "https://www.weddingbook.com/halls/150"}], "has_detail": true}, {"id": "안다즈_강남", "name": "안다즈 강남", "type_raw": "호텔(펜트하우스)", "category": "호텔", "district": "강남구", "guests_str": "20~30명", "guests_min": 20, "guests_max": 30, "cost_str": "2000~3000만", "cost_min": 2000.0, "cost_max": 3000.0, "meal_str": "17~20만", "meal_min": 17.0, "meal_max": 20.0, "rating": 4.9, "notes": "초호화 소규모, 펜트하우스 단독, 압구정 뷰", "tagline": "강남의 펜트하우스를 통째로 빌려 즐기는 대한민국 상위 1% 프라이빗 하이엔드 스몰 웨딩", "reservation_html": "<ul><li>호텔 이벤트/웨딩팀 유선 상담 (02-2193-1234)</li><li>하얏트 공식 홈페이지 '미팅 및 이벤트' 섹션 견적 요청</li><li>하루 단 한 팀(보통 저녁 6시)만 진행하므로 1년 전 예약 필수</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 총 견적: 30명 기준 약 1,500만원 ~ 2,500만원 내외 (패키지 형태)</li><li>평균 식대: 170,000원 ~ 200,000원 (미쉐린 셰프팀 코스 요리)</li><li>꽃장식/디렉팅: 약 500만원 ~ 1,000만원 이상 (커스텀 비중 매우 높음)</li><li>당일 계약 혜택 및 할인 팁: 펜트하우스 1박 숙박(약 800~1,000만원 상당) 및 조식, 웰컴 리셉션, 샴페인 서비스 등이 패키지에 기본 포함됨</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 20~30명 (최대 50명까지 가능하나 30명 내외가 가장 쾌적함)</li><li>주차 및 교통: 압구정역(3호선) 직결로 접근성 최상. 하객 전원 무료 발렛 서비스 제공 빈도 높음.</li></ul><p>-</p>", "pros": "하루 1팀 단독 사용으로 예식 시간 무제한 수준, 17층 테라스에서 즐기는 압구정/한강 파노라마 뷰, 객실과 테라스를 오가는 자유로운 파티 동선, 최정상급 음식 맛.\n    -", "cons": "하객 1인당 투입 비용이 매우 높음(가성비와는 거리가 멂), 소규모 인원만 수용 가능, 우천 시 실내(객실 내부) 진행으로 전환 시 야외 개방감 감소", "tip": "단순한 결혼식이 아닌 '가족 및 친지와의 하룻밤 파티'를 컨셉으로 잡는다면 만족도 200%. 하얏트 멤버십(World of Hyatt) 포인트 적립이 상당하므로 반드시 챙길 것", "links": [{"text": "안다즈 서울 강남 공식 웨딩", "url": "https://www.hyatt.com/ko-KR/hotel/south-korea/andaz-seoul-gangnam/selaz/special-events/weddings"}, {"text": "네이버 블로그 - 안다즈 강남 펜트하우스 웨딩 실제 후기", "url": "https://blog.naver.com/Search.naver?query=%EC%95%88%EB%8B%A4%EC%A6%88+%EA%B2%BD%EB%82%A8+%ED%8E%9C%ED%8A%B8%ED%95%98%EC%9A%B0%EC%8A%A4+%EC%9B%A8%EB%94%A9"}], "has_detail": true}, {"id": "호텔_엔트라", "name": "호텔 엔트라", "type_raw": "호텔(펜트하우스)", "category": "호텔", "district": "강남구", "guests_str": "10~20명", "guests_min": 10, "guests_max": 20, "cost_str": "500~1000만", "cost_min": 500.0, "cost_max": 1000.0, "meal_str": "12~18만", "meal_min": 12.0, "meal_max": 18.0, "rating": 4.2, "notes": "청담동 시티뷰, 인피니티풀, 초소규모 파티형", "tagline": "청담동 시티뷰와 인피니티 풀을 품은 20층 펜트하우스에서 즐기는 영화 같은 초소규모 파티 웨딩", "reservation_html": "<ul><li>호텔 대표번호 (02-500-1500) 객실 및 연회 예약실 상담</li><li>공식 홈페이지 'Special Offers' 내 파티 패키지 확인</li><li>전문 디렉팅 업체(오딩 등)를 통한 연출 상담 권장</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 객실 대관료: 약 150만원 ~ 300만원대 (시즌 및 요일별 상이)</li><li>평균 식대: 120,000원 ~ 180,000원 (코스 또는 케이터링)</li><li>꽃장식/디렉팅: 별도 업체 섭외 필수 (약 300만원 이상 추가 예상)</li><li>당일 계약 혜택 및 할인 팁: 펜트하우스 대관 시 자동 숙박 포함, 인피니티 풀 무료 이용 등의 혜택이 핵심</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 10~20명 내외 (초소규모 직계 가족 예식 또는 브라이들 샤워 겸용 예식에 적합)</li><li>주차 및 교통: 청담 사거리 위치. 하객 전원 발렛 파킹 지원 가능하나 청담동 특유의 주말 정체 고려 필요.</li></ul><p>-</p>", "pros": "청담동 한복판의 파노라마 시티뷰, 인피니티 풀 배경의 독보적 스냅 사진, 예식 후 지인들과의 프라이빗 풀파티/애프터 파티 가능.\n    -", "cons": "전문 웨딩홀 부대시설(신부대기실, 음향 등) 부재로 직접 준비 필요, 30명 이상의 하객 수용 불가, 높은 공간 대관료", "tip": "전형적인 예식보다는 '특별한 장소 대관+럭셔리 파티'에 방점이 찍힌 베뉴. 10~15명 내외의 아주 가까운 지인들만 모시는 초소규모 예식에 강력 추천", "links": [{"text": "호텔 엔트라 강남 공식 펜트하우스 안내", "url": "http://www.hotelentra.com/view/view.do?SR_SEQ=14"}, {"text": "오딩 - 호텔 엔트라 강남 스몰 웨딩 사례", "url": "https://oding.co.kr/venue/detail/35"}], "has_detail": true}, {"id": "이비스_명동", "name": "이비스 명동", "type_raw": "호텔(루프탑)", "category": "호텔", "district": "중구", "guests_str": "50~70명", "guests_min": 50, "guests_max": 70, "cost_str": "500~800만", "cost_min": 500.0, "cost_max": 800.0, "meal_str": "6.5~8만", "meal_min": 6.5, "meal_max": 8.0, "rating": 4.3, "notes": "남산타워 정면뷰, 가성비 호텔웨딩, 주차매우불편", "tagline": "남산타워 뷰를 가장 합리적인 가격으로 누릴 수 있는 고층 루프탑 가성비 웨딩", "reservation_html": "<ul><li>호텔 예약실 유선 상담 (02-6020-8880~1)</li><li>이메일 문의 (stylemfb3@ambatel.com)</li><li>오딩(Oding), 요즘웨딩 등 가성비 스몰 웨딩 패키지 업체 이용 권장</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료: 약 80만원 ~ 150만원 내외</li><li>평균 식대: 65,000원 ~ 79,000원 (뷔페 형식)</li><li>꽃장식: 약 300~500만원 (기본형 기준, 커스텀 시 추가)</li><li>당일 계약 혜택 및 할인 팁: 주중 예식 또는 일요일 저녁 예식 시 대관료 면제 및 식대 추가 할인 폭이 큼</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 50~70명 (최대 100명 수용 가능하나 공간 여유를 위해 70명 이하 추천)</li><li>주차 및 교통: 명동역 도보 거리로 접근성 양호. 단, 호텔 내 주차장이 타워 주차 방식으로 매우 협소(하객용 약 10대 내외)하여 하객 주차 지원이 거의 불가능함.</li></ul><p>-</p>", "pros": "21층 높이에서 즐기는 파노라마 남산 뷰, 호텔 웨딩임에도 매우 합리적인 식대와 대관료, 세련된 루프탑 바(Bar) 분위기.\n    -", "cons": "주차난 심각(하객 불편 1순위), 엘리베이터 이동 대기 시간 발생, 우천 시 실내 장소 이동 시 협소함", "tip": "호텔의 네임드보다는 '남산 뷰'와 '가성비'를 동시에 잡고 싶은 실속파 예비부부에게 추천. 하객들에게 인근 공영주차장 정보를 반드시 미리 안내할 것", "links": [{"text": "이비스 스타일 앰배서더 명동 공식 르 스타일 바", "url": "https://www.ambatel.com/ibisstyles/myeongdong/ko/diningView.do?dining_sn=22"}, {"text": "오딩 - 이비스 스타일 명동 루프탑 견적", "url": "https://oding.co.kr/venue/detail/36"}], "has_detail": true}, {"id": "그래피티_성수", "name": "그래피티 성수", "type_raw": "복합공간", "category": "가든/하우스", "district": "성동구", "guests_str": "50~80명", "guests_min": 50, "guests_max": 80, "cost_str": "1000~2000만", "cost_min": 1000.0, "cost_max": 2000.0, "meal_str": "7~10만", "meal_min": 7.0, "meal_max": 10.0, "rating": 4.6, "notes": "성수동 힙감성, 인더스트리얼, 파티특화", "tagline": "성수동 특유의 거친 인더스트리얼 감성과 그래피티 아트가 만난, 서울에서 가장 '힙'한 파티 웨딩의 성지", "reservation_html": "<ul><li>인스타그램 공식 계정 (@graffiti_seongsu) DM 문의</li><li>복합문화공간 대관 담당 부서 유선 연락</li><li>'료한앤앤장' 등 프리미엄 커스텀 웨딩 디렉팅 업체를 통한 통합 연출 권장</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 총 견적: 50~100명 기준 약 1,500만원 ~ 2,500만원 내외 (대관료+케이터링+연출 합산)</li><li>평균 식대: 70,000원 ~ 100,000원 이상 (외부 케이터링 퀄리티에 따라 상이)</li><li>꽃장식/디렉팅: 정해진 패키지가 없으므로 100% 커스텀 (최소 500만원 이상 권장)</li><li>당일 계약 혜택 및 할인 팁: 기업 행사나 팝업 스토어 대관이 없는 유휴 시간대(주로 일요일) 공략 시 대관료 협의 가능</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 50~80명 (공간의 힙한 분위기를 살리기 위해 너무 꽉 채우지 않는 것을 추천)</li><li>주차 및 교통: 성수역/뚝섬역 인근이나 성수동 특성상 자체 주차는 거의 불가능함. 하객들에게 인근 공영주차장(성수동2가 등) 이용 강력 안내 필수.</li></ul><p>-</p>", "pros": "기존 웨딩의 틀을 완전히 깨부수는 파격적이고 자유로운 분위기, DJ 공연 및 애프터 파티에 최적화된 음향/조명 시설, 유니크한 화보급 스냅 사진.\n    -", "cons": "전문 예식 시설(신부대기실, 폐백실 등) 전무, 어르신들에게는 다소 생소하고 정신없게 느껴질 수 있음, 준비 과정이 일반 예식보다 몇 배로 까다로움", "tip": "전형적인 결혼식보다 '브랜드 런칭 파티' 같은 느낌을 선호하는 커플에게 추천. 하객들에게 드레스코드를 지정하면 공간의 감성이 훨씬 배가됨", "links": [{"text": "그래피티 성수 인스타그램", "url": "https://www.instagram.com/graffiti_seongsu/"}, {"text": "료한앤앤장 - 그래피티 성수 커스텀 웨딩 디렉팅 사례", "url": "https://www.ryohan-ann-zhang.com/"}], "has_detail": true}, {"id": "스테이지28", "name": "스테이지28", "type_raw": "가든", "category": "가든/하우스", "district": "강동구", "guests_str": "150~250명", "guests_min": 150, "guests_max": 250, "cost_str": "1400~2000만", "cost_min": 1400.0, "cost_max": 2000.0, "meal_str": "7~8만", "meal_min": 7.0, "meal_max": 8.0, "rating": 4.7, "notes": "6시간대관, BBQ뷔페, 숲속감성", "tagline": "도심 속 숲속 파티 감성, 6시간의 압도적인 여유로움을 즐길 수 있는 하이엔드 가든 웨딩", "reservation_html": "<ul><li>공식 홈페이지 및 인스타그램(@stage28_official)을 통한 상담 신청</li><li>전화 예약: 02-3426-1928 (방문 상담 필수)</li><li>아이웨딩, 요즘웨딩 등 웨딩 예약 플랫폼을 통한 잔여 타임 확인</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/연출료: 약 880만원 (대관 550만 + 연출 330만)</li><li>꽃장식: 550만원~ (커스텀 가능)</li><li>평균 식대: 약 77,000원 (BBQ 뷔페 형태)</li><li>당일 계약 혜택 및 할인 팁: 비수기(잔여타임) 프로모션 시 대관료 50% 할인 가능성 있음</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 150~250명 (최대 300명 시 가든 밀집도 높음)</li><li>주차 및 교통: 고덕역 인근 위치, 자차 이용 권장. 대중교통 이용객을 위해 올림픽공원역/고덕역 셔틀버스 운행 여부 사전 체크 필수.</li></ul><p>-</p>", "pros": "6시간 단독 대관으로 2부 파티까지 매우 여유로움. 야외 BBQ 뷔페의 높은 하객 만족도. 숲으로 둘러싸인 프라이빗한 분위기.\n    -", "cons": "대중교통 접근성이 낮음. 야외 특성상 우천 시 텐트 설치 등 대안이 있으나 야외 감성이 반감됨. 높은 꽃장식 단가", "tip": "인기 있는 5, 6, 9, 10월 토요일 골든타임은 1년 전 예약이 기본. 일요일 저녁 나이트 웨딩 시 전구 연출로 더 로맨틱한 분위기 연출 가능", "links": [{"text": "오딩 베뉴 상세 정보", "url": "https://oding.co.kr"}, {"text": "아이웨딩 스테이지28 페이지", "url": "https://iwedding.co.kr"}, {"text": "요즘웨딩 견적 정보", "url": "https://yozmwedding.co.kr"}], "has_detail": true}, {"id": "르한스", "name": "르한스", "type_raw": "가든", "category": "가든/하우스", "district": "성북구", "guests_str": "150~200명", "guests_min": 150, "guests_max": 200, "cost_str": "1200~1800만", "cost_min": 1200.0, "cost_max": 1800.0, "meal_str": "8~9만", "meal_min": 8.0, "meal_max": 9.0, "rating": 4.6, "notes": "숲속감성, 어닝보유, 북악산뷰", "tagline": "북악산 자락의 숲속 요정 마을 같은 감성, 어닝 설치로 우천 리스크까지 잡은 정통 야외 하우스 웨딩", "reservation_html": "<ul><li>전화 문의: 02-941-1142</li><li>카카오톡 채널 '르한스'를 통한 상담 예약</li><li>매년 상반기(약 5월) 다음 해 전체 예약을 한꺼번에 받는 '오픈콜' 데이 운영 (사전 공지 확인 필수)</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료: 350만원 (정찰제)</li><li>꽃장식 및 디렉팅: 약 830만원 내외 (OAD 디렉팅 포함, 커스텀 필수)</li><li>평균 식대: 77,000원 ~ 87,000원 (BBQ 뷔페 또는 코스)</li><li>당일 계약 혜택 및 할인 팁: 비수기 할인이 거의 없는 정찰제이나, 평일 또는 나이트 웨딩 시 일부 조율 가능성 있음.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 150~200명 (250명 초과 시 테이블 배치 및 동선이 다소 혼잡함)</li><li>주차 및 교통: 전용 주차장 약 100대 수용 가능하나 경사가 심함. 대중교통 이용객을 위한 셔틀버스(길음역/한성대입구역) 운영 필수.</li></ul><p>-</p>", "pros": "서울 내에서 보기 드문 완벽한 숲속 뷰. 천장 어닝(가림막)이 잘 갖춰져 있어 비가 와도 예식 진행 가능. 4~5시간의 여유로운 대관 시간.\n    -", "cons": "북악스카이웨이 특유의 험한 접근성. 꽃장식 등 필수 추가금 비중이 높아 최종 견적이 상당히 높게 형성됨(추가금 파티 주의)", "tip": "오픈콜 날짜에 맞춰 광클 수준의 전화 연결이 필요함. 나이트 웨딩 시 전구 조명과 산바람이 어우러져 만족도가 극대화됨", "links": [{"text": "아이웨딩 르한스 정보", "url": "https://iwedding.co.kr"}, {"text": "르한스 공식 인스타그램", "url": "https://www.instagram.com/lehans_official"}, {"text": "요즘웨딩 견적 데이터", "url": "https://yozmwedding.co.kr"}], "has_detail": true}, {"id": "아델라베일리", "name": "아델라베일리", "type_raw": "테라스", "category": "가든/하우스", "district": "종로구", "guests_str": "100~150명", "guests_min": 100, "guests_max": 150, "cost_str": "800~1000만", "cost_min": 800.0, "cost_max": 1000.0, "meal_str": "6~8만", "meal_min": 6.0, "meal_max": 8.0, "rating": 4.4, "notes": "북악산뷰, 나이트웨딩추천, 부암동위치", "tagline": "북악산과 인왕산의 절경이 파노라마로 펼쳐지는 테라스 웨딩의 정석, 소규모 파티형 예식에 최적화된 곳", "reservation_html": "<ul><li>전화 예약: 02-395-0950 (부암동 본점 레스토랑)</li><li>웨딩북, 요즘웨딩 등 웨딩 플랫폼을 통한 상담 예약 및 캐시백 혜택 확인</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료: 약 350만원 (3시간 단독 대관)</li><li>꽃장식: 약 385만원 ~ 550만원 (커스텀 가능)</li><li>평균 식대: 59,000원 ~ 89,000원 (뷔페 또는 코스)</li><li>당일 계약 혜택 및 할인 팁: 플랫폼 제휴 시 당일 계약 혜택으로 식대 할인 또는 음주류 서비스 제공 가능성 있음.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 100~150명 (테라스 공간 특성상 150명 초과 시 다소 비좁게 느껴질 수 있음)</li><li>주차 및 교통: 부암동 산자락 위치로 자차 접근성 난이도 높음. 전용 주차 약 80대. 셔틀버스(경복궁역) 운행하나 25인승 소형 차량 위주라 하객 불편 후기 종종 있음.</li></ul><p>-</p>", "pros": "서울 도심을 내려다보는 압도적인 테라스 뷰. 저녁 예식 시 화려한 야경 연출 가능. 자유로운 식순 진행이 가능한 프라이빗함.\n    -", "cons": "대중교통 접근성이 매우 떨어짐(셔틀버스 대기 시간 등). 레스토랑 기반이라 신부 대기실 및 탈의 공간이 다소 협소하고 노후화된 느낌", "tip": "전구 조명이 켜지는 나이트 웨딩이 이 베뉴의 가장 큰 매력 포인트. 하객들에게 미리 셔틀버스 위치와 배차 간격을 상세히 안내하는 것이 필수", "links": [{"text": "웨딩북 아델라베일리 정보", "url": "https://weddingbook.com"}, {"text": "아델라베일리 공식 홈페이지", "url": "http://adelabailey.com"}, {"text": "요즘웨딩 견적 데이터", "url": "https://yozmwedding.co.kr"}], "has_detail": true}, {"id": "남산예술원", "name": "남산예술원", "type_raw": "가든", "category": "가든/하우스", "district": "용산구", "guests_str": "200~250명", "guests_min": 200, "guests_max": 250, "cost_str": "700~900만", "cost_min": 700.0, "cost_max": 900.0, "meal_str": "6~7만", "meal_min": 6.0, "meal_max": 7.0, "rating": 4.6, "notes": "벌룬세레머니, 갈비탕맛집, 남산숲속", "tagline": "서울 한복판 남산 숲속에서의 합리적인 가든 웨딩, 풍선 날리기 이벤트가 시그니처인 낭만적인 베뉴", "reservation_html": "<ul><li>전화 예약: 02-795-2244 (상담 예약 경쟁 치열)</li><li><strong>예약 팁</strong>: 방문 희망일 전주 수요일 오전 10시에 전화를 걸어 선착순으로 상담 일정을 잡는 방식이 일반적임.</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/연출료: 약 650만원 ~ 800만원 (기본 생화 장식 포함)</li><li>평균 식대: 58,000원 ~ 66,000원 (한정식 갈비탕 한상차림)</li><li>당일 계약 혜택 및 할인 팁: 인기 베뉴로 할인이 크지 않으나, 비성수기(7-8월, 1-2월) 대관료 프로모션 가능성 있음.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 200~250명 (최대 300명 이상 수용 가능하나 가든 좌석 및 연회장 혼잡도 고려 필요)</li><li>주차 및 교통: 6호선 한강진역 도보 10~15분 소요(언덕길). 셔틀버스를 운행하지만 하객 접근성은 낮은 편. 전용 주차장 보유(약 150~200대).</li></ul><p>-</p>", "pros": "남산 숲에 둘러싸인 독보적인 야외 감성. 갈비탕 한상차림으로 어르신들 만족도가 높음. 2시간의 비교적 여유로운 예식 간격.\n    -", "cons": "한강진역에서 올라오는 길이 매우 가파름. 연회장 및 신부 대기실 시설이 다소 올드하다는 평. 우천 시 캐노피 설치로 인해 야외 개방감이 줄어듦", "tip": "예식 마지막의 벌룬 세레머니(풍선 날리기)는 반드시 포함할 것. 스냅 사진 결과물이 매우 좋아 야외 스냅 중점 신랑신부에게 강력 추천", "links": [{"text": "남산예술원 공식 홈페이지", "url": "http://namsanartweddinghall.com"}, {"text": "웨비뉴 남산예술원 상세 분석", "url": "https://wavenue.kr"}, {"text": "아이웨딩 남산예술원 페이지", "url": "https://iwedding.co.kr"}], "has_detail": true}, {"id": "크레스트72", "name": "크레스트72", "type_raw": "가든", "category": "가든/하우스", "district": "중구", "guests_str": "150~250명", "guests_min": 150, "guests_max": 250, "cost_str": "2500~4000만+", "cost_min": 2500.0, "cost_max": 4000.0, "meal_str": "11~15만", "meal_min": 11.0, "meal_max": 15.0, "rating": 4.8, "notes": "인공폭포, 대형주차장, 하이엔드연출", "tagline": "인공 폭포와 남산의 녹음이 어우러진 하이엔드 비밀 정원, 압도적인 주차 편의성과 럭셔리한 야외 감성의 만남", "reservation_html": "<ul><li>전화 예약: 02-2232-7366 (중구 장충동)</li><li>공식 홈페이지 및 인스타그램(@crest72_official) 문의</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료: 프리미엄급 (비공개 상담 위주이나 타 하우스웨딩 대비 높음)</li><li>꽃장식: 약 1,000만원 ~ 3,000만원 이상 (완전 커스텀 생화 연출, 추가금 비중 높음)</li><li>평균 식대: 약 11만원 ~ 15만원 (양식 코스 또는 고급 뷔페)</li><li>당일 계약 혜택 및 할인 팁: 비성수기 또는 일요일 나이트 웨딩 시 꽃장식 할인 프로모션 가능성 있음.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 150~250명 (최대 300명까지 수용 가능하나 가든 내 동선 고려 시 200명 내외가 가장 쾌적함)</li><li>주차 및 교통: 약 800대 수용 가능한 대형 주차장 보유(강점). 동대입구역 도보 이동 시 가파른 오르막길이라 셔틀버스 이용 필수.</li></ul><p>-</p>", "pros": "인공 폭포 소리와 숲속 뷰가 어우러진 독보적인 현장감. 3시간 이상의 매우 여유로운 대관 시간. 야간 조명 연출이 뛰어나 나이트 웨딩 선호도 최상.\n    -", "cons": "서울 내 최고 수준의 견적(꽃장식 추가금 파티 주의). 대중교통 이용객에게는 다소 부담스러운 위치", "tip": "가든홀은 조명이 켜지는 오후 7시 예식이 가장 아름답기로 유명함. 하이엔드 야외 웨딩을 원하지만 하객 주차 편의성까지 놓칠 수 없는 신랑신부에게 최적", "links": [{"text": "크레스트72 공식 홈페이지", "url": "http://crest72.co.kr"}, {"text": "웨딩북 크레스트72 정보", "url": "https://weddingbook.com"}, {"text": "아이웨딩 크레스트72 페이지", "url": "https://iwedding.co.kr"}], "has_detail": true}, {"id": "빌라드지연", "name": "빌라드지연", "type_raw": "하우스", "category": "가든/하우스", "district": "서대문구", "guests_str": "50~100명", "guests_min": 50, "guests_max": 100, "cost_str": "1000~1500만", "cost_min": 1000.0, "cost_max": 1500.0, "meal_str": "9~12만", "meal_min": 9.0, "meal_max": 12.0, "rating": 4.5, "notes": "연희동대저택, 프라이빗, 주차불편주의", "tagline": "연희동 대저택에서의 영화 '어바웃 타임' 같은 로맨틱 하우스 웨딩, 소규모 하객과 깊은 소통을 원하는 분들을 위한 베뉴", "reservation_html": "<ul><li>카카오톡 채널 '빌라드지연'을 통한 상담 신청</li><li>공식 인스타그램(@villadejiyeon) 프로필 링크 예약 시스템 활용</li><li>방문 상담 후 계약금 입금 순으로 확정 (보통 1년 전 예약 권장)</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료: 약 300만원 ~ 500만원 (시즌/요일별 상이)</li><li>꽃장식: 약 500만원 ~ 1,000만원 이상 (커스텀 비중 매우 높음)</li><li>평균 식대: 약 8만원 ~ 10만원 중반대 (뷔페 또는 코스 선택 가능)</li><li>당일 계약 혜택 및 할인 팁: 하우스웨딩 특성상 정찰제 성격이 강하나, 비성수기 평일 예식 시 대관료 조정 가능성 있음.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 50~100명 (최적), 최대 120명 내외 (그 이상은 정원 및 실내 이동 동선이 매우 혼잡함)</li><li>주차 및 교통: 연희동 주택가 골목 안쪽에 위치하여 주차 난이도 최상. 전용 주차 매우 협소하여 인근 공영주차장 안내 또는 대중교통 권장 필수.</li></ul><p>-</p>", "pros": "하루 1~2팀만 진행하는 완벽한 프라이빗함. 신랑신부의 취향을 100% 반영한 공간 연출 가능. 이국적인 정원 배경으로 인생 스냅 보장.\n    -", "cons": "하객들에게 미안해질 정도의 불편한 주차와 접근성. 하객 수 대비 높은 고정비(대관료/꽃값)로 인한 1인당 높은 비용 부담", "tip": "본식 스냅의 비중이 높고, 하객들과 파티처럼 어울리는 결혼식을 꿈꾼다면 최고의 선택. 주차 불편을 상쇄할 만큼의 정성스러운 하객 안내문 준비를 추천", "links": [{"text": "아이웨딩 빌라드지연 정보", "url": "https://iwedding.co.kr"}, {"text": "빌라드지연 공식 인스타그램", "url": "https://www.instagram.com/villadejiyeon"}, {"text": "요즘웨딩 견적 데이터", "url": "https://yozmwedding.co.kr"}], "has_detail": true}, {"id": "연희정원", "name": "연희정원", "type_raw": "하우스", "category": "가든/하우스", "district": "서대문구", "guests_str": "50~100명", "guests_min": 50, "guests_max": 100, "cost_str": "800~1200만", "cost_min": 800.0, "cost_max": 1200.0, "meal_str": "6~7만", "meal_min": 6.0, "meal_max": 7.0, "rating": 4.7, "notes": "올데이단독, 하우스파티, 연희동감성", "tagline": "하루에 오직 한 커플만을 위한 '올데이' 프라이빗 하우스, 시간에 구애받지 않는 우리만의 파티 웨딩", "reservation_html": "<ul><li>공식 인스타그램(@yeonhui_garden) 프로필 링크 오픈 카톡 문의</li><li>블로그 상담 신청 및 유선 문의 (0507-1335-0105)</li><li>1일 1팀 시스템으로 예약 난이도가 매우 높음 (최소 1년 전 권장)</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료: 약 400만원 내외 (정해진 식순 없이 여유로운 사용 가능)</li><li>꽃장식 및 디렉팅: 약 300만원 ~ 800만원 이상 (연출 범위에 따라 상이)</li><li>평균 식대: 약 55,000원 ~ 70,000원 (뷔페 형식, 하우스웨딩 치고 합리적인 편)</li><li>당일 계약 혜택 및 할인 팁: 비수기(7-8월) 대관료 할인 또는 꽃장식 업그레이드 프로모션 확인 필요.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 50~80명 (최적), 최대 100명 (그 이상은 야외 좌석 배치가 다소 타이트함)</li><li>주차 및 교통: 전용 주차 공간 거의 없음. 인근 공영주차장(연희동 제1, 2공영) 안내 필수. 대중교통 이용 시 홍대입구역 등에서 버스 환승 필요.</li></ul><p>-</p>", "pros": "하루 종일 우리만 사용하는 단독 베뉴의 여유로움. 정해진 틀 없는 '진짜' 디렉팅 웨딩 가능. 아기자기하고 따뜻한 주택 감성 사진.\n    -", "cons": "주차의 치명적인 불편함. 우천 시 실내 공간이 야외에 비해 다소 협소하게 느껴질 수 있음. 소규모임에도 고정비용(대관/꽃) 부담이 큼", "tip": "전통적인 식순보다 친구들과 어울리는 파티, 3부 애프터 파티까지 계획하는 신랑신부에게 최고의 베뉴. 주차 안내 요원 배치를 신중히 고려할 것", "links": [{"text": "연희정원 공식 인스타그램", "url": "https://www.instagram.com/yeonhui_garden"}, {"text": "아이웨딩 연희정원 정보", "url": "https://iwedding.co.kr"}, {"text": "요즘웨딩 견적 데이터", "url": "https://yozmwedding.co.kr"}], "has_detail": true}, {"id": "세빛섬_가든", "name": "세빛섬 가든", "type_raw": "한강", "category": "가든/하우스", "district": "서초구", "guests_str": "200~300명", "guests_min": 200, "guests_max": 300, "cost_str": "2000~3500만", "cost_min": 2000.0, "cost_max": 3500.0, "meal_str": "9~13만", "meal_min": 9.0, "meal_max": 13.0, "rating": 4.5, "notes": "한강파노라마뷰, 노을웨딩, 주차매우불편", "tagline": "한강 한복판 물 위에서 올리는 파노라마 리버뷰 웨딩, 노을과 야경이 공존하는 이브닝 웨딩의 끝판왕", "reservation_html": "<ul><li>전화 예약: 02-537-2440 (반포 한강공원 내 위치)</li><li>공식 홈페이지 및 인스타그램(@floating_island_wedding) 문의</li><li>방문 상담 후 잔여 타임 확인 및 견적 산출</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/연출료: 약 500만원 ~ 1,000만원 (시즌별 차이 큼)</li><li>꽃장식: 약 500만원 ~ 2,000만원 이상 (야외 가든 연출 규모에 따라 상이)</li><li>평균 식대: 약 9만원 ~ 13만원 (고급 양식 코스 요리)</li><li>당일 계약 혜택 및 할인 팁: 일요일 저녁 타임 또는 비수기 예식 시 꽃장식 업그레이드나 음주류 서비스 혜택 제공 가능성 높음.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 200~300명 (가든 전체를 단독으로 사용하여 개방감이 매우 좋음)</li><li>주차 및 교통: 반포 한강공원 공영주차장 이용. 주말 나들이객과 겹칠 경우 주차 진입에만 30분 이상 소요(치명적 단점). 고속터미널역 셔틀버스 운행 필수.</li></ul><p>-</p>", "pros": "서울에서 유일무이한 한강 위 가든 웨딩의 특별함. 코스 요리로 제공되는 식사 퀄리티가 우수함. 본식 스냅이 화보 수준으로 잘 나옴.\n    -", "cons": "주말 한강공원의 극악무도한 주차 및 교통 체증. 강풍이나 비가 올 경우 한강 특성상 야외 예식 진행이 매우 어려워 실내로 변경 시 만족도 급감", "tip": "오후 5시~6시 시작하는 이브닝 웨딩을 강력 추천. 한강의 노을부터 화려한 야경까지 하객들에게 선물할 수 있음. 하객들에게 주차 혼잡을 미리 강력하게 공지해야 함", "links": [{"text": "플로팅아일랜드 공식 홈페이지", "url": "http://www.floatingisland.co.kr"}, {"text": "아이웨딩 플로팅아일랜드 가든 정보", "url": "https://iwedding.co.kr"}, {"text": "요즘웨딩 견적 데이터", "url": "https://yozmwedding.co.kr"}], "has_detail": true}, {"id": "삼원가든", "name": "삼원가든", "type_raw": "가든", "category": "가든/하우스", "district": "강남구", "guests_str": "150~250명", "guests_min": 150, "guests_max": 250, "cost_str": "1600~2200만", "cost_min": 1600.0, "cost_max": 2200.0, "meal_str": "9~13만", "meal_min": 9.0, "meal_max": 13.0, "rating": 4.7, "notes": "도심폭포뷰, 한식맛집, 6시간대관", "tagline": "강남의 심장 압구정에서 만나는 정통 가든 웨딩, 폭포 소리와 최고급 한식 차림으로 부모님들의 찬사가 이어지는 베뉴", "reservation_html": "<ul><li>카카오톡 채널 '삼원가든웨딩'을 통한 상담 신청</li><li>전화 예약: 02-548-3030 (신사동)</li><li>야외 활동이 적합한 3~6월, 8~11월 시즌 위주로 운영</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/연출료: 약 800만원 ~ 900만원 (대관 250만 + 디렉팅 550~600만)</li><li>꽃장식: 약 800만원 ~ 1,200만원 이상 (야외 공간 연출 필수 항목)</li><li>평균 식대: 약 9만원 ~ 13만원 (갈비탕, 불고기 등 한상차림)</li><li>당일 계약 혜택 및 할인 팁: 인기 맛집 베뉴로 할인이 거의 없으나, 비수기 평일 예식 시 부대비용 조율 가능성 있음.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 150~250명 (최적), 300명 초과 시 가든 및 이동 동선 혼잡 우려.</li><li>주차 및 교통: 압구정역 인근 위치로 접근성 우수. 전용 주차장 보유하나 하객들도 발렛비(약 4,000원)를 지불해야 하는 점이 불만 사항으로 종종 언급됨.</li></ul><p>-</p>", "pros": "강남 도심 한복판에서의 완벽한 숲속/폭포 감성. 검증된 갈비탕 맛집으로 식사 만족도 최상. 6시간의 압도적으로 여유로운 단독 사용 시간.\n    -", "cons": "우천 시 실내 연회장으로 변경되는데 야외의 메리트가 완전히 사라짐. 꽃장식과 디렉팅비 등 필수 부대비용이 높아 총 견적이 비쌈", "tip": "전통적인 한식 차림을 선호하시는 부모님과 야외 웨딩을 꿈꾸는 신랑신부 사이의 완벽한 타협점. 1년 전 예약이 거의 필수이며, 나이트 웨딩 시 전구와 폭포 조명이 어우러져 매우 환상적임", "links": [{"text": "삼원가든 공식 홈페이지", "url": "http://www.samwongarden.com"}, {"text": "웨딩북 삼원가든 정보", "url": "https://weddingbook.com"}, {"text": "아이웨딩 삼원가든 페이지", "url": "https://iwedding.co.kr"}, {"text": "요즘웨딩 견적 데이터", "url": "https://yozmwedding.co.kr"}], "has_detail": true}, {"id": "앨리스몽드_남산", "name": "앨리스몽드 남산", "type_raw": "하우스", "category": "가든/하우스", "district": "용산구", "guests_str": "100~150명", "guests_min": 100, "guests_max": 150, "cost_str": "1500~2000만", "cost_min": 1500.0, "cost_max": 2000.0, "meal_str": "9~14만", "meal_min": 9.0, "meal_max": 14.0, "rating": 4.6, "notes": "남산뷰루프탑, 독채사용, 디렉팅특화", "tagline": "남산 소월길의 보석 같은 단독 하우스 베뉴, 루프탑에서 즐기는 압도적인 서울 시티뷰와 감각적인 디렉팅의 조화", "reservation_html": "<ul><li>공식 홈페이지(alicemonde.co.kr) 상담 예약 메뉴 활용</li><li>전화 예약: 02-511-2266</li><li>아이웨딩, 베리굿웨딩 등 대형 컨설팅 업체 제휴 예약 시 혜택 확인 가능</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료: 약 480만원 ~ 550만원 (5시간 독채 사용)</li><li>꽃장식 및 연출료: 약 1,000만원 ~ 1,300만원 이상 (디렉팅비 포함, 커스텀 비중 높음)</li><li>평균 식대: 약 88,000원 ~ 140,000원 (뷔페 또는 코스 선택 가능)</li><li>당일 계약 혜택 및 할인 팁: 비성수기 잔여 타임 상담 시 식대 할인 또는 꽃장식 서비스 업그레이드 프로모션이 잦은 편.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 100~150명 (최적), 200명 초과 시 층별로 하객이 분산되어 다소 소외감을 느낄 수 있음.</li><li>주차 및 교통: 남산 소월길 오르막 위치로 대중교통 접근성 낮음. 전원 발렛 주차로 진행되나 하객이 몰릴 시 출차 대기 시간 발생.</li></ul><p>-</p>", "pros": "전관을 우리 팀만 사용하는 완벽한 단독성. 루프탑 예식의 로맨틱한 분위기와 남산 타워 배경. 1층 실내 가든홀이 있어 우천 시에도 퀄리티 높은 플랜 B 가능.\n    -", "cons": "꽃장식 및 연출료 등 초기 진입 비용이 매우 높음. 층이 나뉘어 있어 대규모 하객 수용 시 집중도가 떨어짐", "tip": "루프탑 나이트 웨딩 시 시티뷰 야경이 환상적이라 저녁 타임 선호도가 매우 높음. 100~150명 규모의 소규모 하이엔드 하우스 웨딩을 원하는 신랑신부에게 가장 추천하는 베뉴", "links": [{"text": "앨리스몽드 공식 홈페이지", "url": "http://alicemonde.co.kr"}, {"text": "아이웨딩 앨리스몽드 남산 정보", "url": "https://iwedding.co.kr"}, {"text": "요즘웨딩 견적 데이터", "url": "https://yozmwedding.co.kr"}], "has_detail": true}, {"id": "근화원", "name": "근화원", "type_raw": "한옥", "category": "기타", "district": "광진구", "guests_str": "200~250명", "guests_min": 200, "guests_max": 250, "cost_str": "1600~2000만+", "cost_min": 1600.0, "cost_max": 2000.0, "meal_str": "8.8만", "meal_min": 8.8, "meal_max": null, "rating": 4.8, "notes": "어린이대공원 내 폭포배경, 4시간대관, 한식뷔페맛집", "tagline": "한옥의 고즈넉함과 폭포의 시원함을 동시에 갖춘, 예약 전쟁이 치열한 하이엔드 한옥 야외 웨딩의 정석", "reservation_html": "<p>네이버 예약 시스템을 통한 방문 상담 예약 필수 (전화/카톡 불가). '공간한옥(근화원예식)' 카카오톡 채널을 통해 예약 오픈 공지 확인 권장.</p><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/꽃장식: 약 1,600만 원~ (대관 500 + 디렉팅 300 + 꽃장식 800~)</li><li>평균 식대: 88,000원 (한식 뷔페)</li><li>당일 계약 혜택 및 할인 팁: 2026년 상반기 상담 진행 중. 비수기(7~8월)나 평일 예식 시 대관료 할인 협의 가능.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 200~250명 (최대 400명까지 가능하나 혼잡 우려)</li><li>주차 및 교통: 어린이대공원 내 위치하여 주차장(약 120대) 공유, 90분~2시간 이후 유료 전환. ATM 기기가 근처에 없어 사전 공지 필요.</li></ul><p>-</p>", "pros": "4시간의 넉넉한 대관 시간, 압도적인 한옥&폭포 배경 스냅, 정갈한 한식 뷔페로 어르신 만족도 높음.\n    -", "cons": "높은 꽃장식 필수 비용, 협소한 화장실 및 내부 대기 공간, 날씨에 따른 추가 천막 비용 발생", "tip": "현재 2025년 골든타임은 마감되었으며, 2026년 상반기 예약을 위해 네이버 예약 오픈 알림 설정 필수.", "links": [{"text": "iwedding 근화원 정보", "url": "https://www.iwedding.co.kr"}, {"text": "공간한옥 카카오톡 채널", "url": "https://pf.kakao.com/_xjNpxdxj"}], "has_detail": true}, {"id": "라비두스", "name": "라비두스", "type_raw": "하우스", "category": "가든/하우스", "district": "중구", "guests_str": "200~300명", "guests_min": 200, "guests_max": 300, "cost_str": "1600~2500만+", "cost_min": 1600.0, "cost_max": 2500.0, "meal_str": "11~20만", "meal_min": 11.0, "meal_max": 20.0, "rating": 4.7, "notes": "전직 대통령 별장, 대저택 감성, 높은 층고 실내홀 보유", "tagline": "전직 대통령 별장의 품격을 간직한, 도심 속 대저택 야외 웨딩의 끝판왕", "reservation_html": "<p>대표번호(02-2265-7000)를 통한 유선 예약 후 방문 상담. 아이웨딩, 웨딩북 등 웨딩 플랫폼을 통한 잔여 타임 확인 가능.</p><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/꽃장식: 약 1,650만 원~ (대관 550 + 연출 440 + 꽃장식 660~)</li><li>평균 식대: 110,000원 ~ 220,000원 (코스 요리)</li><li>당일 계약 혜택 및 할인 팁: 당일 계약 시 대관료 및 꽃장식 할인 폭이 크며, 비수기/일요일 저녁 타임 견적 조정 가능.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 200~300명 (최소 100명, 실내외 포함 최대 400명 가능)</li><li>주차 및 교통: 충무로역 인근이나 도보 이동 시 급경사 오르막길 주의. 셔틀버스 운행 필수. 원내 주차 100대 미만으로 하객 많을 시 인근 공영주차장 활용.</li></ul><p>-</p>", "pros": "높은 층고의 실내 복층 홀과 넓은 정원의 환상적인 조화, 3시간 30분의 넉넉한 예식 시간, 1:1 커스텀 디렉팅.\n    -", "cons": "하우스 웨딩 특유의 높은 견적, 하객들의 주차 및 접근성(오르막길) 불만 가능성, 우천 시 실내 변경 시의 아쉬움", "tip": "토요일 점심 타임은 1년 전에도 마감되는 경우가 많아, 일요일이나 나이트 웨딩을 대안으로 고려 추천.", "links": [{"text": "라비두스 공식 홈페이지", "url": "http://www.laviedoux.co.kr"}, {"text": "아이웨딩 라비두스 정보", "url": "https://www.iwedding.co.kr"}], "has_detail": true}, {"id": "명동_라루체", "name": "명동 라루체", "type_raw": "하우스", "category": "가든/하우스", "district": "중구", "guests_str": "200~250명", "guests_min": 200, "guests_max": 250, "cost_str": "300~700만", "cost_min": 300.0, "cost_max": 700.0, "meal_str": "6~7.5만", "meal_min": 6.0, "meal_max": 7.5, "rating": 4.5, "notes": "명동역세권, 천장개방글래스돔, 벌룬세레머니, 뷔페맛집", "tagline": "천장이 열리는 글래스 돔과 벌룬 세레머니가 매력적인, '밥루체'라 불리는 뷔페 맛집 하우스 웨딩", "reservation_html": "<p>예약실 대표번호(02-766-8200) 유선 문의. 매주 월, 화 휴무로 수요일 오전 상담 예약 시도가 유리함.</p><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/꽃장식: 약 300~700만 원 (당일 계약 및 프로모션 할인 적용 시)</li><li>평균 식대: 60,000원 ~ 75,000원 (뷔페, 할인 적용 기준)</li><li>당일 계약 혜택 및 할인 팁: 시기별 프로모션이 활발하며, 당일 계약 시 대관료 대폭 할인 및 부대 서비스(풍선 등) 제공 협의 가능.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 200~250명 (홀 내부가 아주 넓지는 않아 적정 인원 유지 권장)</li><li>주차 및 교통: 명동역 도보 2분으로 대중교통 최상. 단, 자체 주차장이 협소해 외부 주차장(남산 등) 이용 빈도가 높으며 주말 명동 진입 교통 체증 주의.</li></ul><p>-</p>", "pros": "하이라이트인 풍선 날리기 이벤트의 만족도, 뷔페 음식의 가짓수와 맛(밥루체), 통창을 통한 남산뷰 개방감.\n    -", "cons": "엘리베이터 혼잡(2대 운영), 일부 시설의 노후화 느낌, 우천 시 천장 개방 불가로 인한 메리트 감소", "tip": "벌룬 세레머니를 위해 가급적 날씨가 안정적인 5~6월, 9~10월 골든타임을 선점하는 것이 핵심.", "links": [{"text": "라루체 공식 홈페이지", "url": "http://www.lalucewedding.co.kr"}, {"text": "웨딩북 명동 라루체 정보", "url": "https://www.weddingbook.com"}], "has_detail": true}, {"id": "메이다이닝", "name": "메이다이닝", "type_raw": "가든", "category": "가든/하우스", "district": "도봉구", "guests_str": "200~300명", "guests_min": 200, "guests_max": 300, "cost_str": "800~1200만", "cost_min": 800.0, "cost_max": 1200.0, "meal_str": "7.7만", "meal_min": 7.7, "meal_max": null, "rating": 4.4, "notes": "3천평 시크릿가든, 6시간대관, 가성비야외, 접근성아쉬움", "tagline": "3,000평 규모의 압도적인 정원에서 즐기는 6시간의 여유, 가성비와 감성을 모두 잡은 시크릿 가든 웨딩", "reservation_html": "<p>메이다이닝 공식 홈페이지 또는 대표번호를 통한 방문 상담 예약. 아이웨딩 등 플랫폼 제휴 혜택 확인 권장.</p><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/꽃장식: 약 830~1,150만 원 (대관 350 + 연출 180 + 꽃장식 300~600)</li><li>평균 식대: 77,000원 (세미 뷔페 형식)</li><li>당일 계약 혜택 및 할인 팁: 성수기 외 시즌이나 평일 예식 시 꽃장식 업그레이드 또는 식대 할인 협의 가능.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 200~250명 (공간은 넓으나 식사 동선 및 편의시설 고려 시 적정 인원)</li><li>주차 및 교통: 도봉구 끝자락에 위치하여 자차 이용 필수. 자체 주차장(약 100대) 외 외부 연계 주차장 확인 필요. 대중교통 이용객을 위한 셔틀버스 운행 필수 고려.</li></ul><p>-</p>", "pros": "서울 내에서 보기 드문 광활하고 잘 가꾸어진 정원 조경, 하루 1~2팀만 진행하는 6시간의 매우 여유로운 대관 시간, 이국적인 나무와 꽃 배경의 스냅.\n    -", "cons": "하객들의 접근성 불편(교통의 요지가 아님), 야외 특성상 벌레 및 날씨 리스크, 실내 신부 대기실 등 부대시설이 다소 소박함", "tip": "정원의 계절감이 극대화되는 5월 중순이나 10월 초순이 가장 인기이며, 최소 1년 전 예약이 안전함.", "links": [{"text": "메이다이닝 공식 홈페이지", "url": "http://www.maydining.co.kr"}, {"text": "요즘웨딩 메이다이닝 정보", "url": "https://yozmwedding.co.kr"}], "has_detail": true}, {"id": "보넬리가든", "name": "보넬리가든", "type_raw": "가든", "category": "가든/하우스", "district": "서초구", "guests_str": "200~300명", "guests_min": 200, "guests_max": 300, "cost_str": "3000~4000만+", "cost_min": 3000.0, "cost_max": 4000.0, "meal_str": "9~12만", "meal_min": 9.0, "meal_max": 12.0, "rating": 4.8, "notes": "1500평 숲속감성, 셀럽웨딩베뉴, 6시간대관, 대형텐트보유", "tagline": "연예인들이 사랑하는 1,500평의 숲속 낙원, 서울 도심 속 가장 완벽하고 프라이빗한 프리미엄 가든 웨딩", "reservation_html": "<p>예약실 대표번호(02-516-0085) 유선 상담 예약. 주말 상담은 예약이 밀려 있어 최소 2~3주 전 신청 권장.</p><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/꽃장식: 약 3,245만 원~ (대관 1,650 + 연출 715 + 꽃장식 880~)</li><li>평균 식대: 90,000원 ~ 120,000원 (뷔페 또는 코스 선택)</li><li>당일 계약 혜택 및 할인 팁: 하이엔드 베뉴 특성상 가격 정찰제 성격이 강하나, 비수기나 평일 예식 시 식대 조정 가능성 있음.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 200~300명 (최대 500명까지 수용 가능하나 가든의 개방감을 위해 적정 인원 유지 추천)</li><li>주차 및 교통: 서초구 내곡동 깊숙이 위치하여 대중교통 이용은 다소 불편함. 셔틀버스 운영이 필수적이며, 자체 주차 공간은 약 150대 규모.</li></ul><p>-</p>", "pros": "6시간의 매우 여유로운 단독 사용으로 파티 분위기 극대화, 미국산 대형 텐트 설치로 우천 시에도 야외 감성 유지 가능, 수준 높은 꽃장식 퀄리티.\n    -", "cons": "서울 시내 최고 수준의 대관료와 부대 비용, 대중교통 접근성 및 진입로 주변 환경(훈련장 등)의 아쉬움, 야외 뷔페 시 하객 동선 혼잡 가능성", "tip": "장나라, 줄리엔강 등 셀럽 웨딩으로 인지도가 급상승하여, 인기 시즌 토요일 점심 타임은 1년 2개월 전부터 문의 필수.", "links": [{"text": "보넬리가든 공식 홈페이지", "url": "http://www.bonelligarden.com"}, {"text": "아이웨딩 보넬리가든 정보", "url": "https://www.iwedding.co.kr"}], "has_detail": true}, {"id": "더벨리하우스", "name": "더벨리하우스", "type_raw": "하우스", "category": "가든/하우스", "district": "성동구", "guests_str": "100~150명", "guests_min": 100, "guests_max": 150, "cost_str": "600~1500만", "cost_min": 600.0, "cost_max": 1500.0, "meal_str": "7~9만", "meal_min": 7.0, "meal_max": 9.0, "rating": 4.6, "notes": "성수동 감성, 통창채광스냅, 스몰웨딩최적화, 주차불편", "tagline": "성수동의 힙한 감성과 통창 너머의 햇살이 어우러진, 스몰 웨딩에 최적화된 프라이빗 대저택", "reservation_html": "<p>카카오톡 채널 '더벨리하우스' 또는 공식 홈페이지를 통해 잔여 타임 및 견적 1차 문의 후 방문 상담.</p><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/꽃장식: 약 600~1,500만 원 (대관 300~700 + 꽃장식 300~800 이상 커스텀)</li><li>평균 식대: 70,000원 ~ 90,000원 (뷔페 또는 코스 선택)</li><li>당일 계약 혜택 및 할인 팁: 당일 계약 시 대관료 할인 또는 음주류 무제한 등 프로모션 제공 빈도 높음.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 100~150명 (200명 이상 시 로비와 대기 공간이 매우 혼잡할 수 있음)</li><li>주차 및 교통: 건물 내 주차가 매우 제한적이며, 성수동 특성상 하객들이 인근 공영주차장을 직접 찾아야 하는 불편함이 큼. 뚝섬역/서울숲역 도보 이동 가능하나 골목 안 위치.</li></ul><p>-</p>", "pros": "세련된 인테리어와 통창 채광으로 인한 본식 스냅의 고퀄리티, 성수동 핫플레이스 인근의 트렌디한 분위기, 여유로운 단독 사용(3시간 이상).\n    -", "cons": "주차난 및 대중교통 접근성(골목길 찾기)에 대한 하객 불만, 하객 규모 대비 협소한 로비 공간, 커스텀 옵션 추가 시 급격히 높아지는 견적", "tip": "100명 내외의 소규모 인원으로 성수동 감성 파티형 웨딩을 꿈꾸는 예비부부에게 가장 추천하는 베뉴.", "links": [{"text": "더벨리하우스 공식 홈페이지", "url": "https://thevalleyhouse.co.kr"}], "has_detail": true}, {"id": "틸티드_한남", "name": "틸티드 한남", "type_raw": "하우스", "category": "가든/하우스", "district": "용산구", "guests_str": "100~130명", "guests_min": 100, "guests_max": 130, "cost_str": "1500~2000만", "cost_min": 1500.0, "cost_max": 2000.0, "meal_str": "9~10만", "meal_min": 9.0, "meal_max": 10.0, "rating": 4.7, "notes": "캘리포니아 빈티지감성, 한남동 힙베뉴, 파티형웨딩, 주차지옥", "tagline": "미국 캘리포니아 대저택의 빈티지한 무드를 한남동에 옮겨온 듯한, 힙하고 프라이빗한 파티 하우스 웨딩", "reservation_html": "<p>카카오톡 채널 '틸티드 한남' 또는 공식 인스타그램(@tilted_hannam)을 통한 잔여 타임 확인 후 방문 상담 예약.</p><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료/꽃장식: 약 1,500~1,800만 원 (대관 550 + 꽃장식 및 연출 880~980 + 음향/출장비 등 추가)</li><li>평균 식대: 88,000원 ~ 98,000원 (양식 코스 또는 세미 뷔페)</li><li>당일 계약 혜택 및 할인 팁: 당일 계약 시 대관료 할인 프로모션이 빈번하며, 평일이나 일요일 나이트 웨딩 시 견적 절감 폭이 큼.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 100~130명 (구조가 여러 구역으로 나뉘어 있어 대규모 인원 시 전체 식순 관람이 어려울 수 있음)</li><li>주차 및 교통: 자체 주차장(약 10~15대)이 매우 협소하여 한강진역 인근 공영주차장 활용 필수. 하객들에게 주차 불편에 대한 사전 공지가 반드시 필요함.</li></ul><p>-</p>", "pros": "국내에서 보기 드문 독보적인 빈티지 럭셔리 인테리어, 모든 공간이 화보 같은 포토존, 3~6시간의 넉넉한 대관 시간으로 진정한 파티 분위기 가능.\n    -", "cons": "매우 열악한 주차 환경, 내부 공간 분리로 인한 하객 간 소외 가능성, 야외 가든 활용 시 날씨에 따른 만족도 편차", "tip": "전형적인 예식 분위기보다 자유롭고 감각적인 하우스 파티형 결혼식을 선호하는 커플에게 최적이며, 2025년 하반기 예약은 이미 진행 중.", "links": [{"text": "아이웨딩 틸티드 한남 정보", "url": "https://www.iwedding.co.kr"}, {"text": "웨딩북 틸티드 한남 정보", "url": "https://www.weddingbook.com"}], "has_detail": true}, {"id": "석파정", "name": "석파정", "type_raw": "한옥(야외)", "category": "한옥/전통", "district": "종로구", "guests_str": "100~200명", "guests_min": 100, "guests_max": 200, "cost_str": "2500~4000만+", "cost_min": 2500.0, "cost_max": 4000.0, "meal_str": "10~13만", "meal_min": 10.0, "meal_max": 13.0, "rating": 4.9, "notes": "대원군 별장, 압도적 경관, 하이엔드 디렉팅 필수", "tagline": "흥선대원군의 별장에서 치러지는 압도적 위엄의 하이엔드 야외 웨딩", "reservation_html": "<ul><li>일반 웨딩홀과 달리 전담 디렉팅 업체(료한디렉터 등)를 통해 상담 및 예약 진행.</li><li>최소 1년 전 예약 권장, 예식 가능 날짜가 매우 한정적임.</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료: 1,000~1,500만원 대</li><li>꽃장식 비용: 700~1,000만원 이상 (커스텀 필수)</li><li>평균 식대: 10~13만원 (외부 케이터링 업체 조율 가능)</li><li>당일 계약 혜택 및 할인 팁: 할인보다는 특정 날짜 선점이 관건이며, 비수기나 평일 예식 시 대관료 협의 가능성 있음.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 100~200명 (200명 초과 시 동선 및 시야 제한 발생)</li><li>주차 및 교통: 서울미술관 주차장 이용 가능하나 주말 관람객과 겹쳐 혼잡함. 대중교통 접근성이 다소 떨어짐.</li></ul><p>-</p>", "pros": "코끼리 바위와 노송이 어우러진 독보적인 경관, 하루 1~2팀 한정의 프라이빗함, 스냅 사진의 완성도가 국내 최정상급.\n    -", "cons": "매우 높은 견적, 경사진 지형으로 인한 노약자 이동 불편, 우천 시 실내(미술관 내부) 전환 시 야외 감성 상실", "tip": "인근의 '석파랑(한옥 레스토랑)'과 이름이 비슷하여 하객들이 헷갈리는 경우가 많으니 청첩장에 주의 문구 필수. 26년 가을 타임은 이미 문의가 폭주 중이므로 빠른 디렉터 컨택 추천.", "links": [{"text": "석파정 웨딩 정보 - 아이웨딩", "url": "https://www.iwedding.co.kr/"}], "has_detail": true}, {"id": "석파랑", "name": "석파랑", "type_raw": "한옥(정원)", "category": "한옥/전통", "district": "종로구", "guests_str": "50~100명", "guests_min": 50, "guests_max": 100, "cost_str": "1500~2000만", "cost_min": 1500.0, "cost_max": 2000.0, "meal_str": "13만", "meal_min": 13.0, "meal_max": null, "rating": 4.7, "notes": "궁중음식맛집, 소규모프리미엄, 주차협소", "tagline": "궁중 음식의 정수와 고즈넉한 한옥 미학이 만난 프라이미엄 소규모 웨딩", "reservation_html": "<ul><li>석파랑 예약실 직접 전화 상담 (02-395-2500).</li><li>아이웨딩, 요즘웨딩 등 웨딩 플랫폼을 통한 비대면 견적 확인 및 예약 대행 가능.</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료: 400만원 내외 (연출료 포함)</li><li>꽃장식 비용: 900~1,000만원 내외 (커스텀 중심)</li><li>평균 식대: 13만원 (궁중 한정식 코스 단일 메뉴 위주)</li><li>당일 계약 혜택 및 할인 팁: 평일 예식 시 식대나 대관료 일부 조정 가능성 있음.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 50~100명 (최대 150명이나 100명 초과 시 신관 전관 대관으로 비용 상승)</li><li>주차 및 교통: 자체 주차장 40대 내외로 매우 협소. 지하철역과 거리가 있어 하객 셔틀버스 운행 권장.</li></ul><p>-</p>", "pros": "궁중 음식 전문점답게 식사 만족도가 최상위권, 본관(전통)과 신관(현대)의 조화로운 배경, 3시간 이상의 넉넉한 예식 시간.\n    -", "cons": "소규모임에도 특급 호텔급의 높은 꽃장식 비용, 주차 지옥(발렛 필수이나 혼잡), 대중교통 접근성 불편", "tip": "전통 혼례와 현대식 웨딩을 믹스하여 진행하기에 가장 최적화된 장소. 날씨의 영향을 덜 받는 구조이므로 6월이나 9월 초 예식도 추천함.", "links": [{"text": "석파랑 공식 홈페이지", "url": "http://www.seokparang.co.kr/"}], "has_detail": true}, {"id": "필경재", "name": "필경재", "type_raw": "한옥(고택)", "category": "한옥/전통", "district": "강남구", "guests_str": "20~40명", "guests_min": 20, "guests_max": 40, "cost_str": "300~500만", "cost_min": 300.0, "cost_max": 500.0, "meal_str": "12~27만", "meal_min": 12.0, "meal_max": 27.0, "rating": 4.8, "notes": "500년역사, 대관료무료, 직계가족웨딩최적", "tagline": "500년 역사의 고택에서 치러지는 품격 있는 '대관료 무료' 직계가족 소규모 웨딩", "reservation_html": "<ul><li>전화 예약 필수 (02-445-2115).</li><li>매월 1일 오전 10시에 2개월 후의 예약을 일괄 접수 (예: 10월 예식은 8월 1일 예약 오픈).</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료: <strong>무료</strong> (식사 비용에 포함)</li><li>꽃장식 비용: 100~300만원 이상 (외부 업체 반입 가능, 규모에 따라 상이)</li><li>평균 식대: 12~27만원 (궁중 한정식 코스, 주말엔 16만원 이상 코스 권장)</li><li>당일 계약 혜택 및 할인 팁: 대관료가 없으므로 별도의 할인은 적으나, 예약금(50~100만원)은 취소 시 절대 환불 불가하므로 주의 필요.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 20~30명 (최대 40명 내외의 룸 보유)</li><li>주차 및 교통: 수서역 도보 10~15분 거리로 접근성이 다소 아쉬우나 발렛 주차 서비스가 잘 되어 있음.</li></ul><p>-</p>", "pros": "500년 된 한옥과 소나무 정원이 주는 압도적 고전미, 대관료가 없어 실속 있는 하이엔드 웨딩 가능, 어르신들이 선호하는 정갈한 궁중 음식.\n    -", "cons": "예약 난이도가 극악(오픈런 필수), 3시간 내외의 다소 타이트한 이용 시간, 야외 정원 촬영 시 날씨(폭염/우천) 리스크", "tip": "직계 가족만 모시는 20~30명 규모의 스몰 웨딩에 가장 최적화된 곳. 야외 정원에서의 선언문 낭독 후 실내 룸에서 식사하는 동선 추천.", "links": [{"text": "필경재 공식 홈페이지", "url": "http://www.philkyungjae.co.kr/"}], "has_detail": true}, {"id": "삼청각", "name": "삼청각", "type_raw": "한옥(야외)", "category": "한옥/전통", "district": "성북구", "guests_str": "100~300명", "guests_min": 100, "guests_max": 300, "cost_str": "3000~5000만+", "cost_min": 3000.0, "cost_max": 5000.0, "meal_str": "16~18만", "meal_min": 16.0, "meal_max": 18.0, "rating": 4.7, "notes": "웅장한한옥, 북악산뷰, 호텔급견적, 접근성불편", "tagline": "북악산의 정기와 거대 한옥의 웅장함이 결합된 대한민국 대표 하이엔드 전통 웨딩", "reservation_html": "<ul><li>삼청각 예약실 대표번호(02-765-3000)를 통한 유선 상담 후 방문 예약.</li><li>성수기(봄/가을 주말)는 최소 1년 전부터 예약 전쟁이 치열하므로 사전 일정 확인 필수.</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료: 일화당(메인) 1,500~2,000만원 / 소규모 홀 500~1,000만원</li><li>꽃장식 비용: 1,500만원 이상 (일화당 기준 커스텀 필수)</li><li>평균 식대: 16~18만원 (정갈한 고급 한정식 코스)</li><li>당일 계약 혜택 및 할인 팁: 비성수기(7~8월, 1~2월)나 평일 예식 시 연출료 및 꽃장식 협의 가능성 있음.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 200~300명 (일화당 최대 400명, 청천당/유하정 등 소규모 별채 보유)</li><li>주차 및 교통: 성북동 산자락 위치로 대중교통 이용이 매우 불편함. 한성대입구역에서 셔틀버스를 필수로 운행해야 하며 자차 이용 시 진입로 정체 주의.</li></ul><p>-</p>", "pros": "압도적인 한옥 규모와 북악산 숲 뷰, 단독 대관의 여유로움, 우천 시 실내 전환 시스템이 타 한옥 베뉴 대비 우수함.\n    -", "cons": "호텔 예식에 육박하는 높은 견적, 하객들의 접근성 불만(찾아가기 힘듦), 피크 타임 주차 공간 부족", "tip": "대규모 인원을 수용하면서도 한옥 야외 예식의 품격을 유지하고 싶은 경우 일화당 앞마당 예식을 추천. 하객들을 위한 셔틀버스와 상세 약도 안내가 필수적인 곳.", "links": [{"text": "삼청각 공식 홈페이지", "url": "https://www.samcheonggak.or.kr/"}], "has_detail": true}, {"id": "스미스한옥", "name": "스미스한옥", "type_raw": "한옥(가든)", "category": "한옥/전통", "district": "종로구", "guests_str": "40~80명", "guests_min": 40, "guests_max": 80, "cost_str": "1000~1500만", "cost_min": 1000.0, "cost_max": 1500.0, "meal_str": "9~10만", "meal_min": 9.0, "meal_max": 10.0, "rating": 4.6, "notes": "삼청동감성, 이탈리안코스, 드레스어울림, 주차불편", "tagline": "삼청동의 힙한 감성과 200년 한옥의 고전미, 이탈리안 코스 요리가 어우러진 퓨전 한옥 웨딩", "reservation_html": "<ul><li>2025년 예식부터 전담 디렉팅 업체인 <strong>'메이커스W(MAKERS.W)'</strong>를 통해 독점 예약 및 상담 진행 (010-2783-4812).</li><li>베리굿웨딩 등 제휴 컨설팅 업체를 통한 연결 가능.</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료 및 디렉팅: 패키지 형태(대관+꽃+디렉팅)로 안내되며 하객 수에 따라 상이함.</li><li>꽃장식 비용: 기본 패키지 포함 또는 추가 커스텀 가능 (하객 규모 대비 높은 비중).</li><li>평균 식대: 9~10만원 (정통 이탈리안 코스 요리)</li><li>당일 계약 혜택 및 할인 팁: 평일 또는 비성수기 예식 시 대관료 일부 할인 또는 서비스 추가 가능.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 40~80명 (최대 100명이나 80명 초과 시 식사 공간 분리 등으로 다소 어수선할 수 있음)</li><li>주차 및 교통: 삼청동 특성상 자체 주차장이 매우 협소함. 하객용 외부 주차장 대관이나 사설 발렛 서비스 섭외가 필수적임.</li></ul><p>-</p>", "pros": "야외 마당의 채광과 한옥 배경이 주는 세련된 스냅 결과물, 뻔하지 않은 이탈리안 코스 식사, 삼청동 나들이를 겸한 즐거운 예식 분위기.\n    -", "cons": "예식 공간과 식사 공간 이동 시 동선이 분리되어 신랑신부 인사가 번거로움, 주차 지옥, 우천 시 마당 사용 불가로 인한 대안 확인 필수", "tip": "한복보다는 세련된 드레스나 슈트가 더 잘 어울리는 한옥 베뉴. 50~60명 규모의 친밀한 파티형 웨딩을 꿈꾸는 커플에게 강력 추천.", "links": [{"text": "메이커스W 공식 홈페이지", "url": "https://makers-w.co.kr/"}], "has_detail": true}, {"id": "두가헌", "name": "두가헌", "type_raw": "한옥(가든)", "category": "한옥/전통", "district": "종로구", "guests_str": "60~80명", "guests_min": 60, "guests_max": 80, "cost_str": "2000~3000만", "cost_min": 2000.0, "cost_max": 3000.0, "meal_str": "13~15만", "meal_min": 13.0, "meal_max": 15.0, "rating": 4.8, "notes": "300년은행나무, 5시간대관, 꽃다발답례, 주차불편", "tagline": "300년 된 은행나무 아래서 펼쳐지는 영화 같은 5시간의 프라이빗 한옥 파티 웨딩", "reservation_html": "<ul><li>두가헌 예약실 유선 상담 예약 (02-3210-2100).</li><li>보통 예식 희망일 기준 1년 전 예약 시스템 오픈, 인기 시즌은 조기 마감됨.</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료 및 연출료: 약 650만원 (대관 400 + 연출 250)</li><li>꽃장식 비용: 660~1,000만원 이상 (커스텀 중심, 하객 답례용 꽃포장 서비스 포함)</li><li>평균 식대: 13~15만원 (고급 양식 코스 요리, 와인 의무 주문 조건 확인 필요)</li><li>당일 계약 혜택 및 할인 팁: 80명 이하 소규모 시 대관료 협의보다는 서비스 와인 업그레이드 등 부가 혜택 위주.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 60~80명 (최대 100명이나 공간이 본채와 별관으로 분리되어 80명 이하가 가장 쾌적함)</li><li>주차 및 교통: 자체 주차장 10~15대 수준으로 혼주 전용임. 하객은 인근 현대미술관 주차장(유료) 이용 후 도보 이동 필수.</li></ul><p>-</p>", "pros": "하루 1~2팀만 진행하는 5시간의 넉넉한 예식 시간, 300년 된 은행나무가 주는 독보적 존재감, 하객들에게 인기 만점인 꽃다발 포장 서비스.\n    -", "cons": "하객수 대비 매우 높은 전체 견적, 주차 지옥(하객 불편도 높음), 하객이 많을 경우 시야가 가려지는 별관 배치 발생", "tip": "은행나무가 노랗게 물드는 10월 말~11월 초 예식이 1년 전부터 마감되는 가장 인기 있는 타임. 지정 좌석제이므로 하객 명단 관리가 매우 정교해야 함.", "links": [{"text": "두가헌 공식 홈페이지", "url": "http://www.dugahun.com/"}], "has_detail": true}, {"id": "보눔_1957", "name": "보눔 1957", "type_raw": "한옥(호텔)", "category": "한옥/전통", "district": "종로구", "guests_str": "50~80명", "guests_min": 50, "guests_max": 80, "cost_str": "1500~2500만", "cost_min": 1500.0, "cost_max": 2500.0, "meal_str": "8~15만", "meal_min": 8.0, "meal_max": 15.0, "rating": 4.5, "notes": "북촌한옥마을, 부티크호텔감성, 커스텀웨딩, 주차지옥", "tagline": "북촌 한옥마을의 정취 속에서 프라이빗하게 즐기는 로맨틱 가든 파티 웨딩", "reservation_html": "<ul><li>호텔 대표번호(02-763-1957)로 직접 유선 문의.</li><li>오딩(Oding), 알지비지구맛 등 야외 스몰 웨딩 전문 디렉팅 업체를 통한 예약 및 상담이 일반적임.</li></ul><p>-</p>", "cost_detail_html": "<ul><li>예상 대관료: 200~400만원 선 (시즌 및 요일별 상이)</li><li>꽃장식 비용: 300~600만원 이상 (커스텀 중심, 연출 규모에 따라 변동폭 큼)</li><li>평균 식대: 8~15만원 (외부 케이터링 또는 제휴 코스 요리 선택 가능)</li><li>당일 계약 혜택 및 할인 팁: 하객 50명 이하 초소규모 예식 시 대관료 협의 가능성 있으며, 평일 예식 혜택이 큰 편.</li></ul><p>-</p>", "capacity_html": "<ul><li>실제 권장 하객수: 50~80명 (100명 수용 시 마당이 꽉 차는 느낌이며, 80명 이하가 가장 이상적임)</li><li>주차 및 교통: 전용 주차 공간이 매우 협소함(거의 불가 수준). 하객들에게 현대계동사옥 등 인근 유료 주차장 안내가 필수적이며 대중교통 이용 권장.</li></ul><p>-</p>", "pros": "북촌 한옥마을의 이국적이면서도 전통적인 배경, 자유로운 예식 기획이 가능한 커스텀 시스템, 부티크 호텔다운 감각적인 공간미.\n    -", "cons": "매우 좁은 골목길로 인한 접근성 불편(대형버스 진입 불가), 시설 일부(화장실 등)의 노후화 지적, 야외 노출로 인한 기온/날씨 영향", "tip": "한옥과 양옥이 공존하는 배경 덕분에 드레스와 한복 모두 잘 어울리는 베뉴. 하객들과 가깝게 소통하는 하우스 파티형 웨딩을 선호하는 커플에게 추천.", "links": [{"text": "보눔 1957 공식 홈페이지", "url": "http://www.bonum1957.com/"}], "has_detail": true}];
+
+// ─── State ───────────────────────────────────────────────────────────────────
+let state = {
+  search: '',
+  category: 'all',
+  sort: 'rating',
+  view: 'card',
+  favOnly: false,
+  favorites: new Set(JSON.parse(localStorage.getItem('wv_favs') || '[]')),
+  compare: [],
+  sortDir: { col: 'rating', asc: false },
+};
+
+function saveFavs() {
+  localStorage.setItem('wv_favs', JSON.stringify([...state.favorites]));
+}
+
+// ─── Filter & Sort ───────────────────────────────────────────────────────────
+function filteredVenues() {
+  let vs = VENUES.slice();
+  const q = state.search.toLowerCase();
+  if (q) vs = vs.filter(v =>
+    v.name.toLowerCase().includes(q) ||
+    v.district.toLowerCase().includes(q) ||
+    v.tagline.toLowerCase().includes(q) ||
+    v.notes.toLowerCase().includes(q) ||
+    v.type_raw.toLowerCase().includes(q)
+  );
+  if (state.category !== 'all') vs = vs.filter(v => v.category === state.category);
+  if (state.favOnly) vs = vs.filter(v => state.favorites.has(v.id));
+
+  // Sort
+  const { col, asc } = state.sortDir;
+  vs.sort((a, b) => {
+    let av, bv;
+    if (col === 'rating')      { av = a.rating;    bv = b.rating; }
+    else if (col === 'cost')   { av = a.cost_min;  bv = b.cost_min; }
+    else if (col === 'meal')   { av = a.meal_min;  bv = b.meal_min; }
+    else if (col === 'guests') { av = a.guests_min;bv = b.guests_min; }
+    else if (col === 'name')   { return asc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name); }
+    else { av = a.rating; bv = b.rating; }
+    return asc ? av - bv : bv - av;
+  });
+  return vs;
+}
+
+// ─── Render Cards ─────────────────────────────────────────────────────────────
+function renderStars(r) {
+  const full = Math.floor(r), half = (r % 1 >= 0.5) ? 1 : 0, empty = 5 - full - half;
+  return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
+}
+
+function renderCard(v) {
+  const isFav = state.favorites.has(v.id);
+  const inCompare = state.compare.includes(v.id);
+  const badgeClass = 'badge-' + v.category.replace('/', '\\/');
+  return `
+  <div class="venue-card" data-id="${v.id}" onclick="openModal('${v.id}')">
+    <div class="card-header">
+      <div class="card-badges">
+        <span class="badge ${badgeClass}">${v.category}</span>
+        <span class="card-district">${v.district}</span>
+      </div>
+      <div class="card-actions" onclick="event.stopPropagation()">
+        <button class="fav-btn" title="즐겨찾기" onclick="toggleFav('${v.id}', this)">${isFav ? '❤️' : '🤍'}</button>
+        <button class="compare-btn ${inCompare ? 'active' : ''}" title="비교 추가" onclick="toggleCompare('${v.id}', this)">비교</button>
+      </div>
+    </div>
+    <div class="card-rating">
+      <span class="stars">${renderStars(v.rating)}</span>
+      <span class="rating-num">${v.rating.toFixed(1)}</span>
+    </div>
+    <div class="card-name">${v.name}</div>
+    ${v.tagline ? `<div class="card-tagline">"${v.tagline}"</div>` : ''}
+    <div class="card-meta">
+      <span>👥 ${v.guests_str}</span>
+      <span>💰 ${v.cost_str}</span>
+      <span>🍽️ ${v.meal_str}/인</span>
+    </div>
+    ${v.notes ? `<div style="font-size:.75rem;color:#9CA3AF;margin-top:2px">${v.notes}</div>` : ''}
+    <div class="card-footer">
+      <span style="font-size:.78rem;color:var(--sub)">${v.type_raw}</span>
+      ${v.has_detail
+        ? `<span class="detail-link">상세 보기 →</span>`
+        : `<span class="no-detail-badge">정보 준비중</span>`}
+    </div>
+  </div>`;
+}
+
+// ─── Render Table ─────────────────────────────────────────────────────────────
+function renderTable(vs) {
+  const cols = [
+    {key:'name',   label:'베뉴명'},
+    {key:'category',label:'유형'},
+    {key:'district',label:'지역'},
+    {key:'guests', label:'인원'},
+    {key:'cost',   label:'총 견적'},
+    {key:'meal',   label:'식대'},
+    {key:'rating', label:'평점'},
+  ];
+  const arrow = (key) => {
+    if (state.sortDir.col !== key) return '<span class="sort-arrow">↕</span>';
+    return state.sortDir.asc ? '<span class="sort-arrow">↑</span>' : '<span class="sort-arrow">↓</span>';
+  };
+  const head = cols.map(c =>
+    `<th onclick="tableSort('${c.key}')">${c.label}${arrow(c.key)}</th>`
+  ).join('');
+  const rows = vs.map(v => `
+    <tr onclick="openModal('${v.id}')">
+      <td><span class="table-name">${v.name}</span></td>
+      <td><span class="badge badge-${v.category.replace('/', '\\/')}">${v.category}</span></td>
+      <td>${v.district}</td>
+      <td>${v.guests_str}</td>
+      <td>${v.cost_str}</td>
+      <td>${v.meal_str}</td>
+      <td>⭐ ${v.rating.toFixed(1)}</td>
+    </tr>`).join('');
+  return `<table class="venue-table"><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+// ─── Main Render ──────────────────────────────────────────────────────────────
+function render() {
+  const vs = filteredVenues();
+  document.querySelector('.result-count').textContent = `${vs.length}개 결과`;
+
+  // Update stats
+  document.getElementById('stat-filtered').textContent = vs.length;
+
+  if (state.view === 'card') {
+    document.getElementById('card-view').style.display = 'block';
+    document.getElementById('table-view').style.display = 'none';
+    const grid = document.querySelector('.card-grid');
+    if (vs.length === 0) {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="emoji">🔍</div><p>검색 결과가 없습니다.</p></div>`;
+    } else {
+      grid.innerHTML = vs.map(renderCard).join('');
+    }
+  } else {
+    document.getElementById('card-view').style.display = 'none';
+    document.getElementById('table-view').style.display = 'block';
+    document.getElementById('table-view').innerHTML = vs.length === 0
+      ? `<div class="empty-state"><div class="emoji">🔍</div><p>검색 결과가 없습니다.</p></div>`
+      : renderTable(vs);
+  }
+}
+
+// ─── Modal ────────────────────────────────────────────────────────────────────
+function openModal(id) {
+  const v = VENUES.find(x => x.id === id);
+  if (!v) return;
+
+  const badgeClass = 'badge-' + v.category.replace('/', '\\/');
+  const isFav = state.favorites.has(v.id);
+
+  let body = '';
+
+  if (v.has_detail) {
+    // 견적
+    if (v.cost_detail_html) body += `
+      <div class="modal-section">
+        <h3>💰 견적 상세</h3>
+        ${v.cost_detail_html}
+      </div>`;
+
+    // 공간
+    if (v.capacity_html) body += `
+      <div class="modal-section">
+        <h3>📍 공간 & 교통</h3>
+        ${v.capacity_html}
+      </div>`;
+
+    // 장단점
+    if (v.pros || v.cons) body += `
+      <div class="modal-section">
+        <h3>✅ 장단점</h3>
+        <div class="pros-cons">
+          <div class="pros-box"><h4>👍 장점</h4>${v.pros || '-'}</div>
+          <div class="cons-box"><h4>👎 단점</h4>${v.cons || '-'}</div>
+        </div>
+      </div>`;
+
+    // 예약 팁
+    if (v.tip) body += `
+      <div class="modal-section">
+        <h3>💡 예약 팁</h3>
+        <div class="tip-box">${v.tip}</div>
+      </div>`;
+
+    // 예약 방법
+    if (v.reservation_html) body += `
+      <div class="modal-section">
+        <h3>📞 예약 방법</h3>
+        ${v.reservation_html}
+      </div>`;
+
+    // 링크
+    if (v.links && v.links.length) body += `
+      <div class="modal-section">
+        <h3>🔗 참고 링크</h3>
+        <div class="links-list">
+          ${v.links.map(l => `<a class="link-item" href="${l.url}" target="_blank">↗ ${l.text}</a>`).join('')}
+        </div>
+      </div>`;
+  } else {
+    body = `<div class="no-detail-notice">상세 리포트가 아직 작성되지 않았습니다.<br>마스터 테이블 기본 정보를 참고하세요.</div>`;
+  }
+
+  document.getElementById('modal-content').innerHTML = `
+    <div class="modal-header">
+      <div class="modal-badges">
+        <span class="badge ${badgeClass}">${v.category}</span>
+        <span class="badge" style="background:rgba(255,255,255,.2);color:#fff">${v.district}</span>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h2>${v.name}</h2>
+      ${v.tagline ? `<div class="modal-tagline">"${v.tagline}"</div>` : ''}
+      <div class="modal-meta">
+        <span>⭐ ${v.rating.toFixed(1)}</span>
+        <span>👥 ${v.guests_str}</span>
+        <span>💰 ${v.cost_str}</span>
+        <span>🍽️ ${v.meal_str}/인</span>
+      </div>
+    </div>
+    <div class="modal-body">
+      ${v.notes ? `<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 14px;font-size:.85rem;color:#166534">📝 ${v.notes}</div>` : ''}
+      ${body}
+    </div>`;
+
+  document.getElementById('venue-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('venue-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ─── Favorites ────────────────────────────────────────────────────────────────
+function toggleFav(id, btn) {
+  if (state.favorites.has(id)) {
+    state.favorites.delete(id);
+    btn.textContent = '🤍';
+  } else {
+    state.favorites.add(id);
+    btn.textContent = '❤️';
+  }
+  saveFavs();
+  if (state.favOnly) render();
+}
+
+// ─── Compare ──────────────────────────────────────────────────────────────────
+function toggleCompare(id, btn) {
+  const idx = state.compare.indexOf(id);
+  if (idx === -1) {
+    if (state.compare.length >= 3) {
+      alert('최대 3개까지 비교할 수 있습니다.');
+      return;
+    }
+    state.compare.push(id);
+    btn.classList.add('active');
+  } else {
+    state.compare.splice(idx, 1);
+    btn.classList.remove('active');
+  }
+  updateCompareBar();
+}
+
+function updateCompareBar() {
+  const bar = document.getElementById('compare-bar');
+  if (state.compare.length === 0) {
+    bar.classList.remove('open');
+    return;
+  }
+  bar.classList.add('open');
+  const previews = state.compare.map(id => {
+    const v = VENUES.find(x => x.id === id);
+    return `<div class="compare-preview">${v.name} <span class="rm" onclick="removeCompare('${id}')">✕</span></div>`;
+  }).join('');
+  document.getElementById('compare-previews').innerHTML = previews;
+}
+
+function removeCompare(id) {
+  state.compare = state.compare.filter(x => x !== id);
+  updateCompareBar();
+  render();
+}
+
+function openCompare() {
+  const vs = state.compare.map(id => VENUES.find(x => x.id === id));
+  const rows = [
+    ['유형', v => v.type_raw],
+    ['지역', v => v.district],
+    ['권장 인원', v => v.guests_str],
+    ['총 견적', v => v.cost_str],
+    ['식대', v => v.meal_str + '/인'],
+    ['평점', v => '⭐ ' + v.rating.toFixed(1)],
+    ['비고', v => v.notes || '-'],
+    ['한줄평', v => v.tagline ? `"${v.tagline}"` : '-'],
+    ['장점', v => v.pros ? v.pros.substring(0,120) + '…' : '-'],
+    ['단점', v => v.cons ? v.cons.substring(0,120) + '…' : '-'],
+    ['예약 팁', v => v.tip ? v.tip.substring(0,120) + '…' : '-'],
+  ];
+  const headCells = ['항목', ...vs.map(v => `<span style="color:#C9E88C">${v.name}</span>`)].map(c => `<th>${c}</th>`).join('');
+  const bodyRows = rows.map(([label, fn]) =>
+    `<tr><td class="label">${label}</td>${vs.map(v => `<td>${fn(v)}</td>`).join('')}</tr>`
+  ).join('');
+
+  document.getElementById('compare-content').innerHTML = `
+    <div class="modal-header" style="padding:20px 24px">
+      <button class="modal-close" onclick="closeCompare()">✕</button>
+      <h2>베뉴 비교</h2>
+    </div>
+    <div style="padding:16px;overflow-x:auto">
+      <table class="compare-table">
+        <thead><tr>${headCells}</tr></thead>
+        <tbody>${bodyRows}</tbody>
+      </table>
+    </div>`;
+  document.getElementById('compare-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCompare() {
+  document.getElementById('compare-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function clearCompare() {
+  state.compare = [];
+  updateCompareBar();
+  render();
+}
+
+// ─── Table Sort ───────────────────────────────────────────────────────────────
+function tableSort(col) {
+  if (state.sortDir.col === col) {
+    state.sortDir.asc = !state.sortDir.asc;
+  } else {
+    state.sortDir = { col, asc: col === 'name' };
+  }
+  render();
+}
+
+// ─── Category Stats ───────────────────────────────────────────────────────────
+function buildStats() {
+  const cats = {};
+  VENUES.forEach(v => { cats[v.category] = (cats[v.category] || 0) + 1; });
+  return cats;
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  // Search
+  document.getElementById('search-input').addEventListener('input', e => {
+    state.search = e.target.value;
+    render();
+  });
+
+  // Category chips
+  document.querySelectorAll('.chip[data-cat]').forEach(chip => {
+    chip.addEventListener('click', () => {
+      state.category = chip.dataset.cat;
+      document.querySelectorAll('.chip[data-cat]').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      render();
+    });
+  });
+
+  // Fav chip
+  document.getElementById('fav-chip').addEventListener('click', function() {
+    state.favOnly = !state.favOnly;
+    this.classList.toggle('active', state.favOnly);
+    render();
+  });
+
+  // Sort
+  document.getElementById('sort-select').addEventListener('change', e => {
+    const val = e.target.value;
+    const dirMap = { rating: false, cost_asc: true, cost_desc: false, meal: true, guests: true };
+    const colMap = { rating: 'rating', cost_asc: 'cost', cost_desc: 'cost', meal: 'meal', guests: 'guests' };
+    state.sortDir = { col: colMap[val] || 'rating', asc: dirMap[val] !== undefined ? dirMap[val] : false };
+    render();
+  });
+
+  // View toggle
+  document.querySelectorAll('.view-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.view = btn.dataset.view;
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render();
+    });
+  });
+
+  // Modal ESC
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeModal(); closeCompare(); }
+  });
+  document.getElementById('venue-modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('venue-modal')) closeModal();
+  });
+  document.getElementById('compare-modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('compare-modal')) closeCompare();
+  });
+
+  // Category stats in hero
+  const stats = buildStats();
+  const statHtml = Object.entries(stats).map(([cat, cnt]) =>
+    `<div class="stat"><div class="stat-num">${cnt}</div><div class="stat-label">${cat}</div></div>`
+  ).join('');
+  document.getElementById('category-stats').innerHTML = statHtml;
+
+  render();
+});
+</script>
+</body>
+</html>
