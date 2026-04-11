@@ -495,22 +495,23 @@
       `;
 
       let html = '';
-      data.body.forEach(item => {
-        if (item.type === 'p') html += `<p class="${item.dropCap ? 'drop-cap' : ''}">${item.text}</p>`;
-        else if (item.type === 'h2') html += `<h2>${item.text}</h2>`;
-        else if (item.type === 'h3') html += `<h3>${item.text}</h3>`;
+      data.body.forEach((item, index) => {
+        const idAttr = `data-id="${index}"`;
+        if (item.type === 'p') html += `<p ${idAttr} class="${item.dropCap ? 'drop-cap' : ''}">${item.text}</p>`;
+        else if (item.type === 'h2') html += `<h2 ${idAttr}>${item.text}</h2>`;
+        else if (item.type === 'h3') html += `<h3 ${idAttr}>${item.text}</h3>`;
         else if (item.type === 'email') {
-          html += `<div class="email-block"><div class="email-header">`;
+          html += `<div ${idAttr} class="email-block"><div class="email-header">`;
           if (item.from) html += `<div><b>From:</b> ${item.from}</div>`;
           if (item.to) html += `<div><b>To:</b> ${item.to}</div>`;
           if (item.date) html += `<div><b>Date:</b> ${item.date}</div>`;
           if (item.subject) html += `<div><b>Subject:</b> ${item.subject}</div>`;
           html += `</div><div>${item.body}</div></div>`;
         }
-        else if (item.type === 'img') html += `<figure><img src="${item.src}" alt="Article Image"><figcaption>${item.cap}</figcaption></figure>`;
-        else if (item.type === 'takeaways') html += `<div class="takeaways"><h4>${item.title}</h4><ul>${item.items.map(li => `<li>${li}</li>`).join('')}</ul></div>`;
+        else if (item.type === 'img') html += `<figure ${idAttr}><img src="${item.src}" alt="Article Image"><figcaption>${item.cap}</figcaption></figure>`;
+        else if (item.type === 'takeaways') html += `<div ${idAttr} class="takeaways"><h4>${item.title}</h4><ul>${item.items.map(li => `<li>${li}</li>`).join('')}</ul></div>`;
         else if (item.type === 'profiles') {
-          let profilesHtml = `<h2>${item.title}</h2><div class="profiles-grid">`;
+          let profilesHtml = `<h2 ${idAttr}>${item.title}</h2><div class="profiles-grid">`;
           item.list.forEach(p => {
             profilesHtml += `<div class="profile-card"><img src="${p.img}" alt="${p.name}"><b>${p.name}</b><span>${p.desc}</span></div>`;
           });
@@ -522,19 +523,46 @@
     }
 
     function setLang(lang) {
-      // 스크롤 위치 비율 저장 (현재 스크롤 / 전체 높이)
-      const scrollPercent = window.scrollY / document.documentElement.scrollHeight;
-      
+      // 1. 현재 화면 상단에 가장 가까운 요소의 ID 찾기
+      const elements = document.querySelectorAll('#article-content > *');
+      let nearestId = 0;
+      let minDistance = Infinity;
+
+      elements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        // 화면 상단(0)에서 가장 가까운 (양수 우선) 요소 찾기
+        const distance = Math.abs(rect.top);
+        if (distance < minDistance) {
+          minDistance = distance;
+          nearestId = el.getAttribute('data-id');
+        }
+      });
+
+      // 2. 언어 전환 및 렌더링
       document.body.className = 'lang-' + lang;
       document.getElementById('btn-ko').classList.toggle('active', lang === 'ko');
       document.getElementById('btn-en').classList.toggle('active', lang === 'en');
       render(lang);
       localStorage.setItem('satoshi-lang', lang);
       
-      // 저장된 비율로 스크롤 복구 (지연 시간을 주어 렌더링 완료 후 이동)
-      requestAnimationFrame(() => {
-        window.scrollTo(0, scrollPercent * document.documentElement.scrollHeight);
-      });
+      // 3. 저장된 ID를 가진 요소로 스크롤 복구
+      if (nearestId !== null) {
+        requestAnimationFrame(() => {
+          const targetEl = document.querySelector(`[data-id="${nearestId}"]`);
+          if (targetEl) {
+            const offset = 80; // 상단 여백 고려
+            const bodyRect = document.body.getBoundingClientRect().top;
+            const elementRect = targetEl.getBoundingClientRect().top;
+            const elementPosition = elementRect - bodyRect;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'instant'
+            });
+          }
+        });
+      }
     }
 
     setLang(localStorage.getItem('satoshi-lang') || 'ko');
