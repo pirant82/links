@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Satoshi: The Cypherpunk Legacy</title>
+  <style>
+    :root {
+      --green:       #2D5A27;
+      --green-light: #4A7C43;
+      --gold:        #8B6914;
+      --gold-light:  #C49A1E;
+      --orange:      #F7931A;
+      --bg:          #FAFAF7;
+      --card-bg:     #FFFFFF;
+      --text:        #1A1A1A;
+      --sub:         #6B7280;
+      --border:      #E5E7EB;
+      --shadow:      0 2px 8px rgba(0,0,0,.08);
+      --font-serif:  'Georgia', 'Times New Roman', serif;
+      --font-mono:   'Courier New', Courier, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    .lang-switch {
+      position: fixed; top: 20px; right: 20px; z-index: 1000;
+      background: rgba(255, 255, 255, 0.9); padding: 5px; border-radius: 30px;
+      box-shadow: var(--shadow); display: flex; gap: 5px; border: 1px solid var(--border);
+      backdrop-filter: blur(4px);
+    }
+    .lang-btn {
+      padding: 6px 16px; border: none; background: none; cursor: pointer;
+      border-radius: 20px; font-size: 0.85rem; font-weight: 600; color: var(--sub);
+    }
+    .lang-btn.active { background: var(--green); color: white; }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    header { padding: 80px 0 60px; text-align: center; border-bottom: 1px solid var(--border); margin-bottom: 60px; }
+    header h1 { font-family: var(--font-serif); font-size: 3rem; line-height: 1.1; margin-bottom: 20px; font-weight: 900; }
+    header .meta { font-size: 0.85rem; color: var(--sub); text-transform: uppercase; letter-spacing: 1px; }
+
+    .article-body { font-size: 1.15rem; color: #333; }
+    .article-body p { margin-bottom: 1.8rem; text-align: justify; }
+    .drop-cap::first-letter {
+      float: left; font-family: var(--font-serif); font-size: 4.5rem;
+      line-height: 0.8; padding-right: 12px; padding-top: 8px; color: var(--green);
+    }
+
+    h2 { font-family: var(--font-serif); font-size: 2.2rem; margin: 5rem 0 2rem; border-top: 4px solid var(--text); padding-top: 1.5rem; font-weight: 800; }
+    h3 { font-family: var(--font-serif); font-size: 1.6rem; margin: 3rem 0 1.5rem; color: var(--green); }
+
+    /* Email UI */
+    .email-block {
+      background: #f8f9fa; border-left: 4px solid var(--orange); padding: 24px; margin: 3rem 0;
+      font-family: var(--font-mono); font-size: 0.95rem; border-radius: 4px; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+    }
+    .email-header { border-bottom: 1px solid #eee; margin-bottom: 15px; padding-bottom: 10px; color: #666; }
+    .email-header div { margin-bottom: 4px; }
+    .email-header b { color: #000; width: 70px; display: inline-block; font-size: 0.8rem; text-transform: uppercase; }
+
+    /* Takeaways Box */
+    .takeaways {
+      background: #fff; border: 1px solid var(--border); padding: 32px; margin: 4rem 0; border-radius: 4px;
+    }
+    .takeaways h4 { font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 20px; border-bottom: 2px solid var(--orange); display: inline-block; }
+    .takeaways ul { list-style: none; }
+    .takeaways li { margin-bottom: 15px; padding-left: 20px; position: relative; font-size: 1rem; color: #444; }
+    .takeaways li::before { content: "•"; color: var(--orange); position: absolute; left: 0; font-weight: bold; }
+
+    /* Figure & Images */
+    figure { margin: 4rem -40px; text-align: center; }
+    figure img { max-width: 100%; height: auto; border-radius: 2px; box-shadow: var(--shadow); }
+    figcaption { padding: 15px 60px; font-size: 0.85rem; color: var(--sub); text-align: left; line-height: 1.5; background: #fff; border-bottom: 1px solid var(--border); }
+
+    /* Profiles */
+    .profiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin: 4rem 0; }
+    .profile-card { text-align: center; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid var(--border); }
+    .profile-card img { width: 120px; height: 120px; object-fit: cover; border-radius: 50%; filter: grayscale(100%); transition: 0.3s; margin-bottom: 15px; border: 2px solid var(--border); }
+    .profile-card:hover img { filter: grayscale(0%); transform: scale(1.05); border-color: var(--green); }
+    .profile-card b { display: block; font-size: 1.1rem; margin-bottom: 5px; }
+    .profile-card span { font-size: 0.85rem; color: var(--sub); line-height: 1.4; display: block; }
+
+    .back-link { margin: 60px 0; text-align: center; }
+    .back-link a { color: var(--green); text-decoration: none; font-weight: 600; border: 1px solid var(--green); padding: 12px 32px; border-radius: 30px; transition: 0.3s; }
+    .back-link a:hover { background: var(--green); color: white; }
+
+    @media (max-width: 800px) {
+      figure { margin: 3rem -24px; }
+      figcaption { padding: 15px 24px; }
+      header h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body class="lang-ko">
+
+  <div class="lang-switch">
+    <button class="lang-btn active" id="btn-ko" onclick="setLang('ko')">KO</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+
+  <div class="container">
+    <header id="article-header"></header>
+    <article class="article-body" id="article-content"></article>
+    
+    <!-- 인물 프로필은 기사 하단에 별도 섹션으로 구성 -->
+    <div id="extra-sections"></div>
+
+    <div class="back-link">
+      <a href="index.html">← Back to Portal</a>
+    </div>
+  </div>
+
+  <script>
+    const content = {
+      ko: {
+        title: "사토시 나카모토를 찾아서",
+        subtitle: "뉴욕타임즈 기술 리포트",
+        author: "By John Carreyrou (With Dylan Freedman)",
+        body: [
+          { type: 'p', text: '2024년 가을 어느 날 저녁, 아내와 나는 롱아일랜드 고속도로에서 교통 체증에 갇혀 있었다. 운전할 때 자주 듣던 재즈 펑크 라디오 방송에 질린 아내가 팟캐스트로 채널을 돌렸다.', dropCap: true },
+          { type: 'p', text: '뉴욕타임스의 기술 쇼인 "하드 포크(Hard Fork)"였고, 진행자들은 비트코인의 익명 발명가 사토시 나카모토의 정체를 밝혔다고 주장하는 새로운 HBO 다큐멘터리에 대해 논의하고 있었다.' },
+          { type: 'p', text: '나는 즉시 귀를 쫑긋 세웠다. 오랫동안 사토시의 진짜 정체를 우리 시대의 가장 큰 수수께끼 중 하나로 여겨왔고, 전에도 이 문제를 파헤쳐보려 했으나 성공하지 못했다. 금융에 혁명을 일으키고 2조 4천억 달러 규모의 산업을 탄생시켰으며, 단 한 번의 경이로운 천재적 발상으로 세계 최대 재산 중 하나를 축적한 베일에 싸인 그 인물을 마침내 누군가가 찾아냈을지도 모른다는 소식에 나는 감탄과 질투가 뒤섞인 감정을 느꼈다.' },
+          { type: 'img', src: 'docs/satoshi/original/Biz-Cypher-01-vtgp-articleLarge.jpg', cap: '2월 마이애미에서의 영국 암호학자 아담 백. 출처... Amir Hamja / 뉴욕타임스' },
+          { type: 'p', text: '결국 "머니 일렉트릭: 비트코인 미스터리"의 결론은 설득력이 없었다. HBO는 매우 빈약해 보이는 증거를 바탕으로 캐나다의 한 소프트웨어 개발자를 지목했다. 하지만 암호화폐 세계를 유쾌하게 훑어보는 그 다큐멘터리를 보던 중, 한 장면이 내 눈길을 끌었다.' },
+          { type: 'p', text: '영국의 암호학자이자 비트코인 운동의 주요 인물인 아담 백(Adam Back)이 라트비아 리가의 공원 벤치에 갈색 코트를 입고 셔츠를 꺼내 입은 채 앉아 있었다. 제작자는 무심하게 사토시 용의자 여러 명의 이름을 빠르게 읊었다. 자신의 이름이 언급되자 아담 백은 긴장하며 자신이 사토시라는 사실을 강력히 부인했고, 그 대화를 오프더레코드(비보도)로 해달라고 요청했다.' },
+          { type: 'img', src: 'docs/satoshi/original/00cypher-bars-02-articleLarge.jpg', cap: '검은 셔츠, 재킷, 바지를 입은 아담 백이 공원의 조각상 기단에 올라서는 모습.' },
+          { type: 'p', text: '비트코인 지식에 정통한 사람이라면 누구나 알겠지만, 사토시는 인터넷에서 익명성을 유지하는 데 있어 달인이었으며 디지털 발자국을 거의, 혹은 전혀 남기지 않았다. 하지만 사토시는 자신의 발명품을 개략적으로 설명한 9페이지짜리 백서와 수많은 이메일을 남겼다. 사토시를 찾아낼 수 있다면, 그 열쇠는 이 텍스트 어딘가에 있을 것이라 확신했다.' },
+          
+          { type: 'h2', text: 'I. 일련의 단서들' },
+          { type: 'h3', text: '두 개의 빈약한 단서' },
+          { type: 'p', text: '사토시가 말미에게 보낸 이메일과 그의 다른 글에서 눈에 띄는 점은 그가 영국식 철자 및 관용구와 미국식 표현을 섞어 썼다는 것이다. 비트코인의 첫 번째 거래 블록에 사토시는 신문 헤드라인 문구를 새겨 넣었다: “The Times 03/Jan/2009 Chancellor on brink of second bailout for banks”. 이는 사토시가 실제로 영국인임을 알리는 신호처럼 느껴졌다.' },
+          { type: 'p', text: '사토시는 또한 \'사이퍼펑크(Cypherpunks)\'의 일원이었을 가능성이 매우 높았다. 사이퍼펑크는 1990년대 초 결성된 무정부주의자 그룹으로, 암호화(코드로 통신을 보호하는 기술)를 이용해 정부의 감시와 검열로부터 개인을 해방시키고자 했다.' },
+          { type: 'email', from: 'Adam Back', to: 'cypherpunks@toad.com', date: 'Mon, 23 Sep 1996', body: '저에게 암호 무정부주의는 더 자유주의적인(libertarian) 정부를 실현하기 위한 수단이자 정부 권력을 줄이고 자유와 프라이버시를 가능케 하는 핵심 도구입니다. 자유주의적 정부란 덜 강력한 정부, 더 낮은 세금, 덜 가혹한 법률, 더 많은 자유를 의미합니다.' },
+          
+          { type: 'h2', text: 'II. 숨겨진 로드맵' },
+          { type: 'h3', text: '비트코인 탄생 10년 전에 비트코인의 윤곽을 그리다' },
+          { type: 'p', text: '1997년 4월 30일, 백 씨는 현대 은행 시스템과 "완전히 단절된" 4가지 핵심 속성을 가진 전자 현금 시스템 구축을 제안했다. 이는 훗날 비트코인의 핵심이 됐다.' },
+          { type: 'img', src: 'docs/satoshi/original/Biz-Cypher-qfct-articleLarge.jpg', cap: '연보라색 배경 앞 대형 스크린에서 연설하는 백 씨. 사토시 나카모토처럼 네트워크 보안에 깊은 이해를 지녔다.' },
+          { type: 'p', text: '1998년 12월, 백 씨는 사토시의 인플레이션 해법까지 미리 예견했다. 연산 문제를 풀어 발행되는 모든 전자 화폐는 통제 불능의 인플레이션에 빠질 수밖에 없었기에, 백 씨는 코인을 주조하는 데 "시간이 지날수록 더 많은 연산 노력"이 필요하도록 해야 한다고 제안했다. 그것이 바로 사토시가 비트코인 소프트웨어를 설계한 방식이었다.' },
+          
+          { type: 'h2', text: 'III. 포위망을 좁히며' },
+          { type: 'p', text: '사토시처럼 백 씨도 문장 사이에 공백을 두 번 넣었다. 50세 이상임을 시사하는 시대에 뒤처진 관행이다. 백 씨는 55세다.' },
+          { type: 'p', text: 'AI와 언어학 전문가의 도움을 받아 분석한 결과, 이중 공백 사용, 영국식 철자, 독특한 하이픈 오류 등 사토시의 글쓰기 버릇을 모두 충족하는 사람은 데이터베이스 수백 명 중 아담 백 한 명뿐이었다.' },
+          { type: 'takeaways', title: '비트코인 창시자 추적 4가지 발견', items: [
+            '아담 백이 비트코인의 거의 모든 기능을 10년 전에 먼저 구상했다.',
+            '백 씨와 사토시 사이의 기술적 배경과 프로필이 완벽하게 일치한다.',
+            '사토시가 나타나자 백 씨가 사이퍼펑크 리스트에서 사라졌다.',
+            'AI 분석 결과 사토시와 백 씨는 동일한 글쓰기 습관(하이픈 오류 등)을 공유한다.'
+          ]},
+          
+          { type: 'h2', text: 'IV. 대면' },
+          { type: 'p', text: '엘살바도르에서 만난 백 씨는 자신이 사토시가 아니라고 우기며 모든 것을 일련의 우연으로 치부했다. 하지만 인터뷰 중 사토시의 인용구를 꺼내자 백 씨는 무심코 자신이 그 말을 했던 주인공인 것처럼 답했다.' },
+          { type: 'p', text: '"그래도 누군가치고는 말을 꽤 많이 했죠, 내 말은… 제가 말주변이 좋다는 건 아닌데, 사실 이 메일링 리스트에서 수다(yakking)를 꽤 많이 떨었거든요."' },
+          { type: 'p', text: '내 귀에는, 코드를 더 선호하는 사람치고는 확실히 말을 많이 했다는 인정처럼 들렸다. 그 이면에는 자신이 그 인용문의 주인공이라는 고백이 담겨 있었다. 다시 말해, 몇 초 동안 백 씨는 가면을 내려놓고 사토시가 됐던 것이다.' },
+          
+          { type: 'profiles', title: '비트코인의 영웅들', list: [
+            { name: 'Hal Finney', desc: '최초의 비트코인 거래 수신자이자 P.G.P. 개발자.', img: 'docs/satoshi/original/finney.png' },
+            { name: 'Nick Szabo', desc: '1998년 "비트 골드"를 제안한 암호학자.', img: 'docs/satoshi/original/szabo.png' },
+            { name: 'Len Sassaman', desc: '사이버펑크 메일링 리스트의 핵심 활동가.', img: 'docs/satoshi/original/sassaman.png' }
+          ]}
+        ]
+      },
+      en: {
+        title: "Finding Satoshi Nakamoto",
+        subtitle: "THE NEW YORK TIMES TECHNOLOGY REPORT",
+        author: "By John Carreyrou (With Dylan Freedman)",
+        body: [
+          { type: 'p', text: 'One evening in the fall of 2024, my wife and I were sitting in traffic on the Long Island Expressway when, tired of listening to the jazz-funk station I often played on our drives, she switched to a podcast.', dropCap: true },
+          { type: 'p', text: 'It was “Hard Fork,” the New York Times tech show, and the hosts were discussing a new HBO documentary claiming to have unmasked Bitcoin’s pseudonymous inventor, Satoshi Nakamoto.' },
+          { type: 'p', text: 'I was instantly riveted. I had long considered the question of Satoshi’s true identity one of our age’s great enigmas and had poked at it before without success.' },
+          { type: 'img', src: 'docs/satoshi/original/Biz-Cypher-01-vtgp-articleLarge.jpg', cap: 'Adam Back, the British cryptographer, in Miami in February. Credit... Amir Hamja for The New York Times' },
+          { type: 'p', text: 'In the end, I found the conclusion of “Money Electric: The Bitcoin Mystery” unconvincing. But as I watched what was an otherwise entertaining romp through the world of crypto, one scene caught my attention.' },
+          { type: 'p', text: 'Adam Back, a British cryptographer and leading figure in the Bitcoin movement, sat on a park bench in Riga, Latvia. At the mention of his own name, Mr. Back tensed up, strenuously denied he was Satoshi and asked that the conversation be kept off the record.' },
+          { type: 'img', src: 'docs/satoshi/original/00cypher-bars-02-articleLarge.jpg', cap: 'Adam Back stepping onto the base of a sculpture at a park.' },
+          { type: 'p', text: 'As anyone steeped in Bitcoin lore will tell you, Satoshi was a master at the art of maintaining anonymity on the internet, leaving few, if any, digital footprints behind. But Satoshi did leave behind a corpus of texts, including a nine-page white paper and many emails. If Satoshi was ever going to be found, I was convinced the key lay somewhere in these texts.' },
+          
+          { type: 'h2', text: 'I. A Series of Clues' },
+          { type: 'h3', text: 'Two Thin Leads' },
+          { type: 'p', text: 'One thing that jumped out in Satoshi’s emails was that he mixed British spelling with American expressions. In Bitcoin’s first block, Satoshi embedded: “The Times 03/Jan/2009 Chancellor on brink of second bailout for banks.” This felt like a sign that Satoshi really was British.' },
+          { type: 'p', text: 'Satoshi was also very likely a member of the Cypherpunks, a group of anarchists formed in the early 1990s who wanted to use cryptography to free individuals from government surveillance.' },
+          { type: 'email', from: 'Adam Back', to: 'cypherpunks@toad.com', date: 'Mon, 23 Sep 1996 08:15:19 +0800', body: 'To me, crypto anarchy is a means to achieve a more libertarian government, it is a pivotal tool to reduce government power, and enable freedom and privacy. A libertarian government means a less powerful government, less taxes, less onerous laws, more freedoms.' },
+          
+          { type: 'h2', text: 'II. Buried Road Map' },
+          { type: 'h3', text: 'Outlining Bitcoin a Decade Before Bitcoin' },
+          { type: 'p', text: 'On April 30, 1997, Adam Back suggested creating an electronic cash system “entirely disconnected” from modern banking. He suggested a decentralized network that wouldn\'t require trust in any individual or bank.' },
+          { type: 'img', src: 'docs/satoshi/original/Biz-Cypher-qfct-articleLarge.jpg', cap: 'Mr. Back speaking in February in Miami. Like Satoshi, he has a deep understanding of network security.' },
+          { type: 'p', text: 'In 1998, Mr. Back even anticipated Satoshi’s inflation solution. He suggested that minting a coin should “require more computational effort over time” to prevent runaway inflation. That’s exactly how Satoshi designed the Bitcoin software.' },
+          
+          { type: 'h2', text: 'III. Closing In' },
+          { type: 'p', text: 'Like Satoshi, Mr. Back used two spaces between sentences. While Mr. Back claimed he never uses the word "bloody," I found a 1998 post where he used it exactly like Satoshi.' },
+          { type: 'p', text: 'Our AI analysis found that Mr. Back was the only person among hundreds of subscribers who matched all of Satoshi\'s unique writing quirks and hyphenation errors.' },
+          { type: 'takeaways', title: '4 Takeaways From Our Investigation', items: [
+            'Adam Back envisioned almost every feature of Bitcoin first.',
+            'Striking technical and biographical parallels link Mr. Back and Satoshi.',
+            'When Satoshi appeared, Mr. Back disappeared from the mailing lists.',
+            'AI analysis shows they share identical writing habits.'
+          ]},
+          
+          { type: 'h2', text: 'IV. Confrontation' },
+          { type: 'p', text: 'In El Salvador, Mr. Back insisted he wasn\'t Satoshi. However, when I brought up a Satoshi quote, he inadvertently replied as if he was the one who said it.' },
+          { type: 'p', text: '"I did a lot of talking though for somebody, I mean … I sure did a lot of yakking on these lists actually."' },
+          { type: 'p', text: 'To my ears, it sounded like he was saying that for someone who preferred code over words, he sure had written a lot of words. Implicit in that was an acknowledgment that he had been the one who wrote the quote.' },
+          
+          { type: 'profiles', title: 'The Bitcoin Heroes', list: [
+            { name: 'Hal Finney', desc: 'First receiver of Bitcoin and P.G.P. developer.', img: 'docs/satoshi/original/finney.png' },
+            { name: 'Nick Szabo', desc: 'Cryptographer who proposed "Bit Gold" in 1998.', img: 'docs/satoshi/original/szabo.png' },
+            { name: 'Len Sassaman', desc: 'Core activist of the Cypherpunk mailing list.', img: 'docs/satoshi/original/sassaman.png' }
+          ]}
+        ]
+      }
+    };
+
+    function render(lang) {
+      const data = content[lang];
+      document.getElementById('article-header').innerHTML = `
+        <div class="meta">${data.subtitle}</div>
+        <h1>${data.title}</h1>
+        <div class="meta" style="margin-top:20px;">${data.author}</div>
+      `;
+
+      let html = '';
+      data.body.forEach(item => {
+        if (item.type === 'p') html += `<p class="${item.dropCap ? 'drop-cap' : ''}">${item.text}</p>`;
+        else if (item.type === 'h2') html += `<h2>${item.text}</h2>`;
+        else if (item.type === 'h3') html += `<h3>${item.text}</h3>`;
+        else if (item.type === 'email') html += `<div class="email-block"><div class="email-header"><div><b>From:</b> ${item.from}</div><div><b>To:</b> ${item.to}</div><div><b>Date:</b> ${item.date}</div></div><div>${item.body}</div></div>`;
+        else if (item.type === 'img') html += `<figure><img src="${item.src}" alt="Article Image"><figcaption>${item.cap}</figcaption></figure>`;
+        else if (item.type === 'takeaways') html += `<div class="takeaways"><h4>${item.title}</h4><ul>${item.items.map(li => `<li>${li}</li>`).join('')}</ul></div>`;
+        else if (item.type === 'profiles') {
+          let profilesHtml = `<h2>${item.title}</h2><div class="profiles-grid">`;
+          item.list.forEach(p => {
+            profilesHtml += `<div class="profile-card"><img src="${p.img}" alt="${p.name}"><b>${p.name}</b><span>${p.desc}</span></div>`;
+          });
+          profilesHtml += `</div>`;
+          html += profilesHtml;
+        }
+      });
+      document.getElementById('article-content').innerHTML = html;
+    }
+
+    function setLang(lang) {
+      document.body.className = 'lang-' + lang;
+      document.getElementById('btn-ko').classList.toggle('active', lang === 'ko');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      render(lang);
+      localStorage.setItem('satoshi-lang', lang);
+      window.scrollTo(0, 0);
+    }
+
+    setLang(localStorage.getItem('satoshi-lang') || 'ko');
+  </script>
+</body>
+</html>
