@@ -522,12 +522,19 @@
     }
 
     function setLang(lang) {
+      // 스크롤 위치 비율 저장 (현재 스크롤 / 전체 높이)
+      const scrollPercent = window.scrollY / document.documentElement.scrollHeight;
+      
       document.body.className = 'lang-' + lang;
       document.getElementById('btn-ko').classList.toggle('active', lang === 'ko');
       document.getElementById('btn-en').classList.toggle('active', lang === 'en');
       render(lang);
       localStorage.setItem('satoshi-lang', lang);
-      window.scrollTo(0, 0);
+      
+      // 저장된 비율로 스크롤 복구 (지연 시간을 주어 렌더링 완료 후 이동)
+      requestAnimationFrame(() => {
+        window.scrollTo(0, scrollPercent * document.documentElement.scrollHeight);
+      });
     }
 
     setLang(localStorage.getItem('satoshi-lang') || 'ko');
