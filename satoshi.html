@@ -76,14 +76,14 @@
     .takeaways li::before { content: "•"; color: var(--orange); position: absolute; left: 0; font-weight: bold; }
 
     /* Figure & Images */
-    figure { margin: 4rem -40px; text-align: center; }
-    figure img { max-width: 100%; height: auto; border-radius: 2px; box-shadow: var(--shadow); aspect-ratio: 16/9; object-fit: cover; background: #eee; }
-    figcaption { padding: 15px 60px; font-size: 0.85rem; color: var(--sub); text-align: left; line-height: 1.5; background: #fff; border-bottom: 1px solid var(--border); }
+    figure { margin: 4rem -40px; text-align: center; min-height: 300px; background: #f0f0f0; display: flex; flex-direction: column; }
+    figure img { max-width: 100%; height: auto; border-radius: 2px; box-shadow: var(--shadow); display: block; }
+    figcaption { padding: 15px 60px; font-size: 0.85rem; color: var(--sub); text-align: left; line-height: 1.5; background: #fff; border-bottom: 1px solid var(--border); width: 100%; }
 
     /* Profiles */
     .profiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin: 4rem 0; }
-    .profile-card { text-align: center; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid var(--border); }
-    .profile-card img { width: 120px; height: 120px; object-fit: cover; border-radius: 50%; filter: grayscale(100%); transition: 0.3s; margin-bottom: 15px; border: 2px solid var(--border); aspect-ratio: 1/1; }
+    .profile-card { text-align: center; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid var(--border); min-height: 250px; }
+    .profile-card img { width: 120px; height: 120px; object-fit: cover; border-radius: 50%; filter: grayscale(100%); transition: 0.3s; margin-bottom: 15px; border: 2px solid var(--border); }
     .profile-card:hover img { filter: grayscale(0%); transform: scale(1.05); border-color: var(--green); }
     .profile-card b { display: block; font-size: 1.1rem; margin-bottom: 5px; }
     .profile-card span { font-size: 0.85rem; color: var(--sub); line-height: 1.4; display: block; }
@@ -480,8 +480,8 @@
     }
 
     function setLang(lang) {
-      // 1. 현재 화면 중앙에 가장 가까운 요소의 ID 찾기 (정교한 앵커링)
-      const targetPoint = window.innerHeight * 0.3; // 화면 상단 30% 지점
+      // 1. 현재 화면에서 사용자의 시선이 머무는 핵심 요소를 파악 (중앙 30% 지점 기준)
+      const targetPoint = window.innerHeight * 0.3;
       const elements = document.querySelectorAll('#article-content > *');
       let nearestId = "0";
       let minDistance = Infinity;
@@ -495,37 +495,40 @@
         }
       });
 
-      // 2. 언어 전환 및 렌더링
+      // 2. 언어 설정 변경 및 렌더링
       document.body.className = 'lang-' + lang;
       document.getElementById('btn-ko').classList.toggle('active', lang === 'ko');
       document.getElementById('btn-en').classList.toggle('active', lang === 'en');
       render(lang);
       localStorage.setItem('satoshi-lang', lang);
-      
-      // 3. 정밀 스크롤 복구
-      if (nearestId !== null) {
-        // 중첩 rAF를 사용하여 브라우저가 레이아웃을 계산할 시간을 충분히 줌
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            const targetEl = document.querySelector(`[data-id="${nearestId}"]`);
-            if (targetEl) {
-              const bodyRect = document.body.getBoundingClientRect().top;
-              const elementRect = targetEl.getBoundingClientRect().top;
-              const offsetPosition = (elementRect - bodyRect) - targetPoint;
 
-              window.scrollTo({
-                top: offsetPosition,
-                behavior: 'instant'
-              });
-              
-              // 미세 오차 수정을 위한 2차 보정
-              setTimeout(() => {
-                const reElementRect = targetEl.getBoundingClientRect().top;
-                const reOffsetPosition = (reElementRect - bodyRect) - targetPoint;
-                window.scrollTo({ top: reOffsetPosition, behavior: 'instant' });
-              }, 60);
-            }
-          });
+      // 3. 정밀 위치 복구 프로세스 (3단계 보정)
+      if (nearestId !== null) {
+        const recoverScroll = () => {
+          const targetEl = document.querySelector(`[data-id="${nearestId}"]`);
+          if (targetEl) {
+            // 레이아웃 강제 계산 유도
+            targetEl.offsetHeight; 
+            
+            const bodyRect = document.body.getBoundingClientRect().top;
+            const elementRect = targetEl.getBoundingClientRect().top;
+            const finalPos = (elementRect - bodyRect) - targetPoint;
+
+            window.scrollTo({ top: finalPos, behavior: 'instant' });
+            return true;
+          }
+          return false;
+        };
+
+        // 단계 1: 다음 프레임에서 즉시 이동
+        requestAnimationFrame(() => {
+          if (recoverScroll()) {
+            // 단계 2: 브라우저가 텍스트 렌더링을 마친 후 다시 미세 조정 (레이아웃 시프트 방지)
+            setTimeout(recoverScroll, 20);
+            // 단계 3: 이미지 로딩이나 폰트 변화에 따른 최후 보정 (충분한 시간차)
+            setTimeout(recoverScroll, 100);
+            setTimeout(recoverScroll, 300);
+          }
         });
       }
     }
