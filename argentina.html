@@ -97,17 +97,16 @@ main {
 
 .timetable {
   display: grid;
-  grid-template-columns: 80px repeat(10, minmax(120px, 1fr)); /* 시간축 + 10일치 */
+  grid-template-columns: 90px repeat(9, minmax(130px, 1fr)); /* 시간축 + 9일치 */
   border-collapse: collapse;
   min-width: 1000px;
 }
 
-/* Header & Sidebar */
 .tt-cell {
   border: 0.5px solid var(--border);
   padding: 8px;
   font-size: 0.75rem;
-  min-height: 50px;
+  min-height: 55px;
   position: relative;
 }
 .tt-header {
@@ -118,15 +117,15 @@ main {
   position: sticky;
   top: 0;
   z-index: 10;
-  height: 60px;
+  height: 65px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 .tt-sidebar {
   background: #f8fafc;
-  color: var(--sub);
-  font-weight: 600;
+  color: var(--arg-blue); /* 메인은 아르헨티나 시간 */
+  font-weight: 700;
   text-align: center;
   position: sticky;
   left: 0;
@@ -134,51 +133,41 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-right: 2px solid var(--border);
 }
 
-.time-art-sub { font-size: 0.65rem; color: var(--arg-blue); opacity: 0.8; }
+.time-kst-sub { font-size: 0.65rem; color: var(--gold); font-weight: 600; }
 
 /* Event Styles */
 .event {
   position: absolute;
-  left: 2px;
-  right: 2px;
-  top: 2px;
-  bottom: 2px;
-  border-radius: 4px;
-  padding: 4px;
-  font-size: 0.7rem;
+  left: 3px;
+  right: 3px;
+  top: 3px;
+  bottom: 3px;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 0.75rem;
   font-weight: 600;
   overflow: hidden;
   z-index: 2;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.event-flight { background: #eff6ff; color: #1d4ed8; border-left: 3px solid #1d4ed8; }
-.event-wine   { background: #fdf2f8; color: #be185d; border-left: 3px solid #be185d; }
-.event-past   { filter: grayscale(1) opacity(0.5); text-decoration: line-through; }
+.event-flight { background: #eff6ff; color: #1d4ed8; border-left: 4px solid #1d4ed8; }
+.event-wine   { background: #fdf2f8; color: #be185d; border-left: 4px solid #be185d; }
+.event-past   { filter: grayscale(0.8) opacity(0.5); text-decoration: line-through; }
 .event-current { 
-  outline: 2px solid var(--green); 
+  outline: 2.5px solid var(--green); 
   z-index: 3;
   animation: tt-pulse 2s infinite;
 }
-@keyframes tt-pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
-}
 
-/* Time Highlight */
-.current-time-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: red;
-  z-index: 100;
-  pointer-events: none;
-}
-.current-col-highlight {
-  background: rgba(45, 90, 39, 0.05);
+@keyframes tt-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
 }
 
 .back-btn {
@@ -190,20 +179,20 @@ main {
 <body>
 
 <header>
-  <h1>🇦🇷 멘도자 견학 타임테이블</h1>
-  <p>2026.04.25 - 05.04 (KST 기준)</p>
+  <h1>🇦🇷 아르헨티나 견학 타임테이블</h1>
+  <p>모든 시간은 <b>아르헨티나 현지 시각(ART)</b> 기준입니다.</p>
 </header>
 
 <main>
   <div class="top-info">
     <div class="clock-row">
       <div class="clock-card">
-        <div style="font-size:0.75rem; color:var(--sub)">🇰🇷 서울 (KST)</div>
-        <div id="kst-time" class="clock-time">--:--:--</div>
-      </div>
-      <div class="clock-card">
         <div style="font-size:0.75rem; color:var(--arg-blue)">🇦🇷 멘도자 (ART)</div>
         <div id="art-time" class="clock-time">--:--:--</div>
+      </div>
+      <div class="clock-card">
+        <div style="font-size:0.75rem; color:var(--sub)">🇰🇷 서울 (KST)</div>
+        <div id="kst-time" class="clock-time">--:--:--</div>
       </div>
     </div>
     
@@ -212,7 +201,7 @@ main {
       <div class="track-container">
         <div id="man" class="track-icon">🙋‍♂️</div>
         <div id="woman" class="track-icon">🙋‍♀️</div>
-        <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-size:0.7rem; opacity:0.3">📍 인천공항</div>
+        <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-size:0.7rem; opacity:0.3">📍 인천공항 재회</div>
       </div>
     </div>
   </div>
@@ -227,49 +216,50 @@ main {
 </main>
 
 <script>
+// 아르헨티나(ART) 날짜 기준 (UTC-3)
 const DATES = [
   '2026-04-25', '2026-04-26', '2026-04-27', '2026-04-28', '2026-04-29', 
-  '2026-04-30', '2026-05-01', '2026-05-02', '2026-05-03', '2026-05-04'
+  '2026-04-30', '2026-05-01', '2026-05-02', '2026-05-03'
 ];
-const START_TS = new Date('2026-04-25T14:30:00+09:00').getTime();
-const END_TS = new Date('2026-05-04T05:00:00+09:00').getTime();
+const REUNION_TS = new Date('2026-05-03T17:00:00-03:00').getTime(); // 아르헨티나 5/3 17시 = 한국 5/4 05시
 
 const EVENTS = [
-  { date: '2026-04-25', hour: 14, duration: 12, task: '✈️ KE017 출국', type: 'flight' },
-  { date: '2026-04-26', hour: 1, duration: 6, task: '🇺🇸 LAX 대기', type: 'flight' },
-  { date: '2026-04-26', hour: 7, duration: 11, task: '✈️ LA603 출발', type: 'flight' },
-  { date: '2026-04-26', hour: 18, duration: 4, task: '🇨🇱 SCL 대기', type: 'flight' },
-  { date: '2026-04-26', hour: 22, duration: 2, task: '✈️ LA434 산티아고', type: 'flight' },
-  { date: '2026-04-27', hour: 0, duration: 1, task: '🍷 MDZ 도착', type: 'wine' },
-  { date: '2026-04-27', hour: 9, duration: 8, task: '🍇 Day 1: 까테나 자파타', type: 'wine' },
-  { date: '2026-04-28', hour: 9, duration: 8, task: '🍇 Day 2: 까테나 자파타', type: 'wine' },
-  { date: '2026-04-29', hour: 9, duration: 8, task: '🍇 Day 3: 까테나 자파타', type: 'wine' },
-  { date: '2026-04-30', hour: 9, duration: 8, task: '🍇 Day 4: 아차발 페레', type: 'wine' },
-  { date: '2026-05-01', hour: 9, duration: 8, task: '🍇 Day 5: 아차발 페레', type: 'wine' },
-  { date: '2026-05-02', hour: 19, duration: 4, task: '✈️ LA2434 멘도자발', type: 'flight' },
-  { date: '2026-05-03', hour: 1, duration: 7, task: '🇵🇪 리마 출발', type: 'flight' },
-  { date: '2026-05-03', hour: 8, duration: 8, task: '🇺🇸 LAX 도착/대기', type: 'flight' },
-  { date: '2026-05-03', hour: 16, duration: 13, task: '✈️ KE012 귀국행', type: 'flight' },
-  { date: '2026-05-04', hour: 5, duration: 1, task: '❤️ 인천 도착!', type: 'flight' }
+  // 모든 시간은 ART(아르헨티나) 기준
+  { date: '2026-04-25', hour: 2, duration: 12, task: '✈️ KE017 한국출발', type: 'flight' },
+  { date: '2026-04-25', hour: 14, duration: 6, task: '🇺🇸 LAX 대기', type: 'flight' },
+  { date: '2026-04-25', hour: 20, duration: 11, task: '✈️ LA603 미국출발', type: 'flight' },
+  { date: '2026-04-26', hour: 7, duration: 3, task: '🇨🇱 SCL 대기', type: 'flight' },
+  { date: '2026-04-26', hour: 10, duration: 2, task: '✈️ LA434 산티아고발', type: 'flight' },
+  { date: '2026-04-26', hour: 12, duration: 1, task: '🍷 멘도자 도착!', type: 'wine' },
+  
+  { date: '2026-04-27', hour: 9, duration: 9, task: '🍇 Day 1: 까테나 자파타', type: 'wine' },
+  { date: '2026-04-28', hour: 9, duration: 9, task: '🍇 Day 2: 까테나 자파타', type: 'wine' },
+  { date: '2026-04-29', hour: 9, duration: 9, task: '🍇 Day 3: 까테나 자파타', type: 'wine' },
+  { date: '2026-04-30', hour: 9, duration: 9, task: '🍇 Day 4: 아차발 페레', type: 'wine' },
+  { date: '2026-05-01', hour: 9, duration: 9, task: '🍇 Day 5: 아차발 페레', type: 'wine' },
+  
+  { date: '2026-05-02', hour: 7, duration: 4, task: '✈️ LA2434 멘도자출발', type: 'flight' },
+  { date: '2026-05-02', hour: 13, duration: 7, task: '✈️ LA2476 리마출발', type: 'flight' },
+  { date: '2026-05-02', hour: 20, duration: 7, task: '🇺🇸 LAX 대기', type: 'flight' },
+  { date: '2026-05-03', hour: 3, duration: 14, task: '✈️ KE012 미국출발', type: 'flight' },
+  { date: '2026-05-03', hour: 17, duration: 1, task: '❤️ 인천 도착/재회!', type: 'flight' }
 ];
 
 function initTimetable() {
   const grid = document.getElementById('timetable-grid');
-  let html = '<div class="tt-cell tt-header" style="position:sticky; left:0; z-index:15;">시간</div>';
+  let html = '<div class="tt-cell tt-header" style="position:sticky; left:0; z-index:15;">ART / KST</div>';
   
-  // Header (Dates)
   DATES.forEach(d => {
     const day = new Date(d).toLocaleDateString('ko-KR', {weekday:'short'});
     html += `<div class="tt-cell tt-header">${d.substring(5)} (${day})</div>`;
   });
 
-  // Rows (00:00 - 23:00)
   for (let h = 0; h < 24; h++) {
-    const timeStr = h.toString().padStart(2, '0') + ':00';
-    const artH = (h + 12) % 24; // 12시간 차이 계산
-    const artTimeStr = artH.toString().padStart(2, '0') + ':00';
+    const artTimeStr = h.toString().padStart(2, '0') + ':00';
+    const kstH = (h + 12) % 24; // 한국은 아르헨티나보다 12시간 빠름
+    const kstTimeStr = kstH.toString().padStart(2, '0') + ':00';
     
-    html += `<div class="tt-cell tt-sidebar">${timeStr}<br><span class="time-art-sub">🇦🇷${artTimeStr}</span></div>`;
+    html += `<div class="tt-cell tt-sidebar">🇦🇷 ${artTimeStr}<br><span class="time-kst-sub">🇰🇷 ${kstTimeStr}</span></div>`;
     
     DATES.forEach(d => {
       html += `<div class="tt-cell" id="cell-${d}-${h}"></div>`;
@@ -277,13 +267,13 @@ function initTimetable() {
   }
   grid.innerHTML = html;
 
-  // Render Events
   const now = Date.now();
   EVENTS.forEach(ev => {
     const cell = document.getElementById(`cell-${ev.date}-${ev.hour}`);
     if (cell) {
       const evDiv = document.createElement('div');
-      const evTime = new Date(`${ev.date}T${ev.hour.toString().padStart(2,'0')}:00:00+09:00`).getTime();
+      // ART 기준으로 타임스탬프 계산 (UTC-3)
+      const evTime = new Date(`${ev.date}T${ev.hour.toString().padStart(2,'0')}:00:00-03:00`).getTime();
       const evEndTime = evTime + (ev.duration * 3600000);
       
       let statusClass = '';
@@ -292,7 +282,7 @@ function initTimetable() {
 
       evDiv.className = `event event-${ev.type} ${statusClass}`;
       evDiv.style.height = `calc(${ev.duration * 100}% + ${(ev.duration - 1) * 1}px)`;
-      evDiv.innerHTML = `<div>${ev.task}</div><div style="font-size:0.6rem;opacity:0.8">${ev.duration}h</div>`;
+      evDiv.innerHTML = `<div>${ev.task}</div><div style="font-size:0.65rem;opacity:0.8">${ev.duration}h</div>`;
       cell.appendChild(evDiv);
     }
   });
@@ -301,39 +291,28 @@ function initTimetable() {
 function updateUI() {
   const now = new Date();
   
-  // Clocks
-  const kst = now.toLocaleTimeString('ko-KR', {timeZone:'Asia/Seoul', hour12:false});
-  const art = now.toLocaleTimeString('ko-KR', {timeZone:'America/Argentina/Mendoza', hour12:false});
-  document.getElementById('kst-time').textContent = kst;
-  document.getElementById('art-time').textContent = art;
+  document.getElementById('kst-time').textContent = now.toLocaleTimeString('ko-KR', {timeZone:'Asia/Seoul', hour12:false});
+  document.getElementById('art-time').textContent = now.toLocaleTimeString('ko-KR', {timeZone:'America/Argentina/Mendoza', hour12:false});
 
-  // Countdown & Runner
-  const timeLeft = END_TS - now.getTime();
+  const timeLeft = REUNION_TS - now.getTime();
   if (timeLeft > 0) {
     const days = Math.floor(timeLeft / 86400000);
     const h = Math.floor((timeLeft % 86400000) / 3600000);
     const m = Math.floor((timeLeft % 3600000) / 60000);
     const s = Math.floor((timeLeft % 60000) / 1000);
-    document.getElementById('d-day').textContent = `D-Day ${days}일 ${h}:${m}:${s}`;
+    document.getElementById('d-day').textContent = `재회까지 D-Day ${days}일 ${h}:${m}:${s}`;
     
-    const progress = Math.max(0, Math.min(1, (now.getTime() - START_TS) / (END_TS - START_TS)));
-    const pos = progress * 45;
-    document.getElementById('man').style.left = pos + '%';
-    document.getElementById('woman').style.right = pos + '%';
+    // 출국(4/25 14:30 KST)부터 입국(5/4 05:00 KST)까지
+    const start = new Date('2026-04-25T14:30:00+09:00').getTime();
+    const end = new Date('2026-05-04T05:00:00+09:00').getTime();
+    const progress = Math.max(0, Math.min(1, (now.getTime() - start) / (end - start)));
+    
+    document.getElementById('man').style.left = (progress * 45) + '%';
+    document.getElementById('woman').style.right = (progress * 45) + '%';
   } else {
-    document.getElementById('d-day').textContent = "❤️ 재회 완료! ❤️";
+    document.getElementById('d-day').textContent = "❤️ 드디어 만났습니다! ❤️";
     document.getElementById('man').textContent = "💏";
     document.getElementById('woman').style.display = "none";
-  }
-
-  // Highlight current cell in timetable
-  const curDate = now.toISOString().split('T')[0];
-  const curHour = now.getHours();
-  document.querySelectorAll('.tt-cell').forEach(c => c.classList.remove('current-col-highlight'));
-  const curCell = document.getElementById(`cell-${curDate}-${curHour}`);
-  if (curCell) {
-    // 해당 열 전체 하이라이트 효과 (단순화를 위해 셀만 표시하거나 로직 추가 가능)
-    curCell.style.backgroundColor = 'rgba(45, 90, 39, 0.1)';
   }
 }
 
