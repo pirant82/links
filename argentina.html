@@ -11,7 +11,7 @@
   --green:       #2D5A27;
   --green-light: #4A7C43;
   --gold:        #8B6914;
-  --arg-blue:    #74ACDF; /* 아르헨티나 하늘색 */
+  --arg-blue:    #74ACDF;
   --bg:          #FAFAF7;
   --card-bg:     #FFFFFF;
   --text:        #1A1A1A;
@@ -27,342 +27,319 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.4;
   padding-bottom: 60px;
 }
 
-/* ── Header ── */
 header {
   background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
   color: #fff;
-  padding: 40px 24px;
+  padding: 30px 24px;
   text-align: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
-header h1 { font-family: 'Noto Serif KR', serif; font-size: 1.8rem; margin-bottom: 8px; }
-header p { opacity: 0.8; font-size: 0.95rem; }
 
 main {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 20px;
 }
 
-/* ── Dual Clock ── */
-.clock-container {
+/* ── Clocks & Countdown ── */
+.top-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.clock-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 12px;
 }
 .clock-card {
-  background: var(--card-bg);
-  padding: 20px;
-  border-radius: var(--radius);
+  background: #fff;
+  padding: 15px;
+  border-radius: 12px;
   text-align: center;
   box-shadow: var(--shadow);
-  border: 1.5px solid var(--border);
+  border: 1px solid var(--border);
 }
-.clock-label { font-size: 0.85rem; color: var(--sub); font-weight: 600; margin-bottom: 8px; }
-.clock-time { font-size: 1.5rem; font-weight: 700; font-family: 'Courier New', monospace; color: var(--green); }
-.clock-date { font-size: 0.8rem; color: var(--sub); margin-top: 4px; }
+.clock-time { font-size: 1.4rem; font-weight: 700; font-family: monospace; color: var(--green); }
 
-/* ── Reunion Runner (애니메이션) ── */
 .reunion-box {
-  background: var(--card-bg);
-  padding: 32px 24px;
-  border-radius: var(--radius);
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
   box-shadow: var(--shadow);
-  margin-bottom: 24px;
-  border: 1.5px solid var(--arg-blue);
+  border: 1px solid var(--arg-blue);
   text-align: center;
 }
-.reunion-title { font-weight: 700; color: var(--green); margin-bottom: 24px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-
 .track-container {
   position: relative;
-  height: 60px;
+  height: 50px;
   background: #f1f5f9;
-  border-radius: 30px;
-  margin: 40px 0 20px;
-  border: 1px dashed #cbd5e1;
-}
-.track-icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 2rem;
-  transition: left 0.5s ease-out, right 0.5s ease-out;
-  z-index: 2;
-}
-#man { left: 0; }
-#woman { right: 0; }
-.track-center {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.5rem;
-  opacity: 0.3;
-}
-
-.d-day-counter {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #e11d48; /* 로맨틱한 레드 */
-  margin-top: 16px;
-}
-
-/* ── Itinerary Table ── */
-.itinerary-container {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  border-radius: 25px;
+  margin: 20px 0;
   overflow: hidden;
-  border: 1.5px solid var(--border);
 }
-.itinerary-header {
-  background: #f8fafc;
-  padding: 16px;
-  font-weight: 700;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.track-icon { position: absolute; top: 50%; transform: translateY(-50%); font-size: 1.8rem; transition: all 0.5s; }
+.d-day-counter { font-size: 1.3rem; font-weight: 700; color: #e11d48; }
+
+/* ── Timetable Grid ── */
+.timetable-wrapper {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+  position: relative;
 }
-.itinerary-table {
-  width: 100%;
+
+.timetable {
+  display: grid;
+  grid-template-columns: 80px repeat(10, minmax(120px, 1fr)); /* 시간축 + 10일치 */
   border-collapse: collapse;
+  min-width: 1000px;
 }
-.itinerary-table th {
-  background: #f1f5f9;
-  padding: 12px;
+
+/* Header & Sidebar */
+.tt-cell {
+  border: 0.5px solid var(--border);
+  padding: 8px;
   font-size: 0.75rem;
-  color: var(--sub);
-  text-transform: uppercase;
-  text-align: center;
+  min-height: 50px;
+  position: relative;
 }
-.itinerary-table td {
-  padding: 14px 10px;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.85rem;
-  text-align: center;
-}
-
-/* 상태별 스타일 */
-.row-past { color: #9ca3af; text-decoration: line-through; background: #f9fafb; }
-.row-current { 
-  background: #f0fdf4; 
-  border-left: 4px solid var(--green);
-  font-weight: 700;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0% { background-color: #f0fdf4; }
-  50% { background-color: #dcfce7; }
-  100% { background-color: #f0fdf4; }
-}
-
-.time-dual { display: flex; flex-direction: column; gap: 2px; }
-.time-kst { color: var(--gold); font-weight: 600; font-size: 0.75rem; }
-.time-art { color: var(--arg-blue); font-weight: 600; font-size: 0.75rem; }
-
-.badge-flight { background: #eff6ff; color: #1d4ed8; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; }
-.badge-wine { background: #fdf2f8; color: #be185d; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; }
-
-/* ── Floating Action ── */
-.back-btn {
-  display: block;
-  width: fit-content;
-  margin: 32px auto;
-  padding: 12px 24px;
+.tt-header {
   background: var(--green);
   color: #fff;
-  text-decoration: none;
-  border-radius: 30px;
+  text-align: center;
+  font-weight: 700;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.tt-sidebar {
+  background: #f8fafc;
+  color: var(--sub);
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(45, 90, 39, 0.3);
+  text-align: center;
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-@media (max-width: 600px) {
-  .clock-container { grid-template-columns: 1fr; }
-  .itinerary-table { font-size: 0.75rem; }
+.time-art-sub { font-size: 0.65rem; color: var(--arg-blue); opacity: 0.8; }
+
+/* Event Styles */
+.event {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 2px;
+  bottom: 2px;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  overflow: hidden;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.event-flight { background: #eff6ff; color: #1d4ed8; border-left: 3px solid #1d4ed8; }
+.event-wine   { background: #fdf2f8; color: #be185d; border-left: 3px solid #be185d; }
+.event-past   { filter: grayscale(1) opacity(0.5); text-decoration: line-through; }
+.event-current { 
+  outline: 2px solid var(--green); 
+  z-index: 3;
+  animation: tt-pulse 2s infinite;
+}
+@keyframes tt-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* Time Highlight */
+.current-time-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: red;
+  z-index: 100;
+  pointer-events: none;
+}
+.current-col-highlight {
+  background: rgba(45, 90, 39, 0.05);
+}
+
+.back-btn {
+  display: block; width: fit-content; margin: 30px auto; padding: 12px 24px;
+  background: var(--green); color: #fff; text-decoration: none; border-radius: 30px; font-weight: 600;
 }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>🇦🇷 멘도자 와이너리 견학</h1>
-  <p>2026.04.25 - 05.03 출장 및 재회 가이드</p>
+  <h1>🇦🇷 멘도자 견학 타임테이블</h1>
+  <p>2026.04.25 - 05.04 (KST 기준)</p>
 </header>
 
 <main>
-  <!-- 시각화 시계 -->
-  <div class="clock-container">
-    <div class="clock-card">
-      <div class="clock-label">🇰🇷 서울 (KST)</div>
-      <div id="kst-time" class="clock-time">00:00:00</div>
-      <div id="kst-date" class="clock-date">2026.04.00</div>
+  <div class="top-info">
+    <div class="clock-row">
+      <div class="clock-card">
+        <div style="font-size:0.75rem; color:var(--sub)">🇰🇷 서울 (KST)</div>
+        <div id="kst-time" class="clock-time">--:--:--</div>
+      </div>
+      <div class="clock-card">
+        <div style="font-size:0.75rem; color:var(--arg-blue)">🇦🇷 멘도자 (ART)</div>
+        <div id="art-time" class="clock-time">--:--:--</div>
+      </div>
     </div>
-    <div class="clock-card">
-      <div class="clock-label">🇦🇷 멘도자 (ART)</div>
-      <div id="art-time" class="clock-time">00:00:00</div>
-      <div id="art-date" class="clock-date">2026.04.00</div>
+    
+    <div class="reunion-box">
+      <div id="d-day" class="d-day-counter">D-Day --일 --:--:--</div>
+      <div class="track-container">
+        <div id="man" class="track-icon">🙋‍♂️</div>
+        <div id="woman" class="track-icon">🙋‍♀️</div>
+        <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-size:0.7rem; opacity:0.3">📍 인천공항</div>
+      </div>
     </div>
   </div>
 
-  <!-- 재회 애니메이션 -->
-  <div class="reunion-box">
-    <div class="reunion-title">❤️ 우리가 다시 만나는 날까지</div>
-    <div class="track-container">
-      <div id="man" class="track-icon">🙋‍♂️</div>
-      <div class="track-center">📍 인천공항</div>
-      <div id="woman" class="track-icon">🙋‍♀️</div>
+  <div class="timetable-wrapper">
+    <div class="timetable" id="timetable-grid">
+      <!-- JS로 생성됨 -->
     </div>
-    <div id="d-day" class="d-day-counter">D-Day 00일 00:00:00</div>
-    <p style="font-size: 0.8rem; color: var(--sub); margin-top: 8px;">* 5월 3일 05:00 인천 도착 기준</p>
-  </div>
-
-  <!-- 스마트 시간표 -->
-  <div class="itinerary-container">
-    <div class="itinerary-header">
-      <span>📅 상세 일정 (KST / ART 병기)</span>
-      <span id="current-status" style="font-size: 0.8rem; color: var(--green-light);"></span>
-    </div>
-    <table class="itinerary-table">
-      <thead>
-        <tr>
-          <th>날짜/시간</th>
-          <th>일정</th>
-          <th>정보</th>
-        </tr>
-      </thead>
-      <tbody id="itinerary-body">
-        <!-- JS로 렌더링 -->
-      </tbody>
-    </table>
   </div>
 
   <a href="index.html" class="back-btn">← 메인 대시보드로 돌아가기</a>
 </main>
 
 <script>
-// ─── 데이터 정의 ───────────────────────────────────────────────────────────
-const START_TIME = new Date('2026-04-25T14:30:00+09:00').getTime(); // 출국
-const END_TIME = new Date('2026-05-03T05:00:00+09:00').getTime();   // 입국
+const DATES = [
+  '2026-04-25', '2026-04-26', '2026-04-27', '2026-04-28', '2026-04-29', 
+  '2026-04-30', '2026-05-01', '2026-05-02', '2026-05-03', '2026-05-04'
+];
+const START_TS = new Date('2026-04-25T14:30:00+09:00').getTime();
+const END_TS = new Date('2026-05-04T05:00:00+09:00').getTime();
 
-const SCHEDULE = [
-  { kst: '2026-04-25 14:30', art: '2026-04-25 02:30', task: '🛫 한국 출국 (ICN)', info: 'KE017', type: 'flight' },
-  { kst: '2026-04-26 01:40', art: '2026-04-25 13:40', task: '🛬 미국 도착 (LAX)', info: '6:15 대기', type: 'flight' },
-  { kst: '2026-04-26 07:55', art: '2026-04-25 19:55', task: '🛫 미국 출발 (LAX)', info: 'LA603', type: 'flight' },
-  { kst: '2026-04-26 18:35', art: '2026-04-26 06:35', task: '🛬 칠레 도착 (SCL)', info: '3:25 대기', type: 'flight' },
-  { kst: '2026-04-26 22:00', art: '2026-04-26 10:00', task: '🛫 칠레 출발 (SCL)', info: 'LA434', type: 'flight' },
-  { kst: '2026-04-27 00:06', art: '2026-04-26 12:06', task: '🍷 멘도자 도착 (MDZ)', info: '최종 목적지', type: 'wine' },
-  { kst: '2026-04-27 09:00', art: '2026-04-26 21:00', task: '🍇 Day 1: 까테나 자파타', info: 'Catena Zapata', type: 'wine' },
-  { kst: '2026-04-28 09:00', art: '2026-04-27 21:00', task: '🍇 Day 2: 까테나 자파타', info: 'Vineyard Tour', type: 'wine' },
-  { kst: '2026-04-29 09:00', art: '2026-04-28 21:00', task: '🍇 Day 3: 까테나 자파타', info: 'Seminar', type: 'wine' },
-  { kst: '2026-04-30 09:00', art: '2026-04-29 21:00', task: '🍇 Day 4: 아차발 페레', info: 'Achaval Ferrer', type: 'wine' },
-  { kst: '2026-05-01 09:00', art: '2026-04-30 21:00', task: '🍇 Day 5: 아차발 페레', info: '귀국 준비', type: 'wine' },
-  { kst: '2026-05-02 19:35', art: '2026-05-02 07:35', task: '🛫 멘도자 출발', info: 'LA2434', type: 'flight' },
-  { kst: '2026-05-03 01:00', art: '2026-05-02 13:00', task: '🛫 리마 출발', info: 'LA2476', type: 'flight' },
-  { kst: '2026-05-03 08:00', art: '2026-05-02 20:00', task: '🛬 미국 도착 (LAX)', info: '4:50 대기', type: 'flight' },
-  { kst: '2026-05-03 15:50', art: '2026-05-03 03:50', task: '🛫 미국 출발 (LAX)', info: 'KE012', type: 'flight' },
-  { kst: '2026-05-04 05:00', art: '2026-05-03 17:00', task: '❤️ 인천공항 도착', info: '재회!', type: 'flight' }
+const EVENTS = [
+  { date: '2026-04-25', hour: 14, duration: 12, task: '✈️ KE017 출국', type: 'flight' },
+  { date: '2026-04-26', hour: 1, duration: 6, task: '🇺🇸 LAX 대기', type: 'flight' },
+  { date: '2026-04-26', hour: 7, duration: 11, task: '✈️ LA603 출발', type: 'flight' },
+  { date: '2026-04-26', hour: 18, duration: 4, task: '🇨🇱 SCL 대기', type: 'flight' },
+  { date: '2026-04-26', hour: 22, duration: 2, task: '✈️ LA434 산티아고', type: 'flight' },
+  { date: '2026-04-27', hour: 0, duration: 1, task: '🍷 MDZ 도착', type: 'wine' },
+  { date: '2026-04-27', hour: 9, duration: 8, task: '🍇 Day 1: 까테나 자파타', type: 'wine' },
+  { date: '2026-04-28', hour: 9, duration: 8, task: '🍇 Day 2: 까테나 자파타', type: 'wine' },
+  { date: '2026-04-29', hour: 9, duration: 8, task: '🍇 Day 3: 까테나 자파타', type: 'wine' },
+  { date: '2026-04-30', hour: 9, duration: 8, task: '🍇 Day 4: 아차발 페레', type: 'wine' },
+  { date: '2026-05-01', hour: 9, duration: 8, task: '🍇 Day 5: 아차발 페레', type: 'wine' },
+  { date: '2026-05-02', hour: 19, duration: 4, task: '✈️ LA2434 멘도자발', type: 'flight' },
+  { date: '2026-05-03', hour: 1, duration: 7, task: '🇵🇪 리마 출발', type: 'flight' },
+  { date: '2026-05-03', hour: 8, duration: 8, task: '🇺🇸 LAX 도착/대기', type: 'flight' },
+  { date: '2026-05-03', hour: 16, duration: 13, task: '✈️ KE012 귀국행', type: 'flight' },
+  { date: '2026-05-04', hour: 5, duration: 1, task: '❤️ 인천 도착!', type: 'flight' }
 ];
 
-// ─── 유틸리티 함수 ───────────────────────────────────────────────────────────
-function updateClocks() {
-  const now = new Date();
+function initTimetable() {
+  const grid = document.getElementById('timetable-grid');
+  let html = '<div class="tt-cell tt-header" style="position:sticky; left:0; z-index:15;">시간</div>';
   
-  // 서울 (KST)
-  const kstOptions = { timeZone: 'Asia/Seoul', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
-  const kstDateOptions = { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' };
-  document.getElementById('kst-time').textContent = now.toLocaleTimeString('ko-KR', kstOptions);
-  document.getElementById('kst-date').textContent = now.toLocaleDateString('ko-KR', kstDateOptions);
+  // Header (Dates)
+  DATES.forEach(d => {
+    const day = new Date(d).toLocaleDateString('ko-KR', {weekday:'short'});
+    html += `<div class="tt-cell tt-header">${d.substring(5)} (${day})</div>`;
+  });
 
-  // 아르헨티나 멘도자 (ART, UTC-3)
-  const artOptions = { timeZone: 'America/Argentina/Mendoza', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
-  const artDateOptions = { timeZone: 'America/Argentina/Mendoza', year: 'numeric', month: '2-digit', day: '2-digit' };
-  document.getElementById('art-time').textContent = now.toLocaleTimeString('ko-KR', artOptions);
-  document.getElementById('art-date').textContent = now.toLocaleDateString('ko-KR', artDateOptions);
-}
-
-function updateReunion() {
-  const now = Date.now();
-  const timeLeft = END_TIME - now;
-
-  // D-Day 계산
-  if (timeLeft > 0) {
-    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const mins = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-    const secs = Math.floor((timeLeft % (1000 * 60)) / 1000);
-    document.getElementById('d-day').textContent = `D-Day ${days}일 ${hours.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
-  } else {
-    document.getElementById('d-day').textContent = "🎉 드디어 만났습니다! ❤️";
-  }
-
-  // 애니메이션 계산 (진척도)
-  const totalDuration = END_TIME - START_TIME;
-  const currentProgress = (now - START_TIME) / totalDuration;
-  const clampedProgress = Math.max(0, Math.min(1, currentProgress));
-
-  // 남자와 여자가 서로 가까워짐 (0%일 때 양끝, 100%일 때 중앙)
-  const manPos = clampedProgress * 45; // 0% -> 45%
-  const womanPos = clampedProgress * 45; // 0% -> 45% (오른쪽에서부터)
-
-  document.getElementById('man').style.left = `${manPos}%`;
-  document.getElementById('woman').style.right = `${womanPos}%`;
-  
-  if (clampedProgress >= 0.98) {
-    document.getElementById('man').textContent = "💏";
-    document.getElementById('woman').style.display = "none";
-  }
-}
-
-function renderSchedule() {
-  const now = Date.now();
-  const body = document.getElementById('itinerary-body');
-  body.innerHTML = '';
-
-  SCHEDULE.forEach((item, index) => {
-    const itemTime = new Date(item.kst).getTime();
-    const nextTime = SCHEDULE[index + 1] ? new Date(SCHEDULE[index+1].kst).getTime() : Infinity;
+  // Rows (00:00 - 23:00)
+  for (let h = 0; h < 24; h++) {
+    const timeStr = h.toString().padStart(2, '0') + ':00';
+    const artH = (h + 12) % 24; // 12시간 차이 계산
+    const artTimeStr = artH.toString().padStart(2, '0') + ':00';
     
-    let statusClass = '';
-    if (now > nextTime) statusClass = 'row-past';
-    else if (now >= itemTime && now < nextTime) {
-      statusClass = 'row-current';
-      document.getElementById('current-status').textContent = `🚩 현재 일정: ${item.task}`;
-    }
+    html += `<div class="tt-cell tt-sidebar">${timeStr}<br><span class="time-art-sub">🇦🇷${artTimeStr}</span></div>`;
+    
+    DATES.forEach(d => {
+      html += `<div class="tt-cell" id="cell-${d}-${h}"></div>`;
+    });
+  }
+  grid.innerHTML = html;
 
-    const row = document.createElement('tr');
-    row.className = statusClass;
-    row.innerHTML = `
-      <td>
-        <div class="time-dual">
-          <span class="time-kst">🇰🇷 ${item.kst.substring(5)}</span>
-          <span class="time-art">🇦🇷 ${item.art.substring(5)}</span>
-        </div>
-      </td>
-      <td>${item.task}</td>
-      <td><span class="badge-${item.type}">${item.info}</span></td>
-    `;
-    body.appendChild(row);
+  // Render Events
+  const now = Date.now();
+  EVENTS.forEach(ev => {
+    const cell = document.getElementById(`cell-${ev.date}-${ev.hour}`);
+    if (cell) {
+      const evDiv = document.createElement('div');
+      const evTime = new Date(`${ev.date}T${ev.hour.toString().padStart(2,'0')}:00:00+09:00`).getTime();
+      const evEndTime = evTime + (ev.duration * 3600000);
+      
+      let statusClass = '';
+      if (now > evEndTime) statusClass = 'event-past';
+      else if (now >= evTime && now <= evEndTime) statusClass = 'event-current';
+
+      evDiv.className = `event event-${ev.type} ${statusClass}`;
+      evDiv.style.height = `calc(${ev.duration * 100}% + ${(ev.duration - 1) * 1}px)`;
+      evDiv.innerHTML = `<div>${ev.task}</div><div style="font-size:0.6rem;opacity:0.8">${ev.duration}h</div>`;
+      cell.appendChild(evDiv);
+    }
   });
 }
 
-// ─── 초기화 ───────────────────────────────────────────────────────────────
-setInterval(() => {
-  updateClocks();
-  updateReunion();
-}, 1000);
+function updateUI() {
+  const now = new Date();
+  
+  // Clocks
+  const kst = now.toLocaleTimeString('ko-KR', {timeZone:'Asia/Seoul', hour12:false});
+  const art = now.toLocaleTimeString('ko-KR', {timeZone:'America/Argentina/Mendoza', hour12:false});
+  document.getElementById('kst-time').textContent = kst;
+  document.getElementById('art-time').textContent = art;
 
-updateClocks();
-updateReunion();
-renderSchedule();
-setInterval(renderSchedule, 60000); // 1분마다 상태 업데이트
+  // Countdown & Runner
+  const timeLeft = END_TS - now.getTime();
+  if (timeLeft > 0) {
+    const days = Math.floor(timeLeft / 86400000);
+    const h = Math.floor((timeLeft % 86400000) / 3600000);
+    const m = Math.floor((timeLeft % 3600000) / 60000);
+    const s = Math.floor((timeLeft % 60000) / 1000);
+    document.getElementById('d-day').textContent = `D-Day ${days}일 ${h}:${m}:${s}`;
+    
+    const progress = Math.max(0, Math.min(1, (now.getTime() - START_TS) / (END_TS - START_TS)));
+    const pos = progress * 45;
+    document.getElementById('man').style.left = pos + '%';
+    document.getElementById('woman').style.right = pos + '%';
+  } else {
+    document.getElementById('d-day').textContent = "❤️ 재회 완료! ❤️";
+    document.getElementById('man').textContent = "💏";
+    document.getElementById('woman').style.display = "none";
+  }
+
+  // Highlight current cell in timetable
+  const curDate = now.toISOString().split('T')[0];
+  const curHour = now.getHours();
+  document.querySelectorAll('.tt-cell').forEach(c => c.classList.remove('current-col-highlight'));
+  const curCell = document.getElementById(`cell-${curDate}-${curHour}`);
+  if (curCell) {
+    // 해당 열 전체 하이라이트 효과 (단순화를 위해 셀만 표시하거나 로직 추가 가능)
+    curCell.style.backgroundColor = 'rgba(45, 90, 39, 0.1)';
+  }
+}
+
+initTimetable();
+setInterval(updateUI, 1000);
+updateUI();
 </script>
 </body>
 </html>
