@@ -93,87 +93,98 @@ main {
   border: 1px solid var(--border);
   overflow-x: auto;
   position: relative;
+  margin-bottom: 40px;
 }
 
 .timetable {
   display: grid;
-  grid-template-columns: 90px repeat(9, minmax(130px, 1fr)); /* 시간축 + 9일치 */
+  grid-template-columns: 90px repeat(9, minmax(130px, 1fr));
   border-collapse: collapse;
   min-width: 1000px;
 }
 
-.tt-cell {
-  border: 0.5px solid var(--border);
-  padding: 8px;
-  font-size: 0.75rem;
-  min-height: 55px;
-  position: relative;
-}
-.tt-header {
-  background: var(--green);
-  color: #fff;
-  text-align: center;
-  font-weight: 700;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  height: 65px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.tt-sidebar {
-  background: #f8fafc;
-  color: var(--arg-blue); /* 메인은 아르헨티나 시간 */
-  font-weight: 700;
-  text-align: center;
-  position: sticky;
-  left: 0;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-right: 2px solid var(--border);
-}
-
+.tt-cell { border: 0.5px solid var(--border); padding: 8px; font-size: 0.75rem; min-height: 55px; position: relative; }
+.tt-header { background: var(--green); color: #fff; text-align: center; font-weight: 700; position: sticky; top: 0; z-index: 10; height: 65px; display: flex; flex-direction: column; justify-content: center; }
+.tt-sidebar { background: #f8fafc; color: var(--arg-blue); font-weight: 700; text-align: center; position: sticky; left: 0; z-index: 5; display: flex; flex-direction: column; justify-content: center; border-right: 2px solid var(--border); }
 .time-kst-sub { font-size: 0.65rem; color: var(--gold); font-weight: 600; }
 
-/* Event Styles */
-.event {
-  position: absolute;
-  left: 3px;
-  right: 3px;
-  top: 3px;
-  bottom: 3px;
-  border-radius: 6px;
-  padding: 6px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  overflow: hidden;
-  z-index: 2;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+.event { position: absolute; left: 3px; right: 3px; top: 3px; bottom: 3px; border-radius: 6px; padding: 6px; font-size: 0.75rem; font-weight: 600; overflow: hidden; z-index: 2; box-shadow: 0 2px 6px rgba(0,0,0,0.12); display: flex; flex-direction: column; justify-content: center; }
 .event-flight { background: #eff6ff; color: #1d4ed8; border-left: 4px solid #1d4ed8; }
 .event-wine   { background: #fdf2f8; color: #be185d; border-left: 4px solid #be185d; }
 .event-past   { filter: grayscale(0.8) opacity(0.5); text-decoration: line-through; }
-.event-current { 
-  outline: 2.5px solid var(--green); 
-  z-index: 3;
-  animation: tt-pulse 2s infinite;
-}
+.event-current { outline: 2.5px solid var(--green); z-index: 3; animation: tt-pulse 2s infinite; }
 
-@keyframes tt-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.03); }
-}
+@keyframes tt-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
-.back-btn {
-  display: block; width: fit-content; margin: 30px auto; padding: 12px 24px;
-  background: var(--green); color: #fff; text-decoration: none; border-radius: 30px; font-weight: 600;
+/* ── Real-time Chat Section ── */
+.chat-section {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  max-width: 800px;
+  margin: 0 auto 40px;
 }
+.chat-header {
+  background: var(--arg-blue);
+  color: #fff;
+  padding: 16px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#chat-messages {
+  height: 400px;
+  overflow-y: auto;
+  padding: 20px;
+  background: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.message-bubble {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.msg-other { align-self: flex-start; background: #fff; border-bottom-left-radius: 2px; }
+.msg-me { align-self: flex-end; background: #dcf8c6; border-bottom-right-radius: 2px; }
+.msg-user { font-size: 0.75rem; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+.msg-time { font-size: 0.65rem; color: #999; margin-top: 4px; text-align: right; }
+
+.chat-input-area {
+  padding: 16px;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+}
+.chat-input-area input {
+  padding: 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  font-size: 0.9rem;
+}
+#nickname-input { width: 100px; }
+#message-input { flex: 1; }
+#send-btn {
+  padding: 10px 20px;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+#send-btn:hover { background: var(--green-light); }
+
+.back-btn { display: block; width: fit-content; margin: 30px auto; padding: 12px 24px; background: var(--green); color: #fff; text-decoration: none; border-radius: 30px; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -184,6 +195,7 @@ main {
 </header>
 
 <main>
+  <!-- 기존 Clocks & Reunion Box 동일 -->
   <div class="top-info">
     <div class="clock-row">
       <div class="clock-card">
@@ -195,7 +207,6 @@ main {
         <div id="kst-time" class="clock-time">--:--:--</div>
       </div>
     </div>
-    
     <div class="reunion-box">
       <div id="d-day" class="d-day-counter">D-Day --일 --:--:--</div>
       <div class="track-container">
@@ -206,38 +217,122 @@ main {
     </div>
   </div>
 
+  <!-- 타임테이블 -->
   <div class="timetable-wrapper">
-    <div class="timetable" id="timetable-grid">
-      <!-- JS로 생성됨 -->
-    </div>
+    <div class="timetable" id="timetable-grid"></div>
   </div>
+
+  <!-- 실시간 방명록 섹션 추가 -->
+  <section class="chat-section">
+    <div class="chat-header">
+      <span>💬 실시간 응원 메시지</span>
+      <span style="font-size:0.7rem; opacity:0.8;">Firebase Realtime DB</span>
+    </div>
+    <div id="chat-messages">
+      <!-- 메시지들 로딩됨 -->
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="nickname-input" placeholder="닉네임" maxlength="10">
+      <input type="text" id="message-input" placeholder="메시지를 입력하세요..." maxlength="100">
+      <button id="send-btn">전송</button>
+    </div>
+  </section>
 
   <a href="index.html" class="back-btn">← 메인 대시보드로 돌아가기</a>
 </main>
 
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+  import { getDatabase, ref, push, set, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCXUguglvkr7XmF4O27n96o4meg_5wHnI0",
+    authDomain: "argcomment.firebaseapp.com",
+    databaseURL: "https://argcomment-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "argcomment",
+    storageBucket: "argcomment.firebasestorage.app",
+    messagingSenderId: "968088074458",
+    appId: "1:968088074458:web:4307adb0fea3195ace0de3"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const messagesRef = ref(db, 'messages');
+
+  const nicknameInput = document.getElementById('nickname-input');
+  const messageInput = document.getElementById('message-input');
+  const sendBtn = document.getElementById('send-btn');
+  const chatMessages = document.getElementById('chat-messages');
+
+  // 로컬 스토리지에서 닉네임 기억하기
+  nicknameInput.value = localStorage.getItem('chat_nick') || '';
+
+  // 메시지 전송 함수
+  function sendMessage() {
+    const nick = nicknameInput.value.trim();
+    const text = messageInput.value.trim();
+    
+    if (!nick || !text) {
+      alert('닉네임과 메시지를 모두 입력해주세요!');
+      return;
+    }
+
+    localStorage.setItem('chat_nick', nick);
+    const newMessageRef = push(messagesRef);
+    set(newMessageRef, {
+      nickname: nick,
+      message: text,
+      timestamp: serverTimestamp()
+    });
+
+    messageInput.value = '';
+  }
+
+  sendBtn.addEventListener('click', sendMessage);
+  messageInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendMessage();
+  });
+
+  // 메시지 수신 및 화면 렌더링
+  onChildAdded(messagesRef, (data) => {
+    const msg = data.val();
+    const isMe = msg.nickname === nicknameInput.value;
+    
+    const date = msg.timestamp ? new Date(msg.timestamp) : new Date();
+    const timeKst = date.toLocaleTimeString('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit' });
+    const timeArt = date.toLocaleTimeString('ko-KR', { timeZone: 'America/Argentina/Mendoza', hour: '2-digit', minute: '2-digit' });
+
+    const bubble = document.createElement('div');
+    bubble.className = `message-bubble ${isMe ? 'msg-me' : 'msg-other'}`;
+    bubble.innerHTML = `
+      <div class="msg-user">${msg.nickname}</div>
+      <div class="msg-text">${msg.message}</div>
+      <div class="msg-time">🇰🇷 ${timeKst} | 🇦🇷 ${timeArt}</div>
+    `;
+    chatMessages.appendChild(bubble);
+    chatMessages.scrollTop = chatMessages.scrollHeight; // 자동 스크롤
+  });
+</script>
+
 <script>
-// 아르헨티나(ART) 날짜 기준 (UTC-3)
-const DATES = [
-  '2026-04-25', '2026-04-26', '2026-04-27', '2026-04-28', '2026-04-29', 
-  '2026-04-30', '2026-05-01', '2026-05-02', '2026-05-03'
-];
-const REUNION_TS = new Date('2026-05-03T17:00:00-03:00').getTime(); // 아르헨티나 5/3 17시 = 한국 5/4 05시
+// ─── 타임테이블 & UI 로직 ───────────────────────────────────────────────────
+const DATES = ['2026-04-25', '2026-04-26', '2026-04-27', '2026-04-28', '2026-04-29', '2026-04-30', '2026-05-01', '2026-05-02', '2026-05-03'];
+const REUNION_TS = new Date('2026-05-03T17:00:00-03:00').getTime();
 
 const EVENTS = [
-  // 모든 시간은 ART(아르헨티나) 기준
   { date: '2026-04-25', hour: 2, duration: 12, task: '✈️ KE017 한국출발', type: 'flight' },
   { date: '2026-04-25', hour: 14, duration: 6, task: '🇺🇸 LAX 대기', type: 'flight' },
   { date: '2026-04-25', hour: 20, duration: 11, task: '✈️ LA603 미국출발', type: 'flight' },
   { date: '2026-04-26', hour: 7, duration: 3, task: '🇨🇱 SCL 대기', type: 'flight' },
   { date: '2026-04-26', hour: 10, duration: 2, task: '✈️ LA434 산티아고발', type: 'flight' },
   { date: '2026-04-26', hour: 12, duration: 1, task: '🍷 멘도자 도착!', type: 'wine' },
-  
   { date: '2026-04-27', hour: 9, duration: 9, task: '🍇 Day 1: 까테나 자파타', type: 'wine' },
   { date: '2026-04-28', hour: 9, duration: 9, task: '🍇 Day 2: 까테나 자파타', type: 'wine' },
   { date: '2026-04-29', hour: 9, duration: 9, task: '🍇 Day 3: 까테나 자파타', type: 'wine' },
   { date: '2026-04-30', hour: 9, duration: 9, task: '🍇 Day 4: 아차발 페레', type: 'wine' },
   { date: '2026-05-01', hour: 9, duration: 9, task: '🍇 Day 5: 아차발 페레', type: 'wine' },
-  
   { date: '2026-05-02', hour: 7, duration: 4, task: '✈️ LA2434 멘도자출발', type: 'flight' },
   { date: '2026-05-02', hour: 13, duration: 7, task: '✈️ LA2476 리마출발', type: 'flight' },
   { date: '2026-05-02', hour: 20, duration: 7, task: '🇺🇸 LAX 대기', type: 'flight' },
@@ -248,38 +343,25 @@ const EVENTS = [
 function initTimetable() {
   const grid = document.getElementById('timetable-grid');
   let html = '<div class="tt-cell tt-header" style="position:sticky; left:0; z-index:15;">ART / KST</div>';
-  
   DATES.forEach(d => {
     const day = new Date(d).toLocaleDateString('ko-KR', {weekday:'short'});
     html += `<div class="tt-cell tt-header">${d.substring(5)} (${day})</div>`;
   });
-
   for (let h = 0; h < 24; h++) {
     const artTimeStr = h.toString().padStart(2, '0') + ':00';
-    const kstH = (h + 12) % 24; // 한국은 아르헨티나보다 12시간 빠름
-    const kstTimeStr = kstH.toString().padStart(2, '0') + ':00';
-    
+    const kstTimeStr = ((h + 12) % 24).toString().padStart(2, '0') + ':00';
     html += `<div class="tt-cell tt-sidebar">🇦🇷 ${artTimeStr}<br><span class="time-kst-sub">🇰🇷 ${kstTimeStr}</span></div>`;
-    
-    DATES.forEach(d => {
-      html += `<div class="tt-cell" id="cell-${d}-${h}"></div>`;
-    });
+    DATES.forEach(d => { html += `<div class="tt-cell" id="cell-${d}-${h}"></div>`; });
   }
   grid.innerHTML = html;
-
   const now = Date.now();
   EVENTS.forEach(ev => {
     const cell = document.getElementById(`cell-${ev.date}-${ev.hour}`);
     if (cell) {
       const evDiv = document.createElement('div');
-      // ART 기준으로 타임스탬프 계산 (UTC-3)
       const evTime = new Date(`${ev.date}T${ev.hour.toString().padStart(2,'0')}:00:00-03:00`).getTime();
       const evEndTime = evTime + (ev.duration * 3600000);
-      
-      let statusClass = '';
-      if (now > evEndTime) statusClass = 'event-past';
-      else if (now >= evTime && now <= evEndTime) statusClass = 'event-current';
-
+      let statusClass = now > evEndTime ? 'event-past' : (now >= evTime ? 'event-current' : '');
       evDiv.className = `event event-${ev.type} ${statusClass}`;
       evDiv.style.height = `calc(${ev.duration * 100}% + ${(ev.duration - 1) * 1}px)`;
       evDiv.innerHTML = `<div>${ev.task}</div><div style="font-size:0.65rem;opacity:0.8">${ev.duration}h</div>`;
@@ -290,10 +372,8 @@ function initTimetable() {
 
 function updateUI() {
   const now = new Date();
-  
   document.getElementById('kst-time').textContent = now.toLocaleTimeString('ko-KR', {timeZone:'Asia/Seoul', hour12:false});
   document.getElementById('art-time').textContent = now.toLocaleTimeString('ko-KR', {timeZone:'America/Argentina/Mendoza', hour12:false});
-
   const timeLeft = REUNION_TS - now.getTime();
   if (timeLeft > 0) {
     const days = Math.floor(timeLeft / 86400000);
@@ -301,12 +381,9 @@ function updateUI() {
     const m = Math.floor((timeLeft % 3600000) / 60000);
     const s = Math.floor((timeLeft % 60000) / 1000);
     document.getElementById('d-day').textContent = `재회까지 D-Day ${days}일 ${h}:${m}:${s}`;
-    
-    // 출국(4/25 14:30 KST)부터 입국(5/4 05:00 KST)까지
     const start = new Date('2026-04-25T14:30:00+09:00').getTime();
     const end = new Date('2026-05-04T05:00:00+09:00').getTime();
     const progress = Math.max(0, Math.min(1, (now.getTime() - start) / (end - start)));
-    
     document.getElementById('man').style.left = (progress * 45) + '%';
     document.getElementById('woman').style.right = (progress * 45) + '%';
   } else {
