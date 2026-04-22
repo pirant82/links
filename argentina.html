@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🇦🇷 멘도자 와이너리 견학 & 재회 카운트다운</title>
+<title>🇦🇷 멘도자 견학 정밀 타임테이블 & 재회</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -82,7 +82,7 @@ main {
   margin: 20px 0;
   overflow: hidden;
 }
-.track-icon { position: absolute; top: 50%; transform: translateY(-50%); font-size: 1.8rem; transition: all 0.5s; }
+.track-icon { position: absolute; top: 50%; transform: translateY(-50%); font-size: 1.8rem; transition: all 0.5s; z-index: 2; }
 .d-day-counter { font-size: 1.3rem; font-weight: 700; color: #e11d48; }
 
 /* ── Timetable Grid ── */
@@ -93,28 +93,98 @@ main {
   border: 1px solid var(--border);
   overflow-x: auto;
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .timetable {
   display: grid;
-  grid-template-columns: 90px repeat(9, minmax(130px, 1fr));
+  grid-template-columns: 90px repeat(9, minmax(140px, 1fr));
   border-collapse: collapse;
-  min-width: 1000px;
+  min-width: 1100px;
 }
 
-.tt-cell { border: 0.5px solid var(--border); padding: 8px; font-size: 0.75rem; min-height: 55px; position: relative; }
-.tt-header { background: var(--green); color: #fff; text-align: center; font-weight: 700; position: sticky; top: 0; z-index: 10; height: 65px; display: flex; flex-direction: column; justify-content: center; }
-.tt-sidebar { background: #f8fafc; color: var(--arg-blue); font-weight: 700; text-align: center; position: sticky; left: 0; z-index: 5; display: flex; flex-direction: column; justify-content: center; border-right: 2px solid var(--border); }
-.time-kst-sub { font-size: 0.65rem; color: var(--gold); font-weight: 600; }
+.tt-cell {
+  border: 0.5px solid var(--border);
+  position: relative;
+  min-height: 60px;
+}
+.tt-header {
+  background: var(--green);
+  color: #fff;
+  text-align: center;
+  font-weight: 700;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 65px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+.tt-sidebar {
+  background: #f8fafc;
+  color: var(--arg-blue);
+  font-weight: 700;
+  text-align: center;
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 2px solid var(--border);
+  font-size: 0.75rem;
+}
 
-.event { position: absolute; left: 3px; right: 3px; top: 3px; bottom: 3px; border-radius: 6px; padding: 6px; font-size: 0.75rem; font-weight: 600; overflow: hidden; z-index: 2; box-shadow: 0 2px 6px rgba(0,0,0,0.12); display: flex; flex-direction: column; justify-content: center; }
+.time-kst-sub { font-size: 0.6rem; color: var(--gold); font-weight: 600; opacity: 0.8; }
+
+/* Precise Event Styling */
+.event {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  overflow: hidden;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.event:hover { transform: scale(1.02); z-index: 4; box-shadow: var(--shadow-lg); }
+
 .event-flight { background: #eff6ff; color: #1d4ed8; border-left: 4px solid #1d4ed8; }
 .event-wine   { background: #fdf2f8; color: #be185d; border-left: 4px solid #be185d; }
+.event-stay   { background: #f0fdf4; color: #166534; border-left: 4px solid #166534; }
+
 .event-past   { filter: grayscale(0.8) opacity(0.5); text-decoration: line-through; }
 .event-current { outline: 2.5px solid var(--green); z-index: 3; animation: tt-pulse 2s infinite; }
 
 @keyframes tt-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+
+/* ── Accommodation Section ── */
+.stay-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.stay-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.stay-date { font-size: 0.75rem; color: var(--sub); font-weight: 700; margin-bottom: 4px; }
+.stay-name { font-weight: 700; color: var(--green); margin-bottom: 8px; display: block; text-decoration: none; }
+.stay-name:hover { text-decoration: underline; }
+.stay-addr { font-size: 0.7rem; color: var(--sub); line-height: 1.4; }
 
 /* ── Real-time Chat Section ── */
 .chat-section {
@@ -135,54 +205,18 @@ main {
   justify-content: space-between;
   align-items: center;
 }
-#chat-messages {
-  height: 400px;
-  overflow-y: auto;
-  padding: 20px;
-  background: #f0f2f5;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.message-bubble {
-  max-width: 80%;
-  padding: 10px 14px;
-  border-radius: 12px;
-  font-size: 0.9rem;
-  position: relative;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
+#chat-messages { height: 350px; overflow-y: auto; padding: 20px; background: #f0f2f5; display: flex; flex-direction: column; gap: 12px; }
+.message-bubble { max-width: 80%; padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 .msg-other { align-self: flex-start; background: #fff; border-bottom-left-radius: 2px; }
 .msg-me { align-self: flex-end; background: #dcf8c6; border-bottom-right-radius: 2px; }
-.msg-user { font-size: 0.75rem; font-weight: 700; color: var(--green); margin-bottom: 4px; }
-.msg-time { font-size: 0.65rem; color: #999; margin-top: 4px; text-align: right; }
+.msg-user { font-size: 0.72rem; font-weight: 700; color: var(--green); margin-bottom: 2px; }
+.msg-time { font-size: 0.6rem; color: #999; margin-top: 4px; text-align: right; }
 
-.chat-input-area {
-  padding: 16px;
-  background: #fff;
-  border-top: 1px solid var(--border);
-  display: flex;
-  gap: 10px;
-}
-.chat-input-area input {
-  padding: 10px;
-  border: 1.5px solid var(--border);
-  border-radius: 8px;
-  outline: none;
-  font-size: 0.9rem;
-}
-#nickname-input { width: 100px; }
-#message-input { flex: 1; }
-#send-btn {
-  padding: 10px 20px;
-  background: var(--green);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-}
-#send-btn:hover { background: var(--green-light); }
+.chat-input-area { padding: 16px; background: #fff; border-top: 1px solid var(--border); display: flex; gap: 8px; align-items: center; }
+.sender-btn { padding: 8px 14px; border: 1.5px solid var(--border); border-radius: 8px; background: #fff; cursor: pointer; font-size: 0.8rem; font-weight: 700; }
+.sender-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+#message-input { flex: 1; padding: 10px; border: 1.5px solid var(--border); border-radius: 8px; outline: none; }
+#send-btn { padding: 10px 18px; background: var(--green); color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
 
 .back-btn { display: block; width: fit-content; margin: 30px auto; padding: 12px 24px; background: var(--green); color: #fff; text-decoration: none; border-radius: 30px; font-weight: 600; }
 </style>
@@ -190,12 +224,11 @@ main {
 <body>
 
 <header>
-  <h1>🇦🇷 아르헨티나 견학 타임테이블</h1>
-  <p>모든 시간은 <b>아르헨티나 현지 시각(ART)</b> 기준입니다.</p>
+  <h1>🇦🇷 아르헨티나 견학 상세 일정</h1>
+  <p><b>아르헨티나 현지 시각(ART)</b> 기준 정밀 타임테이블</p>
 </header>
 
 <main>
-  <!-- 기존 Clocks & Reunion Box 동일 -->
   <div class="top-info">
     <div class="clock-row">
       <div class="clock-card">
@@ -222,18 +255,25 @@ main {
     <div class="timetable" id="timetable-grid"></div>
   </div>
 
-  <!-- 실시간 방명록 섹션 추가 -->
+  <!-- 숙소 섹션 -->
+  <h3 style="margin-bottom:16px; color:var(--green);">🏠 일자별 숙소 안내</h3>
+  <div class="stay-section" id="stay-list">
+    <!-- JS로 렌더링 -->
+  </div>
+
+  <!-- 방명록 섹션 -->
   <section class="chat-section">
     <div class="chat-header">
       <span>💬 실시간 응원 메시지</span>
-      <span style="font-size:0.7rem; opacity:0.8;">Firebase Realtime DB</span>
+      <span style="font-size:0.7rem; opacity:0.8;">Firebase Live</span>
     </div>
-    <div id="chat-messages">
-      <!-- 메시지들 로딩됨 -->
-    </div>
+    <div id="chat-messages"></div>
     <div class="chat-input-area">
-      <input type="text" id="nickname-input" placeholder="닉네임" maxlength="10">
-      <input type="text" id="message-input" placeholder="메시지를 입력하세요..." maxlength="100">
+      <div id="sender-selector" style="display:flex; gap:4px;">
+        <button class="sender-btn" data-nick="나희">나희</button>
+        <button class="sender-btn" data-nick="영민">영민</button>
+      </div>
+      <input type="text" id="message-input" placeholder="메시지 입력..." maxlength="100">
       <button id="send-btn">전송</button>
     </div>
   </section>
@@ -241,7 +281,6 @@ main {
   <a href="index.html" class="back-btn">← 메인 대시보드로 돌아가기</a>
 </main>
 
-<!-- Firebase SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
   import { getDatabase, ref, push, set, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
@@ -256,117 +295,144 @@ main {
     appId: "1:968088074458:web:4307adb0fea3195ace0de3"
   };
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
   const messagesRef = ref(db, 'messages');
 
-  const nicknameInput = document.getElementById('nickname-input');
+  const senderBtns = document.querySelectorAll('.sender-btn');
   const messageInput = document.getElementById('message-input');
   const sendBtn = document.getElementById('send-btn');
   const chatMessages = document.getElementById('chat-messages');
 
-  // 로컬 스토리지에서 닉네임 기억하기
-  nicknameInput.value = localStorage.getItem('chat_nick') || '';
-
-  // 메시지 전송 함수
-  function sendMessage() {
-    const nick = nicknameInput.value.trim();
-    const text = messageInput.value.trim();
-    
-    if (!nick || !text) {
-      alert('닉네임과 메시지를 모두 입력해주세요!');
-      return;
-    }
-
-    localStorage.setItem('chat_nick', nick);
-    const newMessageRef = push(messagesRef);
-    set(newMessageRef, {
-      nickname: nick,
-      message: text,
-      timestamp: serverTimestamp()
+  let currentNick = localStorage.getItem('chat_nick') || '영민';
+  senderBtns.forEach(btn => {
+    if (btn.dataset.nick === currentNick) btn.classList.add('active');
+    btn.addEventListener('click', () => {
+      senderBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentNick = btn.dataset.nick;
+      localStorage.setItem('chat_nick', currentNick);
     });
-
-    messageInput.value = '';
-  }
-
-  sendBtn.addEventListener('click', sendMessage);
-  messageInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') sendMessage();
   });
 
-  // 메시지 수신 및 화면 렌더링
+  function sendMessage() {
+    const text = messageInput.value.trim();
+    if (!text) return;
+    push(messagesRef, { nickname: currentNick, message: text, timestamp: serverTimestamp() });
+    messageInput.value = '';
+  }
+  sendBtn.addEventListener('click', sendMessage);
+  messageInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+
   onChildAdded(messagesRef, (data) => {
     const msg = data.val();
-    const isMe = msg.nickname === nicknameInput.value;
-    
+    const isMe = msg.nickname === currentNick;
     const date = msg.timestamp ? new Date(msg.timestamp) : new Date();
-    const timeKst = date.toLocaleTimeString('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit' });
-    const timeArt = date.toLocaleTimeString('ko-KR', { timeZone: 'America/Argentina/Mendoza', hour: '2-digit', minute: '2-digit' });
-
+    const tKst = date.toLocaleTimeString('ko-KR', { timeZone:'Asia/Seoul', hour:'2-digit', minute:'2-digit' });
+    const tArt = date.toLocaleTimeString('ko-KR', { timeZone:'America/Argentina/Mendoza', hour:'2-digit', minute:'2-digit' });
     const bubble = document.createElement('div');
     bubble.className = `message-bubble ${isMe ? 'msg-me' : 'msg-other'}`;
-    bubble.innerHTML = `
-      <div class="msg-user">${msg.nickname}</div>
-      <div class="msg-text">${msg.message}</div>
-      <div class="msg-time">🇰🇷 ${timeKst} | 🇦🇷 ${timeArt}</div>
-    `;
+    bubble.innerHTML = `<div class="msg-user">${msg.nickname}</div><div>${msg.message}</div><div class="msg-time">🇰🇷 ${tKst} | 🇦🇷 ${tArt}</div>`;
     chatMessages.appendChild(bubble);
-    chatMessages.scrollTop = chatMessages.scrollHeight; // 자동 스크롤
+    chatMessages.scrollTop = chatMessages.scrollHeight;
   });
 </script>
 
 <script>
-// ─── 타임테이블 & UI 로직 ───────────────────────────────────────────────────
+// ─── 데이터 정의 ───────────────────────────────────────────────────────────
 const DATES = ['2026-04-25', '2026-04-26', '2026-04-27', '2026-04-28', '2026-04-29', '2026-04-30', '2026-05-01', '2026-05-02', '2026-05-03'];
 const REUNION_TS = new Date('2026-05-03T17:00:00-03:00').getTime();
 
 const EVENTS = [
-  { date: '2026-04-25', hour: 2, duration: 12, task: '✈️ KE017 한국출발', type: 'flight' },
-  { date: '2026-04-25', hour: 14, duration: 6, task: '🇺🇸 LAX 대기', type: 'flight' },
-  { date: '2026-04-25', hour: 20, duration: 11, task: '✈️ LA603 미국출발', type: 'flight' },
-  { date: '2026-04-26', hour: 7, duration: 3, task: '🇨🇱 SCL 대기', type: 'flight' },
-  { date: '2026-04-26', hour: 10, duration: 2, task: '✈️ LA434 산티아고발', type: 'flight' },
-  { date: '2026-04-26', hour: 12, duration: 1, task: '🍷 멘도자 도착!', type: 'wine' },
-  { date: '2026-04-27', hour: 9, duration: 9, task: '🍇 Day 1: 까테나 자파타', type: 'wine' },
-  { date: '2026-04-28', hour: 9, duration: 9, task: '🍇 Day 2: 까테나 자파타', type: 'wine' },
-  { date: '2026-04-29', hour: 9, duration: 9, task: '🍇 Day 3: 까테나 자파타', type: 'wine' },
-  { date: '2026-04-30', hour: 9, duration: 9, task: '🍇 Day 4: 아차발 페레', type: 'wine' },
-  { date: '2026-05-01', hour: 9, duration: 9, task: '🍇 Day 5: 아차발 페레', type: 'wine' },
-  { date: '2026-05-02', hour: 7, duration: 4, task: '✈️ LA2434 멘도자출발', type: 'flight' },
-  { date: '2026-05-02', hour: 13, duration: 7, task: '✈️ LA2476 리마출발', type: 'flight' },
-  { date: '2026-05-02', hour: 20, duration: 7, task: '🇺🇸 LAX 대기', type: 'flight' },
-  { date: '2026-05-03', hour: 3, duration: 14, task: '✈️ KE012 미국출발', type: 'flight' },
-  { date: '2026-05-03', hour: 17, duration: 1, task: '❤️ 인천 도착/재회!', type: 'flight' }
+  // 4/25 (ART)
+  { date: '2026-04-25', time: '02:30', duration: 11.1, task: '✈️ 한국 출국 (KE017)', type: 'flight', url: 'https://www.koreanair.com' },
+  { date: '2026-04-25', time: '13:40', duration: 6.25, task: '🇺🇸 LAX 도착/대기', type: 'flight' },
+  { date: '2026-04-25', time: '19:55', duration: 10.6, task: '✈️ LA 출발 (LA603)', type: 'flight', url: 'https://www.latamairlines.com' },
+  // 4/26 (ART)
+  { date: '2026-04-26', time: '06:35', duration: 3.4, task: '🇨🇱 산티아고 도착/대기', type: 'flight' },
+  { date: '2026-04-26', time: '10:00', duration: 1.1, task: '✈️ 산티아고 출발 (LA434)', type: 'flight' },
+  { date: '2026-04-26', time: '11:06', duration: 0.9, task: '🍷 멘도자(MDZ) 도착', type: 'wine', url: 'https://www.aa2000.com.ar/mendoza' },
+  { date: '2026-04-26', time: '12:30', duration: 0.5, task: '🏨 파크 하얏트 도착', type: 'stay', url: 'https://www.hyatt.com/en-US/hotel/argentina/park-hyatt-mendoza-hotel-casino-and-spa/menph' },
+  { date: '2026-04-26', time: '13:00', duration: 2.0, task: '🍴 호텔 테라스 점심', type: 'wine' },
+  { date: '2026-04-26', time: '19:30', duration: 2.0, task: '🍽️ 저녁 @ Soberana', type: 'wine', url: 'https://www.instagram.com/soberana.mendoza/' },
+  // 4/27 (ART)
+  { date: '2026-04-27', time: '10:00', duration: 3.0, task: '🍇 Catena Zapata 투어', type: 'wine', url: 'https://www.catenazapata.com/' },
+  { date: '2026-04-27', time: '13:00', duration: 2.5, task: '🍴 Angelica 점심(미슐랭1*)', type: 'wine', url: 'https://www.catenazapata.com/angelica-cocina-maestra.php' },
+  { date: '2026-04-27', time: '15:45', duration: 1.5, task: '🌿 La Piramide Vineyard', type: 'wine' },
+  { date: '2026-04-27', time: '19:00', duration: 3.5, task: '🏠 La Vendimia 도착/아사도', type: 'stay' },
+  // 4/28 (ART)
+  { date: '2026-04-28', time: '10:30', duration: 2.0, task: '🍇 Adrianna Vineyard 시음', type: 'wine' },
+  { date: '2026-04-28', time: '12:35', duration: 3.0, task: '🍴 포도밭 야외 점심', type: 'wine' },
+  { date: '2026-04-28', time: '20:00', duration: 2.5, task: '🍷 Malbec Argentino 저녁', type: 'wine' },
+  // 4/29 (ART)
+  { date: '2026-04-29', time: '11:30', duration: 2.0, task: '🍇 Achaval Ferrer 투어', type: 'wine', url: 'https://www.achaval-ferrer.com/' },
+  { date: '2026-04-29', time: '13:30', duration: 2.2, task: '🍴 Quimera Bistro 점심', type: 'wine', url: 'https://achaval-ferrer.com/quimera-bistro/' },
+  { date: '2026-04-29', time: '16:15', duration: 1.0, task: '🏨 HUENTALA 호텔 체크인', type: 'stay', url: 'https://www.huentalahotel.com/' },
+  // 4/30 (ART)
+  { date: '2026-04-30', time: '11:00', duration: 1.5, task: '🍇 Quimera Winery 시음', type: 'wine' },
+  { date: '2026-04-30', time: '12:30', duration: 3.0, task: '🍴 전통 아사도 점심', type: 'wine' },
+  { date: '2026-04-30', time: '15:30', duration: 2.5, task: '🏙️ 멘도사 시티 투어', type: 'wine' },
+  // 5/2~3 (ART)
+  { date: '2026-05-02', time: '07:35', duration: 4.0, task: '🛫 멘도자 출발', type: 'flight' },
+  { date: '2026-05-02', time: '13:00', duration: 7.0, task: '🛫 리마 출발', type: 'flight' },
+  { date: '2026-05-03', time: '03:50', duration: 13.2, task: '✈️ LAX 출발 (KE012)', type: 'flight' },
+  { date: '2026-05-03', time: '17:00', duration: 1.0, task: '❤️ 인천 도착/재회!', type: 'flight' }
+];
+
+const STAYS = [
+  { date: '4/26', name: 'Park Hyatt Mendoza', addr: 'Chile 1124, Mendoza', url: 'https://www.hyatt.com/en-US/hotel/argentina/park-hyatt-mendoza-hotel-casino-and-spa/menph' },
+  { date: '4/27~28', name: 'Catena Family House "La Vendimia"', addr: 'Private Vineyard Stay', url: 'https://www.catenazapata.com/' },
+  { date: '4/29~30', name: 'Huentala Hotel', addr: 'Primitivo de la Reta 1007, Mendoza', url: 'https://www.huentalahotel.com/' }
 ];
 
 function initTimetable() {
   const grid = document.getElementById('timetable-grid');
   let html = '<div class="tt-cell tt-header" style="position:sticky; left:0; z-index:15;">ART / KST</div>';
-  DATES.forEach(d => {
-    const day = new Date(d).toLocaleDateString('ko-KR', {weekday:'short'});
-    html += `<div class="tt-cell tt-header">${d.substring(5)} (${day})</div>`;
-  });
+  DATES.forEach(d => { html += `<div class="tt-cell tt-header">${d.substring(5)} (${new Date(d).toLocaleDateString('ko-KR',{weekday:'short'})})</div>`; });
   for (let h = 0; h < 24; h++) {
-    const artTimeStr = h.toString().padStart(2, '0') + ':00';
-    const kstTimeStr = ((h + 12) % 24).toString().padStart(2, '0') + ':00';
-    html += `<div class="tt-cell tt-sidebar">🇦🇷 ${artTimeStr}<br><span class="time-kst-sub">🇰🇷 ${kstTimeStr}</span></div>`;
+    html += `<div class="tt-cell tt-sidebar">🇦🇷 ${h}:00<br><span class="time-kst-sub">🇰🇷 ${(h+12)%24}:00</span></div>`;
     DATES.forEach(d => { html += `<div class="tt-cell" id="cell-${d}-${h}"></div>`; });
   }
   grid.innerHTML = html;
+
   const now = Date.now();
   EVENTS.forEach(ev => {
-    const cell = document.getElementById(`cell-${ev.date}-${ev.hour}`);
+    const [h, m] = ev.time.split(':').map(Number);
+    const cell = document.getElementById(`cell-${ev.date}-${h}`);
     if (cell) {
-      const evDiv = document.createElement('div');
-      const evTime = new Date(`${ev.date}T${ev.hour.toString().padStart(2,'0')}:00:00-03:00`).getTime();
+      const evA = document.createElement('a');
+      evA.href = ev.url || '#';
+      if (ev.url) evA.target = '_blank';
+      
+      const evTime = new Date(`${ev.date}T${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:00-03:00`).getTime();
       const evEndTime = evTime + (ev.duration * 3600000);
+      
       let statusClass = now > evEndTime ? 'event-past' : (now >= evTime ? 'event-current' : '');
-      evDiv.className = `event event-${ev.type} ${statusClass}`;
-      evDiv.style.height = `calc(${ev.duration * 100}% + ${(ev.duration - 1) * 1}px)`;
-      evDiv.innerHTML = `<div>${ev.task}</div><div style="font-size:0.65rem;opacity:0.8">${ev.duration}h</div>`;
-      cell.appendChild(evDiv);
+      evA.className = `event event-${ev.type} ${statusClass}`;
+      
+      // 분 단위 위치 계산 (top: %, height: %)
+      const topOffset = (m / 60) * 100;
+      const heightVal = ev.duration * 100;
+      evA.style.top = `${topOffset}%`;
+      evA.style.height = `calc(${heightVal}% + ${(Math.floor(ev.duration)) * 1}px)`;
+      
+      evA.innerHTML = `<div style="font-size:0.6rem; opacity:0.8;">${ev.time}</div><div>${ev.task}</div>`;
+      cell.appendChild(evA);
     }
+  });
+}
+
+function initStays() {
+  const stayList = document.getElementById('stay-list');
+  STAYS.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'stay-card';
+    card.innerHTML = `
+      <div class="stay-date">${s.date} 숙박</div>
+      <a href="${s.url}" target="_blank" class="stay-name">${s.name}</a>
+      <div class="stay-addr">${s.addr}</div>
+    `;
+    stayList.appendChild(card);
   });
 }
 
@@ -376,11 +442,8 @@ function updateUI() {
   document.getElementById('art-time').textContent = now.toLocaleTimeString('ko-KR', {timeZone:'America/Argentina/Mendoza', hour12:false});
   const timeLeft = REUNION_TS - now.getTime();
   if (timeLeft > 0) {
-    const days = Math.floor(timeLeft / 86400000);
-    const h = Math.floor((timeLeft % 86400000) / 3600000);
-    const m = Math.floor((timeLeft % 3600000) / 60000);
-    const s = Math.floor((timeLeft % 60000) / 1000);
-    document.getElementById('d-day').textContent = `재회까지 D-Day ${days}일 ${h}:${m}:${s}`;
+    const d = Math.floor(timeLeft/86400000), h = Math.floor((timeLeft%86400000)/3600000), m = Math.floor((timeLeft%3600000)/60000), s = Math.floor((timeLeft%60000)/1000);
+    document.getElementById('d-day').textContent = `재회까지 D-Day ${d}일 ${h}:${m}:${s}`;
     const start = new Date('2026-04-25T14:30:00+09:00').getTime();
     const end = new Date('2026-05-04T05:00:00+09:00').getTime();
     const progress = Math.max(0, Math.min(1, (now.getTime() - start) / (end - start)));
@@ -388,12 +451,12 @@ function updateUI() {
     document.getElementById('woman').style.right = (progress * 45) + '%';
   } else {
     document.getElementById('d-day').textContent = "❤️ 드디어 만났습니다! ❤️";
-    document.getElementById('man').textContent = "💏";
-    document.getElementById('woman').style.display = "none";
+    document.getElementById('man').textContent = "💏"; document.getElementById('woman').style.display = "none";
   }
 }
 
 initTimetable();
+initStays();
 setInterval(updateUI, 1000);
 updateUI();
 </script>
