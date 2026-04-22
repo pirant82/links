@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🇦🇷 멘도자 견학 정밀 타임테이블 & 재회</title>
+<title>🇦🇷 아르헨티나 견학 정밀 가이드</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -18,6 +18,7 @@
   --sub:         #6B7280;
   --border:      #E5E7EB;
   --shadow:      0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg:   0 8px 24px rgba(0,0,0,.15);
   --radius:      16px;
 }
 
@@ -39,49 +40,19 @@ header {
 }
 
 main {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
 }
 
 /* ── Clocks & Countdown ── */
-.top-info {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-bottom: 30px;
-}
-.clock-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-.clock-card {
-  background: #fff;
-  padding: 15px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-}
+.top-info { display: flex; flex-direction: column; gap: 20px; margin-bottom: 30px; }
+.clock-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.clock-card { background: #fff; padding: 15px; border-radius: 12px; text-align: center; box-shadow: var(--shadow); border: 1px solid var(--border); }
 .clock-time { font-size: 1.4rem; font-weight: 700; font-family: monospace; color: var(--green); }
 
-.reunion-box {
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--arg-blue);
-  text-align: center;
-}
-.track-container {
-  position: relative;
-  height: 50px;
-  background: #f1f5f9;
-  border-radius: 25px;
-  margin: 20px 0;
-  overflow: hidden;
-}
+.reunion-box { background: #fff; padding: 20px; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--arg-blue); text-align: center; }
+.track-container { position: relative; height: 50px; background: #f1f5f9; border-radius: 25px; margin: 20px 0; overflow: hidden; }
 .track-icon { position: absolute; top: 50%; transform: translateY(-50%); font-size: 1.8rem; transition: all 0.5s; z-index: 2; }
 .d-day-counter { font-size: 1.3rem; font-weight: 700; color: #e11d48; }
 
@@ -98,63 +69,33 @@ main {
 
 .timetable {
   display: grid;
-  grid-template-columns: 90px repeat(9, minmax(140px, 1fr));
+  grid-template-columns: 90px repeat(9, minmax(150px, 1fr));
   border-collapse: collapse;
-  min-width: 1100px;
+  min-width: 1200px;
 }
 
-.tt-cell {
-  border: 0.5px solid var(--border);
-  position: relative;
-  min-height: 60px;
-}
-.tt-header {
-  background: var(--green);
-  color: #fff;
-  text-align: center;
-  font-weight: 700;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  height: 65px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  font-size: 0.8rem;
-}
-.tt-sidebar {
-  background: #f8fafc;
-  color: var(--arg-blue);
-  font-weight: 700;
-  text-align: center;
-  position: sticky;
-  left: 0;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-right: 2px solid var(--border);
-  font-size: 0.75rem;
-}
-
+.tt-cell { border: 0.5px solid var(--border); position: relative; min-height: 70px; }
+.tt-header { background: var(--green); color: #fff; text-align: center; font-weight: 700; position: sticky; top: 0; z-index: 10; height: 65px; display: flex; flex-direction: column; justify-content: center; font-size: 0.8rem; }
+.tt-sidebar { background: #f8fafc; color: var(--arg-blue); font-weight: 700; text-align: center; position: sticky; left: 0; z-index: 5; display: flex; flex-direction: column; justify-content: center; border-right: 2px solid var(--border); font-size: 0.75rem; }
 .time-kst-sub { font-size: 0.6rem; color: var(--gold); font-weight: 600; opacity: 0.8; }
 
-/* Precise Event Styling */
+/* Event Styling */
 .event {
   position: absolute;
   left: 4px;
   right: 4px;
   border-radius: 6px;
-  padding: 6px;
-  font-size: 0.72rem;
-  font-weight: 600;
+  padding: 4px 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
   z-index: 2;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   overflow: hidden;
   text-decoration: none;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  transition: transform 0.2s;
 }
 .event:hover { transform: scale(1.02); z-index: 4; box-shadow: var(--shadow-lg); }
 
@@ -164,54 +105,25 @@ main {
 
 .event-past   { filter: grayscale(0.8) opacity(0.5); text-decoration: line-through; }
 .event-current { outline: 2.5px solid var(--green); z-index: 3; animation: tt-pulse 2s infinite; }
-
 @keyframes tt-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
 /* ── Accommodation Section ── */
-.stay-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-  margin-bottom: 40px;
-}
-.stay-card {
-  background: #fff;
-  padding: 16px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-}
+.stay-section { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-bottom: 40px; }
+.stay-card { background: #fff; padding: 16px; border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--shadow); }
 .stay-date { font-size: 0.75rem; color: var(--sub); font-weight: 700; margin-bottom: 4px; }
 .stay-name { font-weight: 700; color: var(--green); margin-bottom: 8px; display: block; text-decoration: none; }
 .stay-name:hover { text-decoration: underline; }
 .stay-addr { font-size: 0.7rem; color: var(--sub); line-height: 1.4; }
 
-/* ── Real-time Chat Section ── */
-.chat-section {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-  overflow: hidden;
-  max-width: 800px;
-  margin: 0 auto 40px;
-}
-.chat-header {
-  background: var(--arg-blue);
-  color: #fff;
-  padding: 16px;
-  font-weight: 700;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+/* ── Chat Section ── */
+.chat-section { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); overflow: hidden; max-width: 800px; margin: 0 auto 40px; }
+.chat-header { background: var(--arg-blue); color: #fff; padding: 16px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
 #chat-messages { height: 350px; overflow-y: auto; padding: 20px; background: #f0f2f5; display: flex; flex-direction: column; gap: 12px; }
 .message-bubble { max-width: 80%; padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 .msg-other { align-self: flex-start; background: #fff; border-bottom-left-radius: 2px; }
 .msg-me { align-self: flex-end; background: #dcf8c6; border-bottom-right-radius: 2px; }
 .msg-user { font-size: 0.72rem; font-weight: 700; color: var(--green); margin-bottom: 2px; }
 .msg-time { font-size: 0.6rem; color: #999; margin-top: 4px; text-align: right; }
-
 .chat-input-area { padding: 16px; background: #fff; border-top: 1px solid var(--border); display: flex; gap: 8px; align-items: center; }
 .sender-btn { padding: 8px 14px; border: 1.5px solid var(--border); border-radius: 8px; background: #fff; cursor: pointer; font-size: 0.8rem; font-weight: 700; }
 .sender-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
@@ -229,6 +141,7 @@ main {
 </header>
 
 <main>
+  <!-- Clocks & Reunion Box -->
   <div class="top-info">
     <div class="clock-row">
       <div class="clock-card">
@@ -250,23 +163,16 @@ main {
     </div>
   </div>
 
-  <!-- 타임테이블 -->
   <div class="timetable-wrapper">
     <div class="timetable" id="timetable-grid"></div>
   </div>
 
-  <!-- 숙소 섹션 -->
   <h3 style="margin-bottom:16px; color:var(--green);">🏠 일자별 숙소 안내</h3>
-  <div class="stay-section" id="stay-list">
-    <!-- JS로 렌더링 -->
-  </div>
+  <div class="stay-section" id="stay-list"></div>
 
-  <!-- 방명록 섹션 -->
+  <!-- Chat Section -->
   <section class="chat-section">
-    <div class="chat-header">
-      <span>💬 실시간 응원 메시지</span>
-      <span style="font-size:0.7rem; opacity:0.8;">Firebase Live</span>
-    </div>
+    <div class="chat-header"><span>💬 실시간 응원 메시지</span><span style="font-size:0.7rem; opacity:0.8;">Firebase Live</span></div>
     <div id="chat-messages"></div>
     <div class="chat-input-area">
       <div id="sender-selector" style="display:flex; gap:4px;">
@@ -281,40 +187,26 @@ main {
   <a href="index.html" class="back-btn">← 메인 대시보드로 돌아가기</a>
 </main>
 
+<!-- Firebase SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
   import { getDatabase, ref, push, set, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCXUguglvkr7XmF4O27n96o4meg_5wHnI0",
-    authDomain: "argcomment.firebaseapp.com",
-    databaseURL: "https://argcomment-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "argcomment",
-    storageBucket: "argcomment.firebasestorage.app",
-    messagingSenderId: "968088074458",
-    appId: "1:968088074458:web:4307adb0fea3195ace0de3"
-  };
-
+  const firebaseConfig = { apiKey: "AIzaSyCXUguglvkr7XmF4O27n96o4meg_5wHnI0", authDomain: "argcomment.firebaseapp.com", databaseURL: "https://argcomment-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "argcomment", storageBucket: "argcomment.firebasestorage.app", messagingSenderId: "968088074458", appId: "1:968088074458:web:4307adb0fea3195ace0de3" };
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
   const messagesRef = ref(db, 'messages');
-
   const senderBtns = document.querySelectorAll('.sender-btn');
   const messageInput = document.getElementById('message-input');
   const sendBtn = document.getElementById('send-btn');
   const chatMessages = document.getElementById('chat-messages');
-
   let currentNick = localStorage.getItem('chat_nick') || '영민';
   senderBtns.forEach(btn => {
     if (btn.dataset.nick === currentNick) btn.classList.add('active');
     btn.addEventListener('click', () => {
-      senderBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentNick = btn.dataset.nick;
-      localStorage.setItem('chat_nick', currentNick);
+      senderBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active');
+      currentNick = btn.dataset.nick; localStorage.setItem('chat_nick', currentNick);
     });
   });
-
   function sendMessage() {
     const text = messageInput.value.trim();
     if (!text) return;
@@ -323,18 +215,14 @@ main {
   }
   sendBtn.addEventListener('click', sendMessage);
   messageInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
-
   onChildAdded(messagesRef, (data) => {
-    const msg = data.val();
-    const isMe = msg.nickname === currentNick;
+    const msg = data.val(); const isMe = msg.nickname === currentNick;
     const date = msg.timestamp ? new Date(msg.timestamp) : new Date();
     const tKst = date.toLocaleTimeString('ko-KR', { timeZone:'Asia/Seoul', hour:'2-digit', minute:'2-digit' });
     const tArt = date.toLocaleTimeString('ko-KR', { timeZone:'America/Argentina/Mendoza', hour:'2-digit', minute:'2-digit' });
-    const bubble = document.createElement('div');
-    bubble.className = `message-bubble ${isMe ? 'msg-me' : 'msg-other'}`;
+    const bubble = document.createElement('div'); bubble.className = `message-bubble ${isMe ? 'msg-me' : 'msg-other'}`;
     bubble.innerHTML = `<div class="msg-user">${msg.nickname}</div><div>${msg.message}</div><div class="msg-time">🇰🇷 ${tKst} | 🇦🇷 ${tArt}</div>`;
-    chatMessages.appendChild(bubble);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+    chatMessages.appendChild(bubble); chatMessages.scrollTop = chatMessages.scrollHeight;
   });
 </script>
 
@@ -343,47 +231,113 @@ main {
 const DATES = ['2026-04-25', '2026-04-26', '2026-04-27', '2026-04-28', '2026-04-29', '2026-04-30', '2026-05-01', '2026-05-02', '2026-05-03'];
 const REUNION_TS = new Date('2026-05-03T17:00:00-03:00').getTime();
 
-const EVENTS = [
-  // 4/25 (ART)
-  { date: '2026-04-25', time: '02:30', duration: 11.1, task: '✈️ 한국 출국 (KE017)', type: 'flight', url: 'https://www.koreanair.com' },
-  { date: '2026-04-25', time: '13:40', duration: 6.25, task: '🇺🇸 LAX 도착/대기', type: 'flight' },
-  { date: '2026-04-25', time: '19:55', duration: 10.6, task: '✈️ LA 출발 (LA603)', type: 'flight', url: 'https://www.latamairlines.com' },
+// Google Maps Search URLs
+const MAPS = {
+  MDZ: 'https://www.google.com/maps/search/Governor+Francisco+Gabrielli+International+Airport',
+  HYATT: 'https://www.google.com/maps/search/Park+Hyatt+Mendoza',
+  SOBERANA: 'https://www.google.com/maps/search/Soberana+Mendoza',
+  CATENA: 'https://www.google.com/maps/search/Catena+Zapata+Winery',
+  ANGELICA: 'https://www.google.com/maps/search/Angelica+Cocina+Maestra',
+  VENDIMIA: 'https://www.google.com/maps/search/Catena+Zapata+La+Vendimia',
+  ADRIANNA: 'https://www.google.com/maps/search/Adrianna+Vineyard',
+  ACHAVAL: 'https://www.google.com/maps/search/Achaval+Ferrer+Winery',
+  QUIMERA: 'https://www.google.com/maps/search/Quimera+Bistro+Mendoza',
+  HUENTALA: 'https://www.google.com/maps/search/Huentala+Hotel+Mendoza'
+};
+
+const RAW_EVENTS = [
+  // 4/25 (ART) - LA Flight (Over midnight fix)
+  { date: '2026-04-25', time: '02:30', duration: 11.1, task: '✈️ 한국 출국 (KE017)', type: 'flight', url: MAPS.MDZ },
+  { date: '2026-04-25', time: '13:40', duration: 6.25, task: '🇺🇸 LAX 대기', type: 'flight' },
+  { date: '2026-04-25', time: '19:55', duration: 10.6, task: '✈️ LA 출발 (LA603)', type: 'flight' },
+  
   // 4/26 (ART)
-  { date: '2026-04-26', time: '06:35', duration: 3.4, task: '🇨🇱 산티아고 도착/대기', type: 'flight' },
-  { date: '2026-04-26', time: '10:00', duration: 1.1, task: '✈️ 산티아고 출발 (LA434)', type: 'flight' },
-  { date: '2026-04-26', time: '11:06', duration: 0.9, task: '🍷 멘도자(MDZ) 도착', type: 'wine', url: 'https://www.aa2000.com.ar/mendoza' },
-  { date: '2026-04-26', time: '12:30', duration: 0.5, task: '🏨 파크 하얏트 도착', type: 'stay', url: 'https://www.hyatt.com/en-US/hotel/argentina/park-hyatt-mendoza-hotel-casino-and-spa/menph' },
-  { date: '2026-04-26', time: '13:00', duration: 2.0, task: '🍴 호텔 테라스 점심', type: 'wine' },
-  { date: '2026-04-26', time: '19:30', duration: 2.0, task: '🍽️ 저녁 @ Soberana', type: 'wine', url: 'https://www.instagram.com/soberana.mendoza/' },
-  // 4/27 (ART)
-  { date: '2026-04-27', time: '10:00', duration: 3.0, task: '🍇 Catena Zapata 투어', type: 'wine', url: 'https://www.catenazapata.com/' },
-  { date: '2026-04-27', time: '13:00', duration: 2.5, task: '🍴 Angelica 점심(미슐랭1*)', type: 'wine', url: 'https://www.catenazapata.com/angelica-cocina-maestra.php' },
-  { date: '2026-04-27', time: '15:45', duration: 1.5, task: '🌿 La Piramide Vineyard', type: 'wine' },
-  { date: '2026-04-27', time: '19:00', duration: 3.5, task: '🏠 La Vendimia 도착/아사도', type: 'stay' },
+  { date: '2026-04-26', time: '06:35', duration: 3.4, task: '🇨🇱 산티아고 대기', type: 'flight' },
+  { date: '2026-04-26', time: '10:00', duration: 1.1, task: '✈️ 산티아고 출발', type: 'flight' },
+  { date: '2026-04-26', time: '11:06', duration: 0.9, task: '🍷 멘도자(MDZ) 도착', type: 'wine', url: MAPS.MDZ },
+  { date: '2026-04-26', time: '12:00', duration: 0.5, task: '🚗 픽업 이동', type: 'wine' },
+  { date: '2026-04-26', time: '12:30', duration: 0.5, task: '🏨 파크 하얏트 도착', type: 'stay', url: MAPS.HYATT },
+  { date: '2026-04-26', time: '13:00', duration: 2.0, task: '🍴 테라스 점심 & 휴식', type: 'wine', url: MAPS.HYATT },
+  { date: '2026-04-26', time: '19:20', duration: 0.2, task: '📍 로비 집합', type: 'wine' },
+  { date: '2026-04-26', time: '19:30', duration: 2.0, task: '🍽️ 저녁 @ Soberana', type: 'wine', url: MAPS.SOBERANA },
+  
+  // 4/27 (ART) - Catena Zapata Details
+  { date: '2026-04-27', time: '07:00', duration: 2.0, task: '🍳 호텔 조식', type: 'stay' },
+  { date: '2026-04-27', time: '09:00', duration: 0.1, task: '🔑 체크아웃', type: 'stay' },
+  { date: '2026-04-27', time: '09:10', duration: 0.8, task: '🚗 와이너리 이동', type: 'wine' },
+  { date: '2026-04-27', time: '10:00', duration: 0.2, task: '🍇 Catena 도착', type: 'wine', url: MAPS.CATENA },
+  { date: '2026-04-27', time: '10:10', duration: 0.5, task: '📐 피라미드 투어', type: 'wine', url: MAPS.CATENA },
+  { date: '2026-04-27', time: '10:40', duration: 0.6, task: '🔬 와인 연구소 소개', type: 'wine' },
+  { date: '2026-04-27', time: '11:20', duration: 1.0, task: '🧪 말벡 블렌딩 세션', type: 'wine' },
+  { date: '2026-04-27', time: '12:20', duration: 0.3, task: '🍷 Nicolas Catena 시음', type: 'wine' },
+  { date: '2026-04-27', time: '13:00', duration: 2.5, task: '🍴 Angelica 점심(1*)', type: 'wine', url: MAPS.ANGELICA },
+  { date: '2026-04-27', time: '15:30', duration: 0.2, task: '🥃 증류소 방문', type: 'wine' },
+  { date: '2026-04-27', time: '15:45', duration: 0.7, task: '🌿 La Piramide Vineyard', type: 'wine' },
+  { date: '2026-04-27', time: '17:00', duration: 0.5, task: '🍇 Angelica Vineyard', type: 'wine' },
+  { date: '2026-04-27', time: '19:00', duration: 0.5, task: '🏠 La Vendimia 도착', type: 'stay', url: MAPS.VENDIMIA },
+  { date: '2026-04-27', time: '19:30', duration: 1.0, task: '🥩 고기 손질 클래스', type: 'wine' },
+  { date: '2026-04-27', time: '20:30', duration: 2.0, task: '🔥 전통 아사도 저녁', type: 'wine' },
+  
   // 4/28 (ART)
-  { date: '2026-04-28', time: '10:30', duration: 2.0, task: '🍇 Adrianna Vineyard 시음', type: 'wine' },
+  { date: '2026-04-28', time: '07:30', duration: 0.5, task: '🍳 조식', type: 'stay' },
+  { date: '2026-04-28', time: '08:00', duration: 2.5, task: '🚗 Adrianna 이동', type: 'wine' },
+  { date: '2026-04-28', time: '10:30', duration: 2.0, task: '🍇 Adrianna 투어/시음', type: 'wine', url: MAPS.ADRIANNA },
   { date: '2026-04-28', time: '12:35', duration: 3.0, task: '🍴 포도밭 야외 점심', type: 'wine' },
+  { date: '2026-04-28', time: '18:00', duration: 0.5, task: '🧘 켈틱 명상', type: 'stay' },
   { date: '2026-04-28', time: '20:00', duration: 2.5, task: '🍷 Malbec Argentino 저녁', type: 'wine' },
+  
   // 4/29 (ART)
-  { date: '2026-04-29', time: '11:30', duration: 2.0, task: '🍇 Achaval Ferrer 투어', type: 'wine', url: 'https://www.achaval-ferrer.com/' },
-  { date: '2026-04-29', time: '13:30', duration: 2.2, task: '🍴 Quimera Bistro 점심', type: 'wine', url: 'https://achaval-ferrer.com/quimera-bistro/' },
-  { date: '2026-04-29', time: '16:15', duration: 1.0, task: '🏨 HUENTALA 호텔 체크인', type: 'stay', url: 'https://www.huentalahotel.com/' },
+  { date: '2026-04-29', time: '10:30', duration: 1.0, task: '🚗 Achaval 이동', type: 'wine' },
+  { date: '2026-04-29', time: '11:40', duration: 0.5, task: '🍇 Finca Bella Vista', type: 'wine', url: MAPS.ACHAVAL },
+  { date: '2026-04-29', time: '12:15', duration: 1.0, task: '🍷 와인 시음', type: 'wine' },
+  { date: '2026-04-29', time: '13:30', duration: 2.2, task: '🍴 Quimera 점심', type: 'wine', url: MAPS.QUIMERA },
+  { date: '2026-04-29', time: '16:15', duration: 0.8, task: '🏨 HUENTALA 체크인', type: 'stay', url: MAPS.HUENTALA },
+  { date: '2026-04-29', time: '20:00', duration: 2.5, task: '🍽️ 저녁 식사', type: 'wine' },
+  
   // 4/30 (ART)
-  { date: '2026-04-30', time: '11:00', duration: 1.5, task: '🍇 Quimera Winery 시음', type: 'wine' },
-  { date: '2026-04-30', time: '12:30', duration: 3.0, task: '🍴 전통 아사도 점심', type: 'wine' },
+  { date: '2026-04-30', time: '10:30', duration: 0.5, task: '🚗 Quimera 이동', type: 'wine' },
+  { date: '2026-04-30', time: '11:00', duration: 1.5, task: '🍇 Quimera 시음', type: 'wine', url: MAPS.QUIMERA },
+  { date: '2026-04-30', time: '12:30', duration: 3.0, task: '🔥 아사도 점심', type: 'wine' },
   { date: '2026-04-30', time: '15:30', duration: 2.5, task: '🏙️ 멘도사 시티 투어', type: 'wine' },
-  // 5/2~3 (ART)
+  { date: '2026-04-30', time: '20:00', duration: 2.5, task: '🍽️ 저녁 식사', type: 'wine' },
+  
+  // 5/1~3 (ART)
+  { date: '2026-05-01', time: '04:45', duration: 0.5, task: '🚗 공항 이동', type: 'flight' },
   { date: '2026-05-02', time: '07:35', duration: 4.0, task: '🛫 멘도자 출발', type: 'flight' },
   { date: '2026-05-02', time: '13:00', duration: 7.0, task: '🛫 리마 출발', type: 'flight' },
-  { date: '2026-05-03', time: '03:50', duration: 13.2, task: '✈️ LAX 출발 (KE012)', type: 'flight' },
-  { date: '2026-05-03', time: '17:00', duration: 1.0, task: '❤️ 인천 도착/재회!', type: 'flight' }
+  { date: '2026-05-03', time: '03:50', duration: 13.2, task: '✈️ LAX 출발', type: 'flight' },
+  { date: '2026-05-03', time: '17:00', duration: 1.0, task: '❤️ 인천 재회!', type: 'flight' }
 ];
 
 const STAYS = [
-  { date: '4/26', name: 'Park Hyatt Mendoza', addr: 'Chile 1124, Mendoza', url: 'https://www.hyatt.com/en-US/hotel/argentina/park-hyatt-mendoza-hotel-casino-and-spa/menph' },
-  { date: '4/27~28', name: 'Catena Family House "La Vendimia"', addr: 'Private Vineyard Stay', url: 'https://www.catenazapata.com/' },
-  { date: '4/29~30', name: 'Huentala Hotel', addr: 'Primitivo de la Reta 1007, Mendoza', url: 'https://www.huentalahotel.com/' }
+  { date: '4/26', name: 'Park Hyatt Mendoza', addr: 'Chile 1124, Mendoza', url: MAPS.HYATT },
+  { date: '4/27~28', name: 'Catena Family House "La Vendimia"', addr: 'Private Stay', url: MAPS.VENDIMIA },
+  { date: '4/29~30', name: 'Huentala Hotel', addr: 'Primitivo de la Reta 1007, Mendoza', url: MAPS.HUENTALA }
 ];
+
+// ─── 유틸리티 로직 ──────────────────────────────────────────────────────────
+function splitOvernightEvents(events) {
+  const result = [];
+  events.forEach(ev => {
+    const [h, m] = ev.time.split(':').map(Number);
+    const startTotalMin = h * 60 + m;
+    const durationMin = ev.duration * 60;
+    
+    if (startTotalMin + durationMin > 1440) {
+      const firstDayMin = 1440 - startTotalMin;
+      const secondDayMin = durationMin - firstDayMin;
+      result.push({ ...ev, duration: firstDayMin / 60 });
+      
+      const curDateIdx = DATES.indexOf(ev.date);
+      if (curDateIdx !== -1 && curDateIdx + 1 < DATES.length) {
+        result.push({ ...ev, date: DATES[curDateIdx+1], time: '00:00', duration: secondDayMin / 60 });
+      }
+    } else {
+      result.push(ev);
+    }
+  });
+  return result;
+}
 
 function initTimetable() {
   const grid = document.getElementById('timetable-grid');
@@ -396,27 +350,21 @@ function initTimetable() {
   grid.innerHTML = html;
 
   const now = Date.now();
-  EVENTS.forEach(ev => {
+  const processed = splitOvernightEvents(RAW_EVENTS);
+  processed.forEach(ev => {
     const [h, m] = ev.time.split(':').map(Number);
     const cell = document.getElementById(`cell-${ev.date}-${h}`);
     if (cell) {
       const evA = document.createElement('a');
-      evA.href = ev.url || '#';
-      if (ev.url) evA.target = '_blank';
-      
+      evA.href = ev.url || `https://www.google.com/maps/search/${encodeURIComponent(ev.task + " Mendoza")}`;
+      evA.target = '_blank';
       const evTime = new Date(`${ev.date}T${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:00-03:00`).getTime();
       const evEndTime = evTime + (ev.duration * 3600000);
-      
       let statusClass = now > evEndTime ? 'event-past' : (now >= evTime ? 'event-current' : '');
       evA.className = `event event-${ev.type} ${statusClass}`;
-      
-      // 분 단위 위치 계산 (top: %, height: %)
-      const topOffset = (m / 60) * 100;
-      const heightVal = ev.duration * 100;
-      evA.style.top = `${topOffset}%`;
-      evA.style.height = `calc(${heightVal}% + ${(Math.floor(ev.duration)) * 1}px)`;
-      
-      evA.innerHTML = `<div style="font-size:0.6rem; opacity:0.8;">${ev.time}</div><div>${ev.task}</div>`;
+      evA.style.top = `${(m/60)*100}%`;
+      evA.style.height = `calc(${ev.duration*100}% - 2px)`;
+      evA.innerHTML = `<div style="font-size:0.55rem; opacity:0.8;">${ev.time}</div><div>${ev.task}</div>`;
       cell.appendChild(evA);
     }
   });
@@ -425,13 +373,8 @@ function initTimetable() {
 function initStays() {
   const stayList = document.getElementById('stay-list');
   STAYS.forEach(s => {
-    const card = document.createElement('div');
-    card.className = 'stay-card';
-    card.innerHTML = `
-      <div class="stay-date">${s.date} 숙박</div>
-      <a href="${s.url}" target="_blank" class="stay-name">${s.name}</a>
-      <div class="stay-addr">${s.addr}</div>
-    `;
+    const card = document.createElement('div'); card.className = 'stay-card';
+    card.innerHTML = `<div class="stay-date">${s.date} 숙박</div><a href="${s.url}" target="_blank" class="stay-name">${s.name}</a><div class="stay-addr">${s.addr}</div>`;
     stayList.appendChild(card);
   });
 }
@@ -447,18 +390,14 @@ function updateUI() {
     const start = new Date('2026-04-25T14:30:00+09:00').getTime();
     const end = new Date('2026-05-04T05:00:00+09:00').getTime();
     const progress = Math.max(0, Math.min(1, (now.getTime() - start) / (end - start)));
-    document.getElementById('man').style.left = (progress * 45) + '%';
-    document.getElementById('woman').style.right = (progress * 45) + '%';
+    document.getElementById('man').style.left = (progress * 45) + '%'; document.getElementById('woman').style.right = (progress * 45) + '%';
   } else {
     document.getElementById('d-day').textContent = "❤️ 드디어 만났습니다! ❤️";
     document.getElementById('man').textContent = "💏"; document.getElementById('woman').style.display = "none";
   }
 }
 
-initTimetable();
-initStays();
-setInterval(updateUI, 1000);
-updateUI();
+initTimetable(); initStays(); setInterval(updateUI, 1000); updateUI();
 </script>
 </body>
 </html>
