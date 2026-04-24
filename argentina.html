@@ -131,6 +131,133 @@ main {
 #send-btn { padding: 10px 18px; background: var(--green); color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
 
 .back-btn { display: block; width: fit-content; margin: 30px auto; padding: 12px 24px; background: var(--green); color: #fff; text-decoration: none; border-radius: 30px; font-weight: 600; }
+
+/* ── Day Tab Bar ── */
+.day-tabs-bar {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  margin: 0 -20px 0;
+}
+.day-tabs {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  gap: 8px;
+  padding: 10px 16px;
+}
+.day-tabs::-webkit-scrollbar { display: none; }
+.day-tab {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: #fff;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.day-tab.active { background: var(--green); color: #fff; border-color: var(--green); }
+.day-tab:hover:not(.active) { background: #f0fdf4; border-color: var(--green-light); }
+
+/* ── Vertical Timeline ── */
+.timeline-section {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+.timeline-day-label {
+  background: var(--green);
+  color: #fff;
+  padding: 10px 16px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.timeline-item {
+  display: grid;
+  grid-template-columns: 58px 16px 1fr 40px;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  min-height: 58px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  transition: background 0.15s;
+}
+.timeline-item:last-child { border-bottom: none; }
+/* 세로 연결선 */
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: calc(14px + 58px + 10px + 7px);
+  top: 30px;
+  bottom: -1px;
+  width: 2px;
+  background: #e5e7eb;
+  z-index: 0;
+}
+.timeline-item:last-child::before { display: none; }
+.tl-time { display: flex; flex-direction: column; align-items: flex-end; padding-top: 2px; }
+.tl-art { font-size: 0.88rem; font-weight: 700; color: var(--green); font-family: monospace; }
+.tl-kst { font-size: 0.6rem; color: var(--sub); margin-top: 2px; }
+.tl-dot-col { display: flex; justify-content: center; padding-top: 4px; position: relative; z-index: 1; }
+.tl-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--green); border: 2px solid #fff;
+  box-shadow: 0 0 0 2px var(--green); flex-shrink: 0;
+}
+.tl-content { padding-top: 1px; }
+.tl-title { font-size: 0.88rem; font-weight: 700; line-height: 1.35; word-break: keep-all; }
+.tl-meta { font-size: 0.67rem; color: var(--sub); margin-top: 3px; }
+.tl-map-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; text-decoration: none; flex-shrink: 0;
+  margin-top: 2px; transition: background 0.15s;
+}
+.tl-map-btn.has-url { background: #f0fdf4; border: 1.5px solid #bbf7d0; }
+.tl-map-btn.has-url:active { background: #dcfce7; }
+.tl-map-btn.no-url { visibility: hidden; pointer-events: none; }
+
+/* 타입별 색상 */
+.timeline-item.type-flight .tl-dot { background: #1d4ed8; box-shadow: 0 0 0 2px #1d4ed8; }
+.timeline-item.type-flight .tl-art { color: #1d4ed8; }
+.timeline-item.type-wine   .tl-dot { background: #be185d; box-shadow: 0 0 0 2px #be185d; }
+.timeline-item.type-wine   .tl-art { color: #be185d; }
+.timeline-item.type-stay   .tl-dot { background: #166534; box-shadow: 0 0 0 2px #166534; }
+.timeline-item.type-stay   .tl-art { color: #166534; }
+
+/* 상태 */
+.timeline-item.ev-past { opacity: 0.38; }
+.timeline-item.ev-past .tl-title { text-decoration: line-through; }
+.timeline-item.ev-past .tl-dot { background: #9ca3af; box-shadow: 0 0 0 2px #9ca3af; }
+.timeline-item.ev-past .tl-art { color: #9ca3af; }
+.timeline-item.ev-current { background: #f0fdf4; border-left: 4px solid var(--green); }
+.timeline-item.ev-current .tl-dot { animation: pulse-dot 1.5s infinite; }
+@keyframes pulse-dot {
+  0%,100% { transform:scale(1); }
+  50%      { transform:scale(1.4); box-shadow: 0 0 0 5px rgba(45,90,39,0.2); }
+}
+
+/* ── Grid Toggle ── */
+.grid-toggle-section { margin-bottom: 30px; }
+.grid-toggle-btn {
+  width: 100%; padding: 14px;
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: 12px; font-size: 0.85rem; font-weight: 700;
+  cursor: pointer; color: var(--green); text-align: center;
+  box-shadow: var(--shadow); transition: background 0.15s;
+}
+.grid-toggle-btn:hover { background: #f0fdf4; }
+#grid-collapsible { display: none; margin-top: 12px; }
 </style>
 </head>
 <body>
@@ -163,8 +290,24 @@ main {
     </div>
   </div>
 
-  <div class="timetable-wrapper">
-    <div class="timetable" id="timetable-grid"></div>
+  <!-- Day Tab Bar -->
+  <div class="day-tabs-bar">
+    <div class="day-tabs" id="day-tabs"></div>
+  </div>
+
+  <!-- Vertical Timeline -->
+  <div class="timeline-section">
+    <div id="timeline-view"></div>
+  </div>
+
+  <!-- Grid Toggle (접기/펼치기) -->
+  <div class="grid-toggle-section">
+    <button class="grid-toggle-btn" id="grid-toggle-btn" onclick="toggleGrid()">📊 전체 그리드 타임테이블 보기 ▼</button>
+    <div id="grid-collapsible">
+      <div class="timetable-wrapper">
+        <div class="timetable" id="timetable-grid"></div>
+      </div>
+    </div>
   </div>
 
   <h3 style="margin-bottom:16px; color:var(--green);">🏠 일자별 숙소 안내</h3>
@@ -424,7 +567,108 @@ function updateUI() {
   }
 }
 
-initTimetable(); initStays(); setInterval(updateUI, 1000); updateUI();
+// ─── 타임라인 뷰 ──────────────────────────────────────────────────────────
+const TAB_DATES = [
+  { date: '2026-04-25', label: '4/25 토', sub: '출국 비행' },
+  { date: '2026-04-26', label: '4/26 일', sub: '멘도사 도착' },
+  { date: '2026-04-27', label: '4/27 월', sub: 'Catena Zapata' },
+  { date: '2026-04-28', label: '4/28 화', sub: 'Adrianna' },
+  { date: '2026-04-29', label: '4/29 수', sub: 'Achaval Ferrer' },
+  { date: '2026-04-30', label: '4/30 목', sub: 'Quimera' },
+  { date: '2026-05-01', label: '5/1 금',  sub: '귀국 비행' },
+  { date: '2026-05-02', label: '5/2 토',  sub: 'LAX → 인천' },
+];
+
+function artToKst(timeStr) {
+  const [h, m] = timeStr.split(':').map(Number);
+  const kstH = (h + 12) % 24;
+  const overflow = (h + 12) >= 24;
+  return `${kstH.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')} KST${overflow ? ' +1일' : ''}`;
+}
+
+function formatDuration(hours) {
+  const totalMin = Math.round(hours * 60);
+  if (totalMin < 60) return `${totalMin}분`;
+  const h2 = Math.floor(totalMin / 60), m2 = totalMin % 60;
+  return m2 > 0 ? `${h2}시간 ${m2}분` : `${h2}시간`;
+}
+
+function getEventStatus(ev) {
+  const [h, m] = ev.time.split(':').map(Number);
+  const startTs = new Date(`${ev.date}T${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:00-03:00`).getTime();
+  const endTs   = startTs + ev.duration * 3600000;
+  const now = Date.now();
+  if (now > endTs)    return 'past';
+  if (now >= startTs) return 'current';
+  return 'future';
+}
+
+function renderTimeline(dateStr) {
+  const events = RAW_EVENTS.filter(ev => ev.date === dateStr);
+  const container = document.getElementById('timeline-view');
+  const tabInfo = TAB_DATES.find(t => t.date === dateStr);
+  if (!events.length) {
+    container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--sub);">이 날짜의 일정이 없습니다.</div>';
+    return;
+  }
+  let html = `<div class="timeline-day-label">📅 ${tabInfo ? tabInfo.label + ' — ' + tabInfo.sub : dateStr}</div>`;
+  events.forEach(ev => {
+    const status  = getEventStatus(ev);
+    const kst     = artToKst(ev.time);
+    const dur     = formatDuration(ev.duration);
+    const hasUrl  = !!ev.url;
+    html += `
+    <div class="timeline-item type-${ev.type} ev-${status}">
+      <div class="tl-time">
+        <span class="tl-art">${ev.time}</span>
+        <span class="tl-kst">${kst}</span>
+      </div>
+      <div class="tl-dot-col"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-title">${ev.task}</div>
+        <div class="tl-meta">${dur}</div>
+      </div>
+      <a href="${ev.url || '#'}" target="_blank" rel="noopener"
+         class="tl-map-btn ${hasUrl ? 'has-url' : 'no-url'}"
+         ${!hasUrl ? 'tabindex="-1" aria-hidden="true"' : 'title="지도 보기"'}>📍</a>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+function initTabs() {
+  const tabsEl = document.getElementById('day-tabs');
+  const nowArt  = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Argentina/Mendoza' });
+  const tripDates = TAB_DATES.map(t => t.date);
+  let defaultDate = tripDates[0];
+  if (tripDates.includes(nowArt))    defaultDate = nowArt;
+  else if (nowArt > tripDates[tripDates.length - 1]) defaultDate = tripDates[tripDates.length - 1];
+
+  TAB_DATES.forEach(t => {
+    const btn = document.createElement('button');
+    btn.className = 'day-tab' + (t.date === defaultDate ? ' active' : '');
+    btn.textContent = t.label;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.day-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderTimeline(t.date);
+    });
+    tabsEl.appendChild(btn);
+  });
+  renderTimeline(defaultDate);
+}
+
+let gridInitialized = false;
+function toggleGrid() {
+  const el  = document.getElementById('grid-collapsible');
+  const btn = document.getElementById('grid-toggle-btn');
+  const isHidden = el.style.display !== 'block';
+  el.style.display = isHidden ? 'block' : 'none';
+  btn.textContent = isHidden ? '📊 전체 그리드 타임테이블 접기 ▲' : '📊 전체 그리드 타임테이블 보기 ▼';
+  if (isHidden && !gridInitialized) { initTimetable(); gridInitialized = true; }
+}
+
+initTabs(); initStays(); setInterval(updateUI, 1000); updateUI();
 </script>
 </body>
 </html>
