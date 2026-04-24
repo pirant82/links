@@ -229,84 +229,111 @@ main {
 <script>
 // ─── 데이터 정의 ───────────────────────────────────────────────────────────
 const DATES = ['2026-04-25', '2026-04-26', '2026-04-27', '2026-04-28', '2026-04-29', '2026-04-30', '2026-05-01', '2026-05-02', '2026-05-03'];
-const REUNION_TS = new Date('2026-05-03T17:00:00-03:00').getTime();
+const REUNION_TS = new Date('2026-05-02T17:00:00-03:00').getTime(); // = 5/3 05:00 KST
 
-// Google Maps Search URLs
+// Google Maps URLs
 const MAPS = {
-  MDZ: 'https://www.google.com/maps/search/Governor+Francisco+Gabrielli+International+Airport',
-  HYATT: 'https://www.google.com/maps/search/Park+Hyatt+Mendoza',
-  SOBERANA: 'https://www.google.com/maps/search/Soberana+Mendoza',
-  CATENA: 'https://www.google.com/maps/search/Catena+Zapata+Winery',
-  ANGELICA: 'https://www.google.com/maps/search/Angelica+Cocina+Maestra',
-  VENDIMIA: 'https://www.google.com/maps/search/Catena+Zapata+La+Vendimia',
-  ADRIANNA: 'https://www.google.com/maps/search/Adrianna+Vineyard',
-  ACHAVAL: 'https://www.google.com/maps/search/Achaval+Ferrer+Winery',
-  QUIMERA: 'https://www.google.com/maps/search/Quimera+Bistro+Mendoza',
-  HUENTALA: 'https://www.google.com/maps/search/Huentala+Hotel+Mendoza'
+  MDZ:            'https://www.google.com/maps/search/Mendoza+Airport+Governor+Francisco+Gabrielli+International',
+  HYATT:          'https://www.google.com/maps/search/Park+Hyatt+Mendoza+Chile+1124',
+  SOBERANA:       'https://www.google.com/maps/search/Soberana+Restaurante+Mendoza',
+  CATENA:         'https://www.google.com/maps/search/Catena+Zapata+Winery+Agrelo+Lujan+de+Cuyo',
+  ANGELICA:       'https://www.google.com/maps/search/Angelica+Cocina+Maestra+Lujan+de+Cuyo+Mendoza',
+  ANGELICA_VYD:   'https://www.google.com/maps/search/Angelica+Vineyard+Catena+Zapata+Agrelo+Mendoza',
+  LA_PIRAMIDE:    'https://www.google.com/maps/search/La+Piramide+Vineyard+Catena+Zapata+Lujan+de+Cuyo',
+  VENDIMIA:       'https://maps.app.goo.gl/zeDAwGpeW8fUSnBK8',
+  ADRIANNA:       'https://maps.app.goo.gl/onuFdoDm28WSqRbx5',
+  BODEGUITA:      'https://www.google.com/maps/search/La+Bodeguita+Gualtallary+Alto+Mendoza',
+  ACHAVAL:        'https://www.google.com/maps/search/Achaval+Ferrer+Winery+Mendoza',
+  FINCA_BELLA:    'https://www.google.com/maps/search/Finca+Bella+Vista+Achaval+Ferrer+Perdriel+Mendoza',
+  QUIMERA:        'https://www.google.com/maps/search/Quimera+Bistro+Mendoza',
+  QUIMERA_WINERY: 'https://www.google.com/maps/search/Quimera+Winery+Perdriel+Lujan+de+Cuyo+Mendoza',
+  HUENTALA:       'https://www.google.com/maps/search/Huentala+Hotel+Primitivo+de+la+Reta+1007+Mendoza',
+  MENDOZA_CITY:   'https://www.google.com/maps/search/Mendoza+City+Center+Plaza+Independencia+Argentina',
 };
 
 const RAW_EVENTS = [
-  // 4/25 (ART) - LA Flight (Over midnight fix)
-  { date: '2026-04-25', time: '02:30', duration: 11.1, task: '✈️ 한국 출국 (KE017)', type: 'flight', url: MAPS.MDZ },
-  { date: '2026-04-25', time: '13:40', duration: 6.25, task: '🇺🇸 LAX 대기', type: 'flight' },
-  { date: '2026-04-25', time: '19:55', duration: 10.6, task: '✈️ LA 출발 (LA603)', type: 'flight' },
-  
-  // 4/26 (ART)
-  { date: '2026-04-26', time: '06:35', duration: 3.4, task: '🇨🇱 산티아고 대기', type: 'flight' },
-  { date: '2026-04-26', time: '10:00', duration: 1.1, task: '✈️ 산티아고 출발', type: 'flight' },
-  { date: '2026-04-26', time: '11:06', duration: 0.9, task: '🍷 멘도자(MDZ) 도착', type: 'wine', url: MAPS.MDZ },
-  { date: '2026-04-26', time: '12:00', duration: 0.5, task: '🚗 픽업 이동', type: 'wine' },
-  { date: '2026-04-26', time: '12:30', duration: 0.5, task: '🏨 파크 하얏트 도착', type: 'stay', url: MAPS.HYATT },
-  { date: '2026-04-26', time: '13:00', duration: 2.0, task: '🍴 테라스 점심 & 휴식', type: 'wine', url: MAPS.HYATT },
-  { date: '2026-04-26', time: '19:20', duration: 0.2, task: '📍 로비 집합', type: 'wine' },
-  { date: '2026-04-26', time: '19:30', duration: 2.0, task: '🍽️ 저녁 @ Soberana', type: 'wine', url: MAPS.SOBERANA },
-  
-  // 4/27 (ART) - Catena Zapata Details
-  { date: '2026-04-27', time: '07:00', duration: 2.0, task: '🍳 호텔 조식', type: 'stay' },
-  { date: '2026-04-27', time: '09:00', duration: 0.1, task: '🔑 체크아웃', type: 'stay' },
-  { date: '2026-04-27', time: '09:10', duration: 0.8, task: '🚗 와이너리 이동', type: 'wine' },
-  { date: '2026-04-27', time: '10:00', duration: 0.2, task: '🍇 Catena 도착', type: 'wine', url: MAPS.CATENA },
-  { date: '2026-04-27', time: '10:10', duration: 0.5, task: '📐 피라미드 투어', type: 'wine', url: MAPS.CATENA },
-  { date: '2026-04-27', time: '10:40', duration: 0.6, task: '🔬 와인 연구소 소개', type: 'wine' },
-  { date: '2026-04-27', time: '11:20', duration: 1.0, task: '🧪 말벡 블렌딩 세션', type: 'wine' },
-  { date: '2026-04-27', time: '12:20', duration: 0.3, task: '🍷 Nicolas Catena 시음', type: 'wine' },
-  { date: '2026-04-27', time: '13:00', duration: 2.5, task: '🍴 Angelica 점심(1*)', type: 'wine', url: MAPS.ANGELICA },
-  { date: '2026-04-27', time: '15:30', duration: 0.2, task: '🥃 증류소 방문', type: 'wine' },
-  { date: '2026-04-27', time: '15:45', duration: 0.7, task: '🌿 La Piramide Vineyard', type: 'wine' },
-  { date: '2026-04-27', time: '17:00', duration: 0.5, task: '🍇 Angelica Vineyard', type: 'wine' },
-  { date: '2026-04-27', time: '19:00', duration: 0.5, task: '🏠 La Vendimia 도착', type: 'stay', url: MAPS.VENDIMIA },
-  { date: '2026-04-27', time: '19:30', duration: 1.0, task: '🥩 고기 손질 클래스', type: 'wine' },
-  { date: '2026-04-27', time: '20:30', duration: 2.0, task: '🔥 전통 아사도 저녁', type: 'wine' },
-  
-  // 4/28 (ART)
-  { date: '2026-04-28', time: '07:30', duration: 0.5, task: '🍳 조식', type: 'stay' },
-  { date: '2026-04-28', time: '08:00', duration: 2.5, task: '🚗 Adrianna 이동', type: 'wine' },
-  { date: '2026-04-28', time: '10:30', duration: 2.0, task: '🍇 Adrianna 투어/시음', type: 'wine', url: MAPS.ADRIANNA },
-  { date: '2026-04-28', time: '12:35', duration: 3.0, task: '🍴 포도밭 야외 점심', type: 'wine' },
-  { date: '2026-04-28', time: '18:00', duration: 0.5, task: '🧘 켈틱 명상', type: 'stay' },
-  { date: '2026-04-28', time: '20:00', duration: 2.5, task: '🍷 Malbec Argentino 저녁', type: 'wine' },
-  
-  // 4/29 (ART)
-  { date: '2026-04-29', time: '10:30', duration: 1.0, task: '🚗 Achaval 이동', type: 'wine' },
-  { date: '2026-04-29', time: '11:40', duration: 0.5, task: '🍇 Finca Bella Vista', type: 'wine', url: MAPS.ACHAVAL },
-  { date: '2026-04-29', time: '12:15', duration: 1.0, task: '🍷 와인 시음', type: 'wine' },
-  { date: '2026-04-29', time: '13:30', duration: 2.2, task: '🍴 Quimera 점심', type: 'wine', url: MAPS.QUIMERA },
-  { date: '2026-04-29', time: '16:15', duration: 0.8, task: '🏨 HUENTALA 체크인', type: 'stay', url: MAPS.HUENTALA },
-  { date: '2026-04-29', time: '20:00', duration: 2.5, task: '🍽️ 저녁 식사', type: 'wine' },
-  
-  // 4/30 (ART)
-  { date: '2026-04-30', time: '10:30', duration: 0.5, task: '🚗 Quimera 이동', type: 'wine' },
-  { date: '2026-04-30', time: '11:00', duration: 1.5, task: '🍇 Quimera 시음', type: 'wine', url: MAPS.QUIMERA },
-  { date: '2026-04-30', time: '12:30', duration: 3.0, task: '🔥 아사도 점심', type: 'wine' },
-  { date: '2026-04-30', time: '15:30', duration: 2.5, task: '🏙️ 멘도사 시티 투어', type: 'wine' },
-  { date: '2026-04-30', time: '20:00', duration: 2.5, task: '🍽️ 저녁 식사', type: 'wine' },
-  
-  // 5/1~3 (ART)
-  { date: '2026-05-01', time: '04:45', duration: 0.5, task: '🚗 공항 이동', type: 'flight' },
-  { date: '2026-05-02', time: '07:35', duration: 4.0, task: '🛫 멘도자 출발', type: 'flight' },
-  { date: '2026-05-02', time: '13:00', duration: 7.0, task: '🛫 리마 출발', type: 'flight' },
-  { date: '2026-05-03', time: '03:50', duration: 13.2, task: '✈️ LAX 출발', type: 'flight' },
-  { date: '2026-05-03', time: '17:00', duration: 1.0, task: '❤️ 인천 재회!', type: 'flight' }
+  // ── 4/25 (ART) ── 비행편
+  { date: '2026-04-25', time: '02:30', duration: 11.1,  task: '✈️ 한국 출국 (KE017)', type: 'flight', url: MAPS.MDZ },
+  { date: '2026-04-25', time: '13:40', duration: 6.25,  task: '🇺🇸 LAX 대기', type: 'flight' },
+  { date: '2026-04-25', time: '19:55', duration: 10.6,  task: '✈️ LA 출발 (LA603)', type: 'flight' },
+
+  // ── 4/26 (ART) ──
+  { date: '2026-04-26', time: '06:35', duration: 3.4,   task: '🇨🇱 산티아고 대기', type: 'flight' },
+  { date: '2026-04-26', time: '10:00', duration: 1.1,   task: '✈️ 산티아고 출발', type: 'flight' },
+  { date: '2026-04-26', time: '11:06', duration: 0.9,   task: '🍷 멘도사(MDZ) 도착', type: 'wine', url: MAPS.MDZ },
+  { date: '2026-04-26', time: '12:00', duration: 0.5,   task: '🚗 카테나 팀 픽업', type: 'wine' },
+  { date: '2026-04-26', time: '12:30', duration: 0.5,   task: '🏨 파크 하얏트 도착', type: 'stay', url: MAPS.HYATT },
+  { date: '2026-04-26', time: '13:00', duration: 6.33,  task: '🍴 테라스 점심 & 체크인 & 휴식', type: 'stay', url: MAPS.HYATT },
+  { date: '2026-04-26', time: '19:20', duration: 0.17,  task: '📍 로비 집합', type: 'wine', url: MAPS.HYATT },
+  { date: '2026-04-26', time: '19:30', duration: 2.0,   task: '🍽️ 저녁 @ Soberana', type: 'wine', url: MAPS.SOBERANA },
+  { date: '2026-04-26', time: '21:30', duration: 0.5,   task: '🛏️ 호텔 복귀 & 휴식', type: 'stay', url: MAPS.HYATT },
+
+  // ── 4/27 (ART) ── Catena Zapata
+  { date: '2026-04-27', time: '07:00', duration: 2.0,   task: '🍳 호텔 조식', type: 'stay', url: MAPS.HYATT },
+  { date: '2026-04-27', time: '09:00', duration: 0.17,  task: '🔑 체크아웃', type: 'stay', url: MAPS.HYATT },
+  { date: '2026-04-27', time: '09:10', duration: 0.83,  task: '🚗 와이너리 이동 (50분)', type: 'wine' },
+  { date: '2026-04-27', time: '10:00', duration: 0.17,  task: '🍇 Catena Zapata 도착', type: 'wine', url: MAPS.CATENA },
+  { date: '2026-04-27', time: '10:10', duration: 0.5,   task: '📐 피라미드 투어 & 역사 소개', type: 'wine', url: MAPS.CATENA },
+  { date: '2026-04-27', time: '10:40', duration: 0.67,  task: '🔬 카테나 와인 연구소 소개', type: 'wine', url: MAPS.CATENA },
+  { date: '2026-04-27', time: '11:20', duration: 1.0,   task: '🧪 말벡 블렌딩 세션 (Nesti Bajda)', type: 'wine', url: MAPS.CATENA },
+  { date: '2026-04-27', time: '12:20', duration: 0.33,  task: '🍷 Nicolas Catena Zapata 시음', type: 'wine', url: MAPS.CATENA },
+  { date: '2026-04-27', time: '12:40', duration: 0.33,  task: '🚗 Angelica 이동', type: 'wine' },
+  { date: '2026-04-27', time: '13:00', duration: 2.5,   task: '🌟 점심 @ Angelica Cocina (미슐랭1*)', type: 'wine', url: MAPS.ANGELICA },
+  { date: '2026-04-27', time: '15:30', duration: 0.25,  task: '🥃 증류소 방문 & 시음', type: 'wine', url: MAPS.CATENA },
+  { date: '2026-04-27', time: '15:45', duration: 0.75,  task: '🌿 La Piramide Vineyard (까베르네)', type: 'wine', url: MAPS.LA_PIRAMIDE },
+  { date: '2026-04-27', time: '16:30', duration: 0.5,   task: '🚗 Angelica Vineyard 이동 (30분)', type: 'wine' },
+  { date: '2026-04-27', time: '17:00', duration: 0.5,   task: '🍇 Angelica Vineyard (말벡 올드바인)', type: 'wine', url: MAPS.ANGELICA_VYD },
+  { date: '2026-04-27', time: '17:30', duration: 1.5,   task: '🚗 La Vendimia 이동 (1시간 20분)', type: 'wine' },
+  { date: '2026-04-27', time: '19:00', duration: 0.5,   task: '🏠 La Vendimia 도착 & 체크인', type: 'stay', url: MAPS.VENDIMIA },
+  { date: '2026-04-27', time: '19:30', duration: 1.0,   task: '🥩 고기 손질 클래스', type: 'wine', url: MAPS.VENDIMIA },
+  { date: '2026-04-27', time: '20:30', duration: 2.0,   task: '🔥 전통 아사도 저녁', type: 'wine', url: MAPS.VENDIMIA },
+  { date: '2026-04-27', time: '22:30', duration: 0.5,   task: '🛏️ 휴식', type: 'stay', url: MAPS.VENDIMIA },
+
+  // ── 4/28 (ART) ── Adrianna Vineyard
+  { date: '2026-04-28', time: '07:30', duration: 0.5,   task: '🍳 조식', type: 'stay', url: MAPS.VENDIMIA },
+  { date: '2026-04-28', time: '08:00', duration: 2.5,   task: '🚗 Adrianna 이동 (2시간 30분)', type: 'wine' },
+  { date: '2026-04-28', time: '10:30', duration: 2.0,   task: '🍇 Adrianna Vineyard 투어 & 시음', type: 'wine', url: MAPS.ADRIANNA },
+  { date: '2026-04-28', time: '12:30', duration: 0.08,  task: '🚗 La Bodeguita 이동 (5분)', type: 'wine' },
+  { date: '2026-04-28', time: '12:35', duration: 2.92,  task: '🍴 포도밭 야외 점심 (La Bodeguita)', type: 'wine', url: MAPS.BODEGUITA },
+  { date: '2026-04-28', time: '15:30', duration: 2.5,   task: '🚗 La Vendimia 복귀 (2시간 30분)', type: 'wine' },
+  { date: '2026-04-28', time: '18:00', duration: 0.5,   task: '🧘 La Vendimia 도착 & 켈틱 명상', type: 'stay', url: MAPS.VENDIMIA },
+  { date: '2026-04-28', time: '18:30', duration: 1.5,   task: '😴 휴식', type: 'stay', url: MAPS.VENDIMIA },
+  { date: '2026-04-28', time: '20:00', duration: 2.5,   task: '🍷 Malbec Argentino 저녁', type: 'wine', url: MAPS.VENDIMIA },
+  { date: '2026-04-28', time: '22:30', duration: 0.5,   task: '🛏️ 휴식', type: 'stay', url: MAPS.VENDIMIA },
+
+  // ── 4/29 (ART) ── Achaval Ferrer
+  { date: '2026-04-29', time: '10:30', duration: 1.0,   task: '🚗 체크아웃 & Achaval 픽업', type: 'wine', url: MAPS.VENDIMIA },
+  { date: '2026-04-29', time: '11:30', duration: 0.17,  task: '🍇 Achaval Ferrer 도착', type: 'wine', url: MAPS.ACHAVAL },
+  { date: '2026-04-29', time: '11:40', duration: 0.58,  task: '🌿 Finca Bella Vista (110년 올드바인)', type: 'wine', url: MAPS.FINCA_BELLA },
+  { date: '2026-04-29', time: '12:15', duration: 1.0,   task: '🍷 Achaval Ferrer 와인 시음', type: 'wine', url: MAPS.ACHAVAL },
+  { date: '2026-04-29', time: '13:15', duration: 0.25,  task: '🚗 Quimera Bistro 이동', type: 'wine' },
+  { date: '2026-04-29', time: '13:30', duration: 2.25,  task: '🍴 점심 @ Quimera Bistro (미슐랭 추천)', type: 'wine', url: MAPS.QUIMERA },
+  { date: '2026-04-29', time: '15:45', duration: 0.5,   task: '🚗 Huentala 이동', type: 'wine' },
+  { date: '2026-04-29', time: '16:15', duration: 0.75,  task: '🏨 HUENTALA 체크인', type: 'stay', url: MAPS.HUENTALA },
+  { date: '2026-04-29', time: '17:00', duration: 2.75,  task: '☕ 자유 시간 & 휴식', type: 'stay', url: MAPS.HUENTALA },
+  { date: '2026-04-29', time: '19:45', duration: 0.25,  task: '🚗 저녁 식사 픽업', type: 'wine', url: MAPS.HUENTALA },
+  { date: '2026-04-29', time: '20:00', duration: 2.5,   task: '🍽️ 저녁 식사 (장소 추후 확정)', type: 'wine' },
+  { date: '2026-04-29', time: '22:30', duration: 0.5,   task: '🛏️ 호텔 복귀 & 휴식', type: 'stay', url: MAPS.HUENTALA },
+
+  // ── 4/30 (ART) ── Quimera Winery + 멘도사 시티
+  { date: '2026-04-30', time: '10:30', duration: 0.5,   task: '🚗 Quimera Winery 이동', type: 'wine', url: MAPS.HUENTALA },
+  { date: '2026-04-30', time: '11:00', duration: 1.5,   task: '🍇 Quimera Winery 방문 & 시음', type: 'wine', url: MAPS.QUIMERA_WINERY },
+  { date: '2026-04-30', time: '12:30', duration: 3.0,   task: '🔥 포도밭 전통 아사도 점심', type: 'wine', url: MAPS.QUIMERA_WINERY },
+  { date: '2026-04-30', time: '15:30', duration: 2.5,   task: '🏙️ 멘도사 시티 투어', type: 'wine', url: MAPS.MENDOZA_CITY },
+  { date: '2026-04-30', time: '18:00', duration: 1.75,  task: '🏨 호텔 도착 & 휴식', type: 'stay', url: MAPS.HUENTALA },
+  { date: '2026-04-30', time: '19:45', duration: 0.25,  task: '🚗 저녁 식사 픽업', type: 'wine', url: MAPS.HUENTALA },
+  { date: '2026-04-30', time: '20:00', duration: 2.5,   task: '🍽️ 저녁 식사 (장소 추후 확정)', type: 'wine' },
+  { date: '2026-04-30', time: '22:30', duration: 0.5,   task: '🛏️ 호텔 복귀 & 휴식', type: 'stay', url: MAPS.HUENTALA },
+
+  // ── 5/1 (ART) ── 출국
+  { date: '2026-05-01', time: '04:45', duration: 0.5,   task: '🚗 공항 이동 픽업', type: 'flight', url: MAPS.HUENTALA },
+  { date: '2026-05-01', time: '05:15', duration: 2.33,  task: '🛫 멘도사 공항 도착 & 수속', type: 'flight', url: MAPS.MDZ },
+  { date: '2026-05-01', time: '07:35', duration: 3.92,  task: '✈️ 멘도사 출발 → 리마 (LA2434)', type: 'flight', url: MAPS.MDZ },
+  { date: '2026-05-01', time: '11:30', duration: 2.5,   task: '🛬 리마(LIM) 도착 & 대기 2h30m', type: 'flight' },
+  { date: '2026-05-01', time: '14:00', duration: 9.0,   task: '✈️ 리마 출발 → LAX (LA2476)', type: 'flight' },
+  { date: '2026-05-01', time: '23:00', duration: 4.83,  task: '🇺🇸 LAX 도착 (터미널B) & 대기 4h50m', type: 'flight' },
+  { date: '2026-05-02', time: '03:50', duration: 13.17, task: '✈️ LAX 출발 → 인천 (KE012)', type: 'flight' },
+  { date: '2026-05-02', time: '17:00', duration: 1.0,   task: '❤️ 인천 도착! (제2터미널)', type: 'flight' },
 ];
 
 const STAYS = [
@@ -388,7 +415,7 @@ function updateUI() {
     const d = Math.floor(timeLeft/86400000), h = Math.floor((timeLeft%86400000)/3600000), m = Math.floor((timeLeft%3600000)/60000), s = Math.floor((timeLeft%60000)/1000);
     document.getElementById('d-day').textContent = `재회까지 D-Day ${d}일 ${h}:${m}:${s}`;
     const start = new Date('2026-04-25T14:30:00+09:00').getTime();
-    const end = new Date('2026-05-04T05:00:00+09:00').getTime();
+    const end = new Date('2026-05-03T05:00:00+09:00').getTime();
     const progress = Math.max(0, Math.min(1, (now.getTime() - start) / (end - start)));
     document.getElementById('man').style.left = (progress * 45) + '%'; document.getElementById('woman').style.right = (progress * 45) + '%';
   } else {
