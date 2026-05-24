@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTA V 스크립트 · 한국어 번역</title>
+<style>
+  :root {
+    --green:       #2D5A27;
+    --green-light: #4A7C43;
+    --bg:          #FAFAF7;
+    --card-bg:     #FFFFFF;
+    --text:        #1A1A1A;
+    --sub:         #6B7280;
+    --border:      #E5E7EB;
+    --shadow:      0 2px 8px rgba(0,0,0,.08);
+    --amber:       #D97706;
+    --amber-bg:    #FEF3C7;
+    --sidebar-w:   272px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  /* ── App shell ── */
+  #app {
+    display: grid;
+    grid-template-rows: 56px 1fr;
+    height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--green);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  }
+
+  #sidebar-toggle {
+    background: rgba(255,255,255,.15);
+    border: none;
+    color: #fff;
+    width: 34px;
+    height: 34px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background .15s;
+  }
+  #sidebar-toggle:hover { background: rgba(255,255,255,.28); }
+
+  .header-text h1 { font-size: 1rem; font-weight: 700; }
+  .header-text p  { font-size: .72rem; opacity: .65; margin-top: 1px; }
+
+  .header-home {
+    margin-left: auto;
+    color: rgba(255,255,255,.7);
+    text-decoration: none;
+    font-size: .78rem;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,.25);
+    transition: background .15s;
+  }
+  .header-home:hover { background: rgba(255,255,255,.15); color: #fff; }
+
+  /* ── Content row ── */
+  #content {
+    display: grid;
+    grid-template-columns: var(--sidebar-w) 1fr;
+    overflow: hidden;
+    transition: grid-template-columns .22s ease;
+  }
+  #content.collapsed { grid-template-columns: 0px 1fr; }
+
+  /* ── Sidebar ── */
+  #sidebar {
+    min-width: 0;
+    overflow: hidden;
+    border-right: 1px solid var(--border);
+    background: var(--card-bg);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-inner {
+    width: var(--sidebar-w);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .search-wrap {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .search-wrap input {
+    width: 100%;
+    padding: 7px 11px;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    font-size: .83rem;
+    font-family: inherit;
+    background: var(--bg);
+    outline: none;
+  }
+  .search-wrap input:focus { border-color: var(--green); }
+
+  #mission-list {
+    flex: 1;
+    overflow-y: auto;
+    list-style: none;
+    padding: 6px 0;
+  }
+  #mission-list li {
+    padding: 9px 14px;
+    font-size: .83rem;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background .12s;
+  }
+  #mission-list li:hover  { background: #F0F7EE; }
+  #mission-list li.active {
+    background: #E8F5E3;
+    border-left-color: var(--green);
+    color: var(--green);
+    font-weight: 600;
+  }
+  #mission-list li.hide { display: none; }
+
+  /* ── Main ── */
+  #main {
+    overflow-y: auto;
+    padding: 28px 32px;
+    background: var(--bg);
+  }
+
+  /* Welcome */
+  #welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 55vh;
+    gap: 10px;
+    text-align: center;
+    color: var(--sub);
+  }
+  #welcome .ico { font-size: 2.8rem; }
+  #welcome h2   { font-size: 1.15rem; color: var(--text); }
+  #welcome p    { font-size: .87rem; }
+
+  /* Loading */
+  #loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 55vh;
+    gap: 10px;
+    color: var(--sub);
+    font-size: .9rem;
+  }
+  .spinner {
+    width: 20px; height: 20px;
+    border: 2px solid var(--border);
+    border-top-color: var(--green);
+    border-radius: 50%;
+    animation: spin .65s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Script view */
+  #script-view { display: none; }
+
+  .mission-header {
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--green);
+  }
+  .mission-header h2 {
+    font-size: 1.3rem;
+    color: var(--green);
+    margin-bottom: 5px;
+  }
+  .mission-meta { font-size: .78rem; color: var(--sub); display: flex; gap: 14px; }
+
+  /* Lines */
+  .lines { display: flex; flex-direction: column; gap: 7px; }
+
+  /* Stage direction */
+  .l-stage {
+    background: #F9FAFB;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 14px;
+  }
+  .s-en { font-style: italic; font-size: .83rem; color: var(--sub); }
+  .s-ko { font-style: italic; font-size: .88rem; color: #4B5563; margin-top: 3px; }
+
+  /* Dialogue */
+  .l-dial {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 16px;
+    box-shadow: var(--shadow);
+  }
+
+  .speaker {
+    font-size: .73rem;
+    font-weight: 700;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    margin-bottom: 5px;
+  }
+
+  .d-en {
+    font-size: .92rem;
+    color: #4B5563;
+    line-height: 1.65;
+    margin-bottom: 5px;
+  }
+
+  .d-ko {
+    font-size: .92rem;
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.65;
+  }
+
+  /* Slang */
+  .slangs {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .slang {
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+    padding: 5px 10px;
+    background: var(--amber-bg);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 6px 6px 0;
+    font-size: .81rem;
+    line-height: 1.55;
+  }
+  .slang-t {
+    font-weight: 700;
+    color: var(--amber);
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .slang-t::after { content: ' —'; color: #9CA3AF; font-weight: 400; }
+  .slang-d { color: #374151; }
+
+  @media (max-width: 600px) {
+    #main { padding: 16px; }
+    #content { grid-template-columns: 240px 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <button id="sidebar-toggle" title="미션 목록 열기/닫기">☰</button>
+    <div class="header-text">
+      <h1>GTA V 스크립트 · 한국어 번역</h1>
+      <p id="hstats">로딩 중...</p>
+    </div>
+    <a class="header-home" href="index.html">← 홈</a>
+  </header>
+
+  <div id="content">
+
+    <aside id="sidebar">
+      <div class="sidebar-inner">
+        <div class="search-wrap">
+          <input id="search" type="text" placeholder="미션 검색...">
+        </div>
+        <ul id="mission-list"></ul>
+      </div>
+    </aside>
+
+    <main id="main">
+      <div id="loading"><div class="spinner"></div><span>데이터 로딩 중...</span></div>
+      <div id="welcome">
+        <div class="ico">🎮</div>
+        <h2>미션을 선택하세요</h2>
+        <p>왼쪽 목록에서 미션을 클릭하면 스크립트가 표시됩니다</p>
+      </div>
+      <div id="script-view">
+        <div class="mission-header">
+          <h2 id="m-title"></h2>
+          <div class="mission-meta">
+            <span id="m-lines"></span>
+            <span id="m-slang"></span>
+          </div>
+        </div>
+        <div class="lines" id="lines"></div>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+// ── Sidebar toggle ──────────────────────────────────────────────────
+$('sidebar-toggle').addEventListener('click', () =>
+  $('content').classList.toggle('collapsed')
+);
+
+// ── Search ─────────────────────────────────────────────────────────
+$('search').addEventListener('input', e => {
+  const q = e.target.value.toLowerCase();
+  $('mission-list').querySelectorAll('li').forEach(li =>
+    li.classList.toggle('hide', q && !li.textContent.toLowerCase().includes(q))
+  );
+});
+
+// ── Helpers ─────────────────────────────────────────────────────────
+function esc(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Render mission list ─────────────────────────────────────────────
+function buildList(missions) {
+  const ul = $('mission-list');
+  ul.innerHTML = '';
+  missions.forEach(m => {
+    const li = document.createElement('li');
+    li.textContent = m.name;
+    li.addEventListener('click', () => {
+      ul.querySelectorAll('li').forEach(el => el.classList.remove('active'));
+      li.classList.add('active');
+      showMission(m);
+    });
+    ul.appendChild(li);
+  });
+}
+
+// ── Render mission script ───────────────────────────────────────────
+function showMission(m) {
+  $('welcome').style.display    = 'none';
+  $('script-view').style.display = 'block';
+
+  $('m-title').textContent = m.name;
+
+  const dial  = m.lines.filter(l => !l.is_stage_dir).length;
+  const stage = m.lines.filter(l =>  l.is_stage_dir).length;
+  const slang = m.lines.reduce((n, l) => n + (l.slang?.length || 0), 0);
+  $('m-lines').textContent = `대사 ${dial}줄 · 지문 ${stage}줄`;
+  $('m-slang').textContent = `슬랭 주석 ${slang}개`;
+
+  const container = $('lines');
+  container.innerHTML = '';
+
+  const frag = document.createDocumentFragment();
+  m.lines.forEach(line => {
+    const div = document.createElement('div');
+
+    if (line.is_stage_dir) {
+      div.className = 'l-stage';
+      div.innerHTML =
+        `<div class="s-en">${esc(line.en)}</div>` +
+        (line.ko ? `<div class="s-ko">${esc(line.ko)}</div>` : '');
+    } else {
+      div.className = 'l-dial';
+      const slangHtml = (line.slang || []).map(s =>
+        `<div class="slang">` +
+        `<span class="slang-t">${esc(s.term)}</span>` +
+        `<span class="slang-d">${esc(s.explanation)}</span>` +
+        `</div>`
+      ).join('');
+
+      div.innerHTML =
+        `<div class="speaker">${esc(line.speaker)}</div>` +
+        `<div class="d-en">${esc(line.en)}</div>` +
+        `<div class="d-ko">${esc(line.ko)}</div>` +
+        (slangHtml ? `<div class="slangs">${slangHtml}</div>` : '');
+    }
+    frag.appendChild(div);
+  });
+
+  container.appendChild(frag);
+  $('main').scrollTop = 0;
+}
+
+// ── Load ────────────────────────────────────────────────────────────
+fetch('./scripts_annotated.json')
+  .then(r => r.json())
+  .then(data => {
+    const missions = data.missions;
+    const totalSlang = missions.reduce((n, m) =>
+      n + m.lines.reduce((s, l) => s + (l.slang?.length || 0), 0), 0);
+
+    $('hstats').textContent =
+      `${missions.length}개 미션 · 슬랭 주석 ${totalSlang}개`;
+    $('loading').style.display = 'none';
+    $('welcome').style.display  = 'flex';
+
+    buildList(missions);
+  })
+  .catch(err => {
+    $('loading').innerHTML =
+      `<span style="color:#DC2626">데이터 로드 실패: ${err.message}</span>`;
+  });
+</script>
+</body>
+</html>
