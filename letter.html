@@ -276,6 +276,7 @@
   .quiz-feedback {
     font-family: 'Noto Sans KR', sans-serif;
     font-size: .82rem;
+    font-weight: 600;
     color: var(--seal);
     margin-top: 14px;
     min-height: 1.2em;
@@ -283,6 +284,9 @@
     transition: opacity .2s ease;
   }
   .quiz-feedback.show { opacity: 1; }
+  .quiz-feedback.correct { color: var(--accent); }
+
+  .quiz-input.correct { border-color: var(--accent); background: #F3E9CF; }
 
   .quiz-match {
     display: flex;
@@ -739,13 +743,14 @@
   const fillEl = document.getElementById('quiz-progress-fill');
   const labelEl = document.getElementById('quiz-progress-label');
 
-  function showFeedback(msg) {
+  function showFeedback(msg, isCorrect) {
     fbEl.textContent = msg;
+    fbEl.classList.toggle('correct', !!isCorrect);
     fbEl.classList.add('show');
   }
   function clearFeedback() {
     fbEl.textContent = '';
-    fbEl.classList.remove('show');
+    fbEl.classList.remove('show', 'correct');
   }
 
   function renderStep() {
@@ -766,8 +771,10 @@
         btn.textContent = opt;
         btn.addEventListener('click', () => {
           if (norm(opt) === norm(step.answer)) {
+            wrap.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
             btn.classList.add('correct');
-            setTimeout(advance, 260);
+            showFeedback('정답이에요!', true);
+            setTimeout(advance, 550);
           } else {
             missedOnce[cur] = true;
             btn.classList.add('wrong');
@@ -794,7 +801,11 @@
       btn.textContent = '확인';
       const submit = () => {
         if (norm(input.value) === norm(step.answer)) {
-          setTimeout(advance, 120);
+          input.disabled = true;
+          btn.disabled = true;
+          input.classList.add('correct');
+          showFeedback('정답이에요!', true);
+          setTimeout(advance, 550);
         } else {
           missedOnce[cur] = true;
           input.classList.add('wrong');
@@ -848,7 +859,12 @@
             el.classList.add('matched');
             matchedCount++;
             selectedLeft = null;
-            if (matchedCount === step.left.length) setTimeout(advance, 280);
+            if (matchedCount === step.left.length) {
+              showFeedback('정답이에요! 다 이었어요.', true);
+              setTimeout(advance, 550);
+            } else {
+              showFeedback(`정답이에요! (${matchedCount}/${step.left.length})`, true);
+            }
           } else {
             missedOnce[cur] = true;
             el.classList.add('wrong');
