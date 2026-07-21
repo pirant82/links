@@ -29,6 +29,110 @@
 
   body.locked { overflow: hidden; height: 100vh; }
 
+  /* ── Intro gate ──────────────────────────────────────────────── */
+  #intro-screen, #result-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 22px;
+    text-align: center;
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  #intro-screen.hidden-gate, #result-screen.hidden-gate {
+    opacity: 0;
+    transform: translateY(-16px);
+    pointer-events: none;
+    display: none;
+  }
+
+  .gate-card {
+    width: min(92vw, 420px);
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    border-radius: 14px;
+    box-shadow: 0 14px 40px rgba(58,46,42,.12);
+    padding: 44px 30px 36px;
+  }
+
+  .gate-eyebrow {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: .72rem;
+    letter-spacing: .28em;
+    color: var(--sub);
+    margin-bottom: 16px;
+  }
+
+  .gate-icon {
+    font-size: 2.4rem;
+    margin-bottom: 18px;
+  }
+
+  .gate-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 14px;
+    line-height: 1.4;
+  }
+
+  .gate-desc {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: .9rem;
+    color: var(--sub);
+    line-height: 1.65;
+    margin-bottom: 30px;
+  }
+
+  .gate-btn {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: .95rem;
+    font-weight: 600;
+    padding: 14px 22px;
+    border: none;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+    width: 100%;
+  }
+  .gate-btn:active { transform: scale(.98); }
+
+  .result-score {
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .result-score span {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--sub);
+  }
+  .result-sub {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: .84rem;
+    color: var(--sub);
+    margin-bottom: 22px;
+  }
+  .result-missed {
+    text-align: left;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: .8rem;
+    color: var(--sub);
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 26px;
+    line-height: 1.7;
+  }
+  .result-missed strong { color: var(--ink); }
+
   /* ── Quiz gate ───────────────────────────────────────────────── */
   #quiz-screen {
     position: fixed;
@@ -468,7 +572,17 @@
 </head>
 <body class="locked">
 
-<div id="quiz-screen">
+<div id="intro-screen">
+  <div class="gate-card">
+    <div class="gate-eyebrow">LETTER FOR NAHUI</div>
+    <div class="gate-icon">💌</div>
+    <div class="gate-title">영민이가 쓴 편지를 보려면<br>문제를 다 풀어야 돼요</div>
+    <div class="gate-desc">나희만 알 수 있는 문제 15개가 기다리고 있어요.<br>다 맞추면 편지를 열어볼 수 있어요.</div>
+    <button class="gate-btn" id="intro-start-btn" type="button">문제 풀러 가기 →</button>
+  </div>
+</div>
+
+<div id="quiz-screen" class="hidden-gate">
   <div class="quiz-card">
     <div class="quiz-eyebrow">나희만 풀 수 있는 문제</div>
     <div class="quiz-progress-wrap">
@@ -478,6 +592,16 @@
     <div class="quiz-question" id="quiz-question"></div>
     <div id="quiz-body"></div>
     <div class="quiz-feedback" id="quiz-feedback"></div>
+  </div>
+</div>
+
+<div id="result-screen" class="hidden-gate">
+  <div class="gate-card">
+    <div class="gate-eyebrow">결과 발표</div>
+    <div class="result-score" id="result-score">15<span> / 15 한 번에 정답</span></div>
+    <div class="result-sub" id="result-sub"></div>
+    <div class="result-missed" id="result-missed" style="display:none;"></div>
+    <button class="gate-btn" id="result-next-btn" type="button">상자 열러 가기 →</button>
   </div>
 </div>
 
@@ -608,6 +732,7 @@
   ];
 
   let cur = 0;
+  const missedOnce = new Array(steps.length).fill(false);
   const qEl = document.getElementById('quiz-question');
   const bodyEl = document.getElementById('quiz-body');
   const fbEl = document.getElementById('quiz-feedback');
@@ -644,6 +769,7 @@
             btn.classList.add('correct');
             setTimeout(advance, 260);
           } else {
+            missedOnce[cur] = true;
             btn.classList.add('wrong');
             showFeedback('오답이에요. 다시 골라보세요.');
             setTimeout(() => btn.classList.remove('wrong'), 350);
@@ -670,6 +796,7 @@
         if (norm(input.value) === norm(step.answer)) {
           setTimeout(advance, 120);
         } else {
+          missedOnce[cur] = true;
           input.classList.add('wrong');
           showFeedback('오답이에요. 다시 확인해보세요.');
           setTimeout(() => input.classList.remove('wrong'), 350);
@@ -723,6 +850,7 @@
             selectedLeft = null;
             if (matchedCount === step.left.length) setTimeout(advance, 280);
           } else {
+            missedOnce[cur] = true;
             el.classList.add('wrong');
             leftEls[selectedLeft].classList.add('wrong');
             showFeedback('오답이에요. 다시 이어보세요.');
@@ -747,16 +875,54 @@
     cur++;
     if (cur >= steps.length) {
       fillEl.style.width = '100%';
-      const quizScreen = document.getElementById('quiz-screen');
-      const chestScreen = document.getElementById('chest-screen');
-      quizScreen.classList.add('hidden-gate');
-      chestScreen.classList.remove('hidden-gate');
+      showResult();
     } else {
       renderStep();
     }
   }
 
-  renderStep();
+  /* ── Intro gate ────────────────────────────────────────────── */
+  document.getElementById('intro-start-btn').addEventListener('click', () => {
+    document.getElementById('intro-screen').classList.add('hidden-gate');
+    document.getElementById('quiz-screen').classList.remove('hidden-gate');
+    renderStep();
+  });
+
+  /* ── Result screen ─────────────────────────────────────────── */
+  function showResult() {
+    const total = steps.length;
+    const perfectCount = missedOnce.filter(m => !m).length;
+    document.getElementById('quiz-screen').classList.add('hidden-gate');
+
+    document.getElementById('result-score').innerHTML =
+      `${perfectCount}<span> / ${total} 한 번에 정답</span>`;
+
+    const subEl = document.getElementById('result-sub');
+    if (perfectCount === total) {
+      subEl.textContent = '전부 한 번에 맞췄어요! 역시 나희 🎉';
+    } else if (perfectCount >= total * 0.7) {
+      subEl.textContent = '거의 다 맞췄네요, 대단해요!';
+    } else {
+      subEl.textContent = '그래도 결국 다 풀었으니 됐어요 :)';
+    }
+
+    const missedIdx = missedOnce.map((m, i) => m ? i : -1).filter(i => i >= 0);
+    const missedEl = document.getElementById('result-missed');
+    if (missedIdx.length > 0) {
+      missedEl.style.display = 'block';
+      missedEl.innerHTML = '<strong>한 번 이상 틀린 문제</strong><br>' +
+        missedIdx.map(i => `${i + 1}. ${steps[i].q}`).join('<br>');
+    } else {
+      missedEl.style.display = 'none';
+    }
+
+    document.getElementById('result-screen').classList.remove('hidden-gate');
+  }
+
+  document.getElementById('result-next-btn').addEventListener('click', () => {
+    document.getElementById('result-screen').classList.add('hidden-gate');
+    document.getElementById('chest-screen').classList.remove('hidden-gate');
+  });
 
   /* ── Chest gate ────────────────────────────────────────────── */
   const chestScreen = document.getElementById('chest-screen');
