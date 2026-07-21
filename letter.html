@@ -29,8 +29,186 @@
 
   body.locked { overflow: hidden; height: 100vh; }
 
-  /* ── Envelope intro ─────────────────────────────────────────── */
-  #envelope-screen {
+  /* ── Quiz gate ───────────────────────────────────────────────── */
+  #quiz-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 22px;
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  #quiz-screen.hidden-gate {
+    opacity: 0;
+    transform: translateY(-16px);
+    pointer-events: none;
+    display: none;
+  }
+
+  .quiz-card {
+    width: min(92vw, 420px);
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    border-radius: 14px;
+    box-shadow: 0 14px 40px rgba(58,46,42,.12);
+    padding: 34px 26px 28px;
+  }
+
+  .quiz-progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .quiz-progress-track {
+    flex: 1;
+    height: 4px;
+    background: var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width .4s ease;
+  }
+  .quiz-progress-label {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: .72rem;
+    color: var(--sub);
+    white-space: nowrap;
+  }
+
+  .quiz-eyebrow {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: .7rem;
+    letter-spacing: .25em;
+    color: var(--sub);
+    margin-bottom: 10px;
+  }
+
+  .quiz-question {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 1.06rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 22px;
+    white-space: pre-line;
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .quiz-opt {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: .94rem;
+    text-align: left;
+    padding: 13px 16px;
+    border: 1.5px solid var(--rule);
+    background: var(--bg);
+    color: var(--ink);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color .15s, background .15s, transform .1s;
+  }
+  .quiz-opt:hover { border-color: var(--accent); }
+  .quiz-opt:active { transform: scale(.98); }
+  .quiz-opt.wrong {
+    border-color: var(--seal);
+    background: #FBEAEA;
+    animation: shake .32s ease;
+  }
+  .quiz-opt.correct {
+    border-color: var(--accent);
+    background: #F3E9CF;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+
+  .quiz-input-row {
+    display: flex;
+    gap: 8px;
+  }
+  .quiz-input {
+    flex: 1;
+    min-width: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 1rem;
+    padding: 13px 14px;
+    border: 1.5px solid var(--rule);
+    border-radius: 10px;
+    background: var(--bg);
+    color: var(--ink);
+    outline: none;
+    letter-spacing: .04em;
+  }
+  .quiz-input:focus { border-color: var(--accent); }
+  .quiz-input.wrong { border-color: var(--seal); animation: shake .32s ease; }
+
+  .quiz-submit {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: .92rem;
+    font-weight: 600;
+    padding: 13px 18px;
+    border: none;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+  }
+  .quiz-submit:active { transform: scale(.97); }
+
+  .quiz-feedback {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: .82rem;
+    color: var(--seal);
+    margin-top: 14px;
+    min-height: 1.2em;
+    opacity: 0;
+    transition: opacity .2s ease;
+  }
+  .quiz-feedback.show { opacity: 1; }
+
+  .quiz-match {
+    display: flex;
+    gap: 14px;
+  }
+  .quiz-match-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .quiz-match-item {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: .84rem;
+    line-height: 1.35;
+    padding: 11px 12px;
+    border: 1.5px solid var(--rule);
+    background: var(--bg);
+    color: var(--ink);
+    border-radius: 9px;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  .quiz-match-item:hover { border-color: var(--accent); }
+  .quiz-match-item.selected { border-color: var(--accent); background: #F3E9CF; }
+  .quiz-match-item.matched { border-color: #8FA876; background: #EAF1E1; color: var(--sub); cursor: default; }
+  .quiz-match-item.wrong { border-color: var(--seal); background: #FBEAEA; animation: shake .32s ease; }
+
+  /* ── Chest gate ──────────────────────────────────────────────── */
+  #chest-screen {
     position: fixed;
     inset: 0;
     z-index: 50;
@@ -42,86 +220,123 @@
     gap: 22px;
     transition: opacity .55s ease, transform .55s ease;
   }
-  #envelope-screen.lifted {
+  #chest-screen.hidden-gate { display: none; }
+  #chest-screen.lifted {
     opacity: 0;
     transform: translateY(-24px);
     pointer-events: none;
   }
 
-  .env-eyebrow {
+  .chest-eyebrow {
     font-family: 'Noto Sans KR', sans-serif;
     font-size: .74rem;
     letter-spacing: .3em;
     color: var(--sub);
   }
 
-  .envelope {
+  .chest-wrap {
     position: relative;
-    width: min(78vw, 300px);
-    aspect-ratio: 3 / 2;
-    cursor: pointer;
-    perspective: 900px;
+    width: min(70vw, 240px);
+    aspect-ratio: 1 / 1;
   }
 
-  .env-body {
+  .chest-box {
     position: absolute;
-    inset: 0;
-    background: var(--paper);
-    border: 1.5px solid var(--rule);
-    border-radius: 6px;
-    box-shadow: 0 10px 30px rgba(58,46,42,.10);
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding-bottom: 16px;
-  }
-
-  .env-to {
-    font-size: .95rem;
-    color: var(--sub);
-    letter-spacing: .05em;
-  }
-
-  .env-flap {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 58%;
-    background: var(--paper);
-    border: 1.5px solid var(--rule);
-    border-bottom: none;
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
-    transform-origin: top center;
-    transition: transform .65s cubic-bezier(.4,0,.2,1);
-    transform-style: preserve-3d;
-  }
-  #envelope-screen.opening .env-flap {
-    transform: rotateX(178deg);
-  }
-
-  .env-seal {
-    position: absolute;
-    top: 46%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 40px;
-    height: 40px;
+    bottom: 8%;
+    transform: translateX(-50%);
+    width: 88%;
+    height: 56%;
+    background: linear-gradient(180deg, #C79A5B, #A9793C);
+    border: 3px solid #7A5426;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 10px 26px rgba(58,46,42,.16);
+  }
+  .chest-box::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 38%;
+    height: 4px;
+    background: #7A5426;
+    opacity: .5;
+  }
+
+  .chest-lid {
+    position: absolute;
+    left: 50%;
+    bottom: 54%;
+    transform: translateX(-50%);
+    width: 92%;
+    height: 34%;
+    background: linear-gradient(180deg, #D6AC6C, #B8863F);
+    border: 3px solid #7A5426;
+    border-radius: 50% 50% 6px 6px / 70% 70% 6px 6px;
+    transform-origin: 50% 100%;
+    transition: transform .7s cubic-bezier(.4,0,.2,1);
+    z-index: 3;
+  }
+  #chest-screen.opening .chest-lid {
+    transform: translateX(-50%) rotateX(-118deg);
+  }
+
+  .chest-glow {
+    position: absolute;
+    left: 50%;
+    bottom: 40%;
+    transform: translateX(-50%) scale(.4);
+    width: 60%;
+    aspect-ratio: 1;
     border-radius: 50%;
-    background: var(--seal);
-    color: #fff;
+    background: radial-gradient(circle, rgba(255,224,150,.9), rgba(255,224,150,0) 70%);
+    opacity: 0;
+    transition: opacity .3s ease .35s, transform .5s ease .35s;
+    z-index: 1;
+  }
+  #chest-screen.opening .chest-glow {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.3);
+  }
+
+  .chest-lock {
+    position: absolute;
+    left: 50%;
+    bottom: 52%;
+    transform: translate(-50%, 50%);
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    background: #E9C46A;
+    border: 2px solid #7A5426;
+    z-index: 4;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
-    box-shadow: 0 3px 8px rgba(156,63,78,.4);
-    z-index: 2;
-    transition: opacity .3s ease .15s, transform .3s ease .15s;
+    font-size: .9rem;
+    color: #6B4A1E;
+    transition: opacity .25s ease, transform .25s ease;
   }
-  #envelope-screen.opening .env-seal {
+  #chest-screen.opening .chest-lock {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(.4);
+    transform: translate(-50%, 50%) scale(.5);
   }
 
-  .env-hint {
+  .chest-key {
+    position: absolute;
+    left: 50%;
+    top: -6%;
+    transform: translateX(-50%) rotate(0deg);
+    font-size: 2.1rem;
+    cursor: pointer;
+    z-index: 5;
+    transition: transform .55s cubic-bezier(.4,0,.2,1), opacity .3s ease .35s;
+    filter: drop-shadow(0 4px 6px rgba(58,46,42,.25));
+  }
+  #chest-screen.opening .chest-key {
+    transform: translateX(-50%) translateY(148%) rotate(90deg);
+    opacity: 0;
+  }
+
+  .chest-hint {
     font-family: 'Noto Sans KR', sans-serif;
     font-size: .78rem;
     color: var(--sub);
@@ -253,14 +468,29 @@
 </head>
 <body class="locked">
 
-<div id="envelope-screen">
-  <div class="env-eyebrow">LETTER FOR NAHUI</div>
-  <div class="envelope" id="envelope">
-    <div class="env-flap"></div>
-    <div class="env-seal">♥</div>
-    <div class="env-body"><span class="env-to">나희에게</span></div>
+<div id="quiz-screen">
+  <div class="quiz-card">
+    <div class="quiz-eyebrow">나희만 풀 수 있는 문제</div>
+    <div class="quiz-progress-wrap">
+      <div class="quiz-progress-track"><div class="quiz-progress-fill" id="quiz-progress-fill"></div></div>
+      <div class="quiz-progress-label" id="quiz-progress-label">1 / 13</div>
+    </div>
+    <div class="quiz-question" id="quiz-question"></div>
+    <div id="quiz-body"></div>
+    <div class="quiz-feedback" id="quiz-feedback"></div>
   </div>
-  <div class="env-hint">톡, 눌러서 열어보기</div>
+</div>
+
+<div id="chest-screen" class="hidden-gate">
+  <div class="chest-eyebrow">LETTER FOR NAHUI</div>
+  <div class="chest-wrap" id="chest">
+    <div class="chest-glow"></div>
+    <div class="chest-box"></div>
+    <div class="chest-lid"></div>
+    <div class="chest-lock">🔒</div>
+    <div class="chest-key" id="chest-key">🗝️</div>
+  </div>
+  <div class="chest-hint">톡, 열쇠를 눌러서 상자를 열어보기</div>
 </div>
 
 <main class="letter">
@@ -334,17 +564,208 @@
 </footer>
 
 <script>
-  const screen = document.getElementById('envelope-screen');
-  const envelope = document.getElementById('envelope');
+  /* ── Quiz gate ─────────────────────────────────────────────── */
+  const norm = s => String(s).trim().toLowerCase().replace(/[\s\-]/g, '');
 
-  envelope.addEventListener('click', () => {
-    if (screen.classList.contains('opening')) return;
-    screen.classList.add('opening');
-    setTimeout(() => screen.classList.add('lifted'), 550);
+  const steps = [
+    { type: 'mc', q: '영민이한테 가장 중요한 건?',
+      opts: ['돈', '나희', '행복', '가족'], answer: '나희' },
+    { type: 'text', q: '영민이 생일은? (6자리 숫자)',
+      placeholder: 'YYMMDD', inputmode: 'numeric', maxlength: 6, answer: '970802' },
+    { type: 'mc', q: '영민이 고향은?',
+      opts: ['부산', '수원', '서울', '대전'], answer: '부산' },
+    { type: 'text', q: '영민이 전화번호는?',
+      placeholder: '010-XXXX-XXXX', inputmode: 'tel', maxlength: 13, answer: '01095209546' },
+    { type: 'mc', q: '영민이 동생은 몇년생일까?',
+      opts: ['99', '00', '01', '02'], answer: '01' },
+    { type: 'text', q: '영민이는 무슨 허씨일까? (OO 허씨)',
+      placeholder: '두 글자', maxlength: 6, answer: '김해' },
+    { type: 'match', q: '아래 넷을 이어보세요',
+      left: [
+        'SKT 베프 동기 이름 (교회친구)',
+        '사시미 친구 이름',
+        '베프인데 창원 사는 애',
+        '군대 친구 이름',
+      ],
+      right: ['박진성', '우제강', '윤동현', '한태원'],
+      pairs: [0, 1, 2, 3] /* left[i] <-> right[pairs[i]] */ },
+    { type: 'mc', q: '영민이가 나희한테 가장 하고 싶은 말은?',
+      opts: ['사랑해', '고마워', '미안해', '위 다'], answer: '위 다' },
+    { type: 'mc', q: '우리가 미래에 가질 아이의 수는?',
+      opts: ['1명 이하', '2명 이상'], answer: '2명 이상' },
+    { type: 'mc', q: '다음 중 가장 잘생긴 사람은?',
+      opts: ['차은우', '원빈', '허영민', '강동원'], answer: '허영민' },
+    { type: 'mc', q: '다음 중 영어를 더 잘 하는 사람은?',
+      opts: ['김나희', '허영민'], answer: '허영민' },
+    { type: 'mc', q: '영민이 팀 이름은?',
+      opts: ['단말개발팀', 'Device개발팀', 'Device Tech팀', 'Access Tech팀'], answer: 'Device Tech팀' },
+    { type: 'text', q: '영민이 임원 이름은? (OO)',
+      placeholder: '영문 2글자', maxlength: 4, answer: 'TK' },
+  ];
+
+  let cur = 0;
+  const qEl = document.getElementById('quiz-question');
+  const bodyEl = document.getElementById('quiz-body');
+  const fbEl = document.getElementById('quiz-feedback');
+  const fillEl = document.getElementById('quiz-progress-fill');
+  const labelEl = document.getElementById('quiz-progress-label');
+
+  function showFeedback(msg) {
+    fbEl.textContent = msg;
+    fbEl.classList.add('show');
+  }
+  function clearFeedback() {
+    fbEl.textContent = '';
+    fbEl.classList.remove('show');
+  }
+
+  function renderStep() {
+    const step = steps[cur];
+    clearFeedback();
+    fillEl.style.width = (cur / steps.length * 100) + '%';
+    labelEl.textContent = `${cur + 1} / ${steps.length}`;
+    qEl.textContent = step.q;
+    bodyEl.innerHTML = '';
+
+    if (step.type === 'mc') {
+      const wrap = document.createElement('div');
+      wrap.className = 'quiz-options';
+      step.opts.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-opt';
+        btn.type = 'button';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => {
+          if (norm(opt) === norm(step.answer)) {
+            btn.classList.add('correct');
+            setTimeout(advance, 260);
+          } else {
+            btn.classList.add('wrong');
+            showFeedback('오답이에요. 다시 골라보세요.');
+            setTimeout(() => btn.classList.remove('wrong'), 350);
+          }
+        });
+        wrap.appendChild(btn);
+      });
+      bodyEl.appendChild(wrap);
+
+    } else if (step.type === 'text') {
+      const row = document.createElement('div');
+      row.className = 'quiz-input-row';
+      const input = document.createElement('input');
+      input.className = 'quiz-input';
+      input.type = 'text';
+      input.placeholder = step.placeholder || '';
+      if (step.inputmode) input.inputMode = step.inputmode;
+      if (step.maxlength) input.maxLength = step.maxlength;
+      const btn = document.createElement('button');
+      btn.className = 'quiz-submit';
+      btn.type = 'button';
+      btn.textContent = '확인';
+      const submit = () => {
+        if (norm(input.value) === norm(step.answer)) {
+          setTimeout(advance, 120);
+        } else {
+          input.classList.add('wrong');
+          showFeedback('오답이에요. 다시 확인해보세요.');
+          setTimeout(() => input.classList.remove('wrong'), 350);
+        }
+      };
+      btn.addEventListener('click', submit);
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
+      row.appendChild(input);
+      row.appendChild(btn);
+      bodyEl.appendChild(row);
+      setTimeout(() => input.focus(), 50);
+
+    } else if (step.type === 'match') {
+      const wrap = document.createElement('div');
+      wrap.className = 'quiz-match';
+      const leftCol = document.createElement('div');
+      leftCol.className = 'quiz-match-col';
+      const rightCol = document.createElement('div');
+      rightCol.className = 'quiz-match-col';
+
+      const rightOrder = step.right.map((_, i) => i).sort(() => Math.random() - .5);
+      let selectedLeft = null;
+      let matchedCount = 0;
+
+      const leftEls = step.left.map((text, i) => {
+        const el = document.createElement('div');
+        el.className = 'quiz-match-item';
+        el.textContent = text;
+        el.addEventListener('click', () => {
+          if (el.classList.contains('matched')) return;
+          leftCol.querySelectorAll('.quiz-match-item').forEach(x => x.classList.remove('selected'));
+          el.classList.add('selected');
+          selectedLeft = i;
+        });
+        leftCol.appendChild(el);
+        return el;
+      });
+
+      const rightEls = {};
+      rightOrder.forEach(idx => {
+        const el = document.createElement('div');
+        el.className = 'quiz-match-item';
+        el.textContent = step.right[idx];
+        el.addEventListener('click', () => {
+          if (el.classList.contains('matched') || selectedLeft === null) return;
+          if (step.pairs[selectedLeft] === idx) {
+            leftEls[selectedLeft].classList.remove('selected');
+            leftEls[selectedLeft].classList.add('matched');
+            el.classList.add('matched');
+            matchedCount++;
+            selectedLeft = null;
+            if (matchedCount === step.left.length) setTimeout(advance, 280);
+          } else {
+            el.classList.add('wrong');
+            leftEls[selectedLeft].classList.add('wrong');
+            showFeedback('오답이에요. 다시 이어보세요.');
+            setTimeout(() => {
+              el.classList.remove('wrong');
+              leftEls[selectedLeft] && leftEls[selectedLeft].classList.remove('wrong', 'selected');
+              selectedLeft = null;
+            }, 350);
+          }
+        });
+        rightEls[idx] = el;
+        rightCol.appendChild(el);
+      });
+
+      wrap.appendChild(leftCol);
+      wrap.appendChild(rightCol);
+      bodyEl.appendChild(wrap);
+    }
+  }
+
+  function advance() {
+    cur++;
+    if (cur >= steps.length) {
+      fillEl.style.width = '100%';
+      const quizScreen = document.getElementById('quiz-screen');
+      const chestScreen = document.getElementById('chest-screen');
+      quizScreen.classList.add('hidden-gate');
+      chestScreen.classList.remove('hidden-gate');
+    } else {
+      renderStep();
+    }
+  }
+
+  renderStep();
+
+  /* ── Chest gate ────────────────────────────────────────────── */
+  const chestScreen = document.getElementById('chest-screen');
+  const chestKey = document.getElementById('chest-key');
+
+  chestKey.addEventListener('click', () => {
+    if (chestScreen.classList.contains('opening')) return;
+    chestScreen.classList.add('opening');
+    setTimeout(() => chestScreen.classList.add('lifted'), 700);
     setTimeout(() => {
-      screen.style.display = 'none';
+      chestScreen.style.display = 'none';
       document.body.classList.remove('locked');
-    }, 1150);
+    }, 1300);
   }, { once: true });
 
   const io = new IntersectionObserver((entries) => {
