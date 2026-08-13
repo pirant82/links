@@ -137,17 +137,22 @@
   .gallery{background:var(--bg-soft)}
   .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
   .gallery-grid img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;cursor:pointer;background:#eee}
-  .gallery-more{
-    display:block;margin:18px auto 0;background:none;border:none;color:var(--sub);
-    font-size:.8rem;letter-spacing:.05em;text-decoration:underline;cursor:pointer;font-family:inherit;
-  }
 
   .lightbox{
     position:fixed;inset:0;background:rgba(10,10,10,.94);z-index:100;
     display:none;align-items:center;justify-content:center;
+    overflow:hidden;touch-action:pan-y;
   }
   .lightbox.open{display:flex}
-  .lightbox img{max-width:92vw;max-height:80vh;object-fit:contain}
+  .lightbox-track{
+    display:flex;width:100%;height:100%;will-change:transform;
+  }
+  .lightbox-track.dragging{transition:none}
+  .lightbox-track:not(.dragging){transition:transform .3s ease}
+  .lightbox-slide{
+    flex:none;width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  }
+  .lightbox-slide img{max-width:92vw;max-height:80vh;object-fit:contain;pointer-events:none;-webkit-user-drag:none}
   .lightbox-close{position:absolute;top:20px;right:20px;color:#fff;font-size:1.6rem;background:none;border:none;cursor:pointer;line-height:1}
   .lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:1.8rem;background:none;border:none;cursor:pointer;padding:12px}
   .lightbox-prev{left:6px}
@@ -236,7 +241,6 @@
   <section class="gallery reveal">
     <div class="eyebrow">Gallery</div>
     <div class="gallery-grid" id="galleryGrid"></div>
-    <button class="gallery-more" id="galleryMoreBtn" style="display:none">사진 더 보기</button>
   </section>
 
   <section class="reveal" id="accountSection">
@@ -274,7 +278,7 @@
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" id="lbClose">✕</button>
   <button class="lightbox-nav lightbox-prev" id="lbPrev">‹</button>
-  <img id="lbImg" src="" alt="">
+  <div class="lightbox-track" id="lbTrack"></div>
   <button class="lightbox-nav lightbox-next" id="lbNext">›</button>
   <div class="lightbox-count" id="lbCount"></div>
 </div>
@@ -342,8 +346,7 @@ const CONFIG = {
     'DSCF6982.jpg','DSCF7012.jpg',
     '색보정본 (1).jpg','색보정본 (2).jpg','색보정본 (3).jpg','색보정본 (4).jpg','색보정본 (5).jpg',
     '세부보정본 (5).jpg','작가셀렉본 (9).jpg'
-  ],
-  galleryInitialCount: 9
+  ]
 };
 /* KAKAO_SHARE_KEY: Kakao Developers JS 키를 발급받으면 여기 SDK를 로드하고
    shareBtn 클릭 핸들러를 Kakao.Share.sendDefault(...) 로 교체하면 됩니다. */
@@ -460,47 +463,85 @@ $('#transportList').innerHTML = CONFIG.transport.map(t => `
 `).join('');
 
 /* ── Gallery ── */
-let galleryExpanded = false;
-function renderGallery(){
-  const list = galleryExpanded ? CONFIG.gallery : CONFIG.gallery.slice(0, CONFIG.galleryInitialCount);
-  $('#galleryGrid').innerHTML = list.map((file, i) => `<img src="images/${enc(file)}" loading="lazy" data-index="${i}" alt="웨딩 사진 ${i+1}">`).join('');
-  $$('#galleryGrid img').forEach(img => img.addEventListener('click', () => openLightbox(Number(img.dataset.index))));
-}
-renderGallery();
-const moreBtn = $('#galleryMoreBtn');
-if(CONFIG.gallery.length > CONFIG.galleryInitialCount){
-  moreBtn.style.display = 'block';
-  moreBtn.textContent = `사진 더 보기 (${CONFIG.gallery.length - CONFIG.galleryInitialCount})`;
-  moreBtn.addEventListener('click', () => {
-    galleryExpanded = true;
-    renderGallery();
-    moreBtn.style.display = 'none';
-  });
-}
+$('#galleryGrid').innerHTML = CONFIG.gallery.map((file, i) =>
+  `<img src="images/${enc(file)}" loading="lazy" data-index="${i}" alt="웨딩 사진 ${i+1}">`
+).join('');
+$$('#galleryGrid img').forEach(img => img.addEventListener('click', () => openLightbox(Number(img.dataset.index))));
 
-/* ── Lightbox ── */
+/* ── Lightbox (swipe slider) ── */
+const lbTrack = $('#lbTrack');
+lbTrack.innerHTML = CONFIG.gallery.map((file, i) =>
+  `<div class="lightbox-slide"><img src="images/${enc(file)}" alt="웨딩 사진 ${i+1}"></div>`
+).join('');
+
 let lbIndex = 0;
-function openLightbox(i){
-  lbIndex = i;
-  updateLightbox();
-  $('#lightbox').classList.add('open');
+let dragStartX = 0, dragStartY = 0, dragDeltaX = 0, isDragging = false, isHorizontalDrag = null;
+
+function trackWidth(){ return lbTrack.clientWidth; }
+function setTrackX(px, animate){
+  lbTrack.classList.toggle('dragging', !animate);
+  lbTrack.style.transform = `translateX(${px}px)`;
 }
-function updateLightbox(){
-  const file = CONFIG.gallery[lbIndex];
-  $('#lbImg').src = `images/${enc(file)}`;
+function goTo(i, animate){
+  lbIndex = (i + CONFIG.gallery.length) % CONFIG.gallery.length;
+  setTrackX(-lbIndex * trackWidth(), animate !== false);
   $('#lbCount').textContent = `${lbIndex+1} / ${CONFIG.gallery.length}`;
+}
+function openLightbox(i){
+  $('#lightbox').classList.add('open');
+  goTo(i, false);
 }
 function closeLightbox(){ $('#lightbox').classList.remove('open'); }
 $('#lbClose').addEventListener('click', closeLightbox);
-$('#lightbox').addEventListener('click', (e) => { if(e.target.id === 'lightbox') closeLightbox(); });
-$('#lbPrev').addEventListener('click', () => { lbIndex = (lbIndex - 1 + CONFIG.gallery.length) % CONFIG.gallery.length; updateLightbox(); });
-$('#lbNext').addEventListener('click', () => { lbIndex = (lbIndex + 1) % CONFIG.gallery.length; updateLightbox(); });
+$('#lbPrev').addEventListener('click', () => goTo(lbIndex - 1));
+$('#lbNext').addEventListener('click', () => goTo(lbIndex + 1));
 document.addEventListener('keydown', (e) => {
   if(!$('#lightbox').classList.contains('open')) return;
   if(e.key === 'Escape') closeLightbox();
-  if(e.key === 'ArrowLeft') $('#lbPrev').click();
-  if(e.key === 'ArrowRight') $('#lbNext').click();
+  if(e.key === 'ArrowLeft') goTo(lbIndex - 1);
+  if(e.key === 'ArrowRight') goTo(lbIndex + 1);
 });
+window.addEventListener('resize', () => { if($('#lightbox').classList.contains('open')) goTo(lbIndex, false); });
+
+lbTrack.addEventListener('pointerdown', (e) => {
+  if(e.target.closest('button')) return;
+  isDragging = true;
+  isHorizontalDrag = null;
+  dragStartX = e.clientX;
+  dragStartY = e.clientY;
+  dragDeltaX = 0;
+  lbTrack.setPointerCapture(e.pointerId);
+});
+lbTrack.addEventListener('pointermove', (e) => {
+  if(!isDragging) return;
+  const dx = e.clientX - dragStartX;
+  const dy = e.clientY - dragStartY;
+  if(isHorizontalDrag === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)){
+    isHorizontalDrag = Math.abs(dx) > Math.abs(dy);
+  }
+  if(!isHorizontalDrag) return;
+  dragDeltaX = dx;
+  const w = trackWidth();
+  let base = -lbIndex * w + dx;
+  const min = -(CONFIG.gallery.length - 1) * w, max = 0;
+  if(base > max) base = max + (base - max) * 0.35;
+  if(base < min) base = min + (base - min) * 0.35;
+  setTrackX(base, false);
+});
+function endDrag(){
+  if(!isDragging) return;
+  isDragging = false;
+  if(isHorizontalDrag){
+    const w = trackWidth();
+    const threshold = w * 0.18;
+    if(dragDeltaX < -threshold) goTo(lbIndex + 1);
+    else if(dragDeltaX > threshold) goTo(lbIndex - 1);
+    else goTo(lbIndex);
+  }
+  isHorizontalDrag = null;
+}
+lbTrack.addEventListener('pointerup', endDrag);
+lbTrack.addEventListener('pointercancel', endDrag);
 
 /* ── Account ── */
 function accountItemHTML(item){
