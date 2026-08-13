@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>허영민 ♥ 김나희 결혼합니다</title>
+<meta name="description" content="2026년 11월 8일 일요일 오후 3시 30분, 서울시립대학교 자작마루. 허영민 · 김나희 결혼식에 초대합니다.">
+<meta property="og:title" content="허영민 ♥ 김나희 결혼합니다">
+<meta property="og:description" content="2026.11.8 SUN 3:30 PM · 서울시립대학교 자작마루">
+<meta property="og:image" content="https://pirant82.github.io/links/%EB%AA%A8%EC%B2%AD/images/main.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+KR:wght@400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --bg-soft:#FAF9F6;
+    --text:#2A2A28;
+    --sub:#8F8B84;
+    --line:#E7E3DB;
+    --accent:#A6885F;
+    --accent-soft:#F1EAE0;
+    --shadow:0 4px 24px rgba(0,0,0,.06);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:480px;margin:0 auto;background:var(--bg);min-height:100vh;position:relative;overflow:hidden}
+  .serif{font-family:'Noto Serif KR',serif}
+  .eng{font-family:'Cormorant Garamond',serif}
+
+  section{padding:72px 32px;position:relative}
+  .divider{width:32px;height:1px;background:var(--line);margin:0 auto 20px}
+  .eyebrow{
+    font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--accent);text-align:center;margin-bottom:14px;font-weight:500;
+  }
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease, transform .8s ease}
+  .reveal.in{opacity:1;transform:translateY(0)}
+
+  /* ── Hero ── */
+  .hero{
+    position:relative;height:100svh;min-height:560px;
+    display:flex;align-items:flex-end;justify-content:center;
+    background:#111 center/cover no-repeat;
+    padding:0;
+  }
+  .hero-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.08) 45%, rgba(0,0,0,.72) 100%);
+  }
+  .hero-content{position:relative;z-index:1;color:#fff;text-align:center;padding:0 24px 56px;width:100%}
+  .hero-label{font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;opacity:.85;margin-bottom:18px}
+  .hero-names{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:500;letter-spacing:.02em;margin-bottom:14px}
+  .hero-names .amp{color:var(--accent);margin:0 10px;font-style:italic}
+  .hero-date{font-size:.85rem;letter-spacing:.06em;opacity:.92}
+  .hero-scroll{
+    position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+    width:1px;height:44px;background:rgba(255,255,255,.55);z-index:1;overflow:hidden;
+  }
+  .hero-scroll::after{
+    content:'';position:absolute;left:0;top:-100%;width:100%;height:100%;
+    background:#fff;animation:scrollLine 1.8s ease-in-out infinite;
+  }
+  @keyframes scrollLine{ to{ top:100%; } }
+
+  /* ── Greeting ── */
+  .greeting{text-align:center}
+  .greeting p{color:var(--text);font-size:.98rem;margin-bottom:10px}
+  .greeting .sign{margin-top:28px;font-size:.88rem;color:var(--sub)}
+  .greeting .sign b{color:var(--text);font-weight:500}
+
+  /* ── Family ── */
+  .family{background:var(--bg-soft)}
+  .family-title{text-align:center;font-size:1.15rem;font-weight:500;margin-bottom:36px}
+  .family-row{
+    display:flex;align-items:center;justify-content:center;gap:14px;
+    padding:16px 0;border-bottom:1px solid var(--line);
+  }
+  .family-row:last-child{border-bottom:none}
+  .family-role{font-size:.72rem;color:var(--accent);letter-spacing:.1em;width:52px;flex:none;text-align:center}
+  .family-name{flex:1;text-align:center;font-size:.95rem}
+  .family-name .self{font-weight:700;font-size:1.02rem}
+  .family-actions{display:flex;gap:8px;flex:none}
+  .icon-btn{
+    width:34px;height:34px;border-radius:50%;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;text-decoration:none;
+    color:var(--text);font-size:.85rem;background:#fff;transition:border-color .2s;
+  }
+  .icon-btn:active{border-color:var(--accent)}
+
+  /* ── Calendar / D-day ── */
+  .cal-wrap{text-align:center}
+  .cal-date{font-family:'Cormorant Garamond',serif;font-size:2.1rem;margin-bottom:4px}
+  .cal-dow{font-size:.85rem;color:var(--sub);margin-bottom:28px}
+  .cal-grid{
+    display:grid;grid-template-columns:repeat(7,1fr);gap:6px 0;
+    max-width:300px;margin:0 auto 24px;
+  }
+  .cal-grid .dow{font-size:.7rem;color:var(--sub);padding-bottom:8px}
+  .cal-grid .day{font-size:.82rem;padding:7px 0;color:var(--text)}
+  .cal-grid .day.blank{visibility:hidden}
+  .cal-grid .day.target{position:relative;color:#fff;font-weight:700}
+  .cal-grid .day.target::before{
+    content:'';position:absolute;inset:2px;border-radius:50%;background:var(--accent);z-index:-1;
+  }
+  .dday{
+    display:inline-block;margin-top:8px;padding:10px 22px;border:1px solid var(--line);
+    border-radius:30px;font-size:.85rem;letter-spacing:.03em;
+  }
+  .dday b{color:var(--accent);font-size:1rem}
+
+  /* ── Location ── */
+  .loc-name{text-align:center;font-size:1.15rem;font-weight:500;margin-bottom:6px}
+  .loc-addr{text-align:center;font-size:.85rem;color:var(--sub);margin-bottom:22px}
+  .loc-buttons{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+  .pill-btn{
+    padding:9px 16px;border:1px solid var(--line);border-radius:30px;
+    font-size:.78rem;background:#fff;color:var(--text);text-decoration:none;
+    cursor:pointer;font-family:inherit;
+  }
+  .pill-btn:active{background:var(--accent-soft);border-color:var(--accent)}
+  .transport{border-top:1px solid var(--line);padding-top:20px;display:flex;flex-direction:column;gap:14px}
+  .transport-item{display:flex;gap:14px;font-size:.85rem}
+  .transport-item .t-label{flex:none;width:56px;color:var(--accent);font-weight:500}
+  .transport-item .t-text{color:var(--text);white-space:pre-line}
+
+  /* ── Gallery ── */
+  .gallery{background:var(--bg-soft)}
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+  .gallery-grid img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;cursor:pointer;background:#eee}
+  .gallery-more{
+    display:block;margin:18px auto 0;background:none;border:none;color:var(--sub);
+    font-size:.8rem;letter-spacing:.05em;text-decoration:underline;cursor:pointer;font-family:inherit;
+  }
+
+  .lightbox{
+    position:fixed;inset:0;background:rgba(10,10,10,.94);z-index:100;
+    display:none;align-items:center;justify-content:center;
+  }
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:92vw;max-height:80vh;object-fit:contain}
+  .lightbox-close{position:absolute;top:20px;right:20px;color:#fff;font-size:1.6rem;background:none;border:none;cursor:pointer;line-height:1}
+  .lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:1.8rem;background:none;border:none;cursor:pointer;padding:12px}
+  .lightbox-prev{left:6px}
+  .lightbox-next{right:6px}
+  .lightbox-count{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-size:.78rem}
+
+  /* ── Account ── */
+  .account-toggle{
+    display:block;margin:0 auto;padding:13px 30px;border:1px solid var(--accent);
+    border-radius:30px;background:#fff;color:var(--accent);font-size:.85rem;
+    letter-spacing:.03em;cursor:pointer;font-family:inherit;
+  }
+  .account-panel{max-height:0;overflow:hidden;transition:max-height .4s ease}
+  .account-panel.open{max-height:1400px;margin-top:28px}
+  .account-group{margin-bottom:22px}
+  .account-group h4{font-size:.78rem;color:var(--accent);letter-spacing:.08em;margin-bottom:10px;padding-left:2px}
+  .account-item{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:12px 14px;background:var(--bg-soft);border-radius:10px;margin-bottom:8px;
+  }
+  .account-item .a-who{font-size:.8rem;color:var(--sub);margin-bottom:2px}
+  .account-item .a-num{font-size:.9rem}
+  .account-item .a-empty{font-size:.82rem;color:var(--sub);font-style:italic}
+  .copy-btn{
+    flex:none;font-size:.72rem;padding:7px 12px;border:1px solid var(--line);
+    border-radius:20px;background:#fff;color:var(--text);cursor:pointer;font-family:inherit;
+  }
+  .copy-btn.copied{border-color:var(--accent);color:var(--accent)}
+
+  /* ── Share ── */
+  .share{text-align:center;background:var(--bg-soft)}
+  .share-buttons{display:flex;gap:10px;justify-content:center;margin-top:20px}
+
+  footer{padding:36px 32px 48px;text-align:center;font-size:.72rem;color:var(--sub);letter-spacing:.02em}
+  footer .heart{color:var(--accent)}
+
+  .toast{
+    position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);
+    background:#2A2A28;color:#fff;padding:11px 20px;border-radius:24px;font-size:.8rem;
+    opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;z-index:200;white-space:nowrap;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <section class="hero" id="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-label">Wedding Invitation</div>
+      <div class="hero-names">허영민<span class="amp">&amp;</span>김나희</div>
+      <div class="hero-date eng" id="heroDate"></div>
+    </div>
+    <div class="hero-scroll"></div>
+  </section>
+
+  <section class="greeting reveal">
+    <div class="eyebrow">Invitation</div>
+    <div id="greetingText"></div>
+    <div class="sign eng" id="signText"></div>
+  </section>
+
+  <section class="family reveal">
+    <div class="family-title serif">신랑 · 신부</div>
+    <div id="familyList"></div>
+  </section>
+
+  <section class="cal-wrap reveal" id="calendarSection">
+    <div class="eyebrow">Wedding Day</div>
+    <div class="cal-date eng" id="calBigDate"></div>
+    <div class="cal-dow" id="calDow"></div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="dday" id="ddayText"></div>
+  </section>
+
+  <section class="reveal" id="locationSection">
+    <div class="eyebrow">Location</div>
+    <div class="loc-name serif" id="venueName"></div>
+    <div class="loc-addr" id="venueAddr"></div>
+    <div class="loc-buttons" id="mapButtons"></div>
+    <div class="transport" id="transportList"></div>
+  </section>
+
+  <section class="gallery reveal">
+    <div class="eyebrow">Gallery</div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+    <button class="gallery-more" id="galleryMoreBtn" style="display:none">사진 더 보기</button>
+  </section>
+
+  <section class="reveal" id="accountSection">
+    <div class="eyebrow">Gift</div>
+    <div class="loc-name serif" style="margin-bottom:10px">마음 전하실 곳</div>
+    <div class="loc-addr" style="margin-bottom:22px">축하의 마음을 전해주시면<br>소중히 간직하겠습니다</div>
+    <button class="account-toggle" id="accountToggle">계좌번호 보기</button>
+    <div class="account-panel" id="accountPanel">
+      <div class="account-group">
+        <h4>신랑측</h4>
+        <div id="groomAccounts"></div>
+      </div>
+      <div class="account-group">
+        <h4>신부측</h4>
+        <div id="brideAccounts"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="share reveal">
+    <div class="eyebrow">Share</div>
+    <div class="loc-name serif">청첩장 공유하기</div>
+    <div class="share-buttons">
+      <button class="pill-btn" id="shareBtn">🔗 링크 복사</button>
+    </div>
+  </section>
+
+  <footer>
+    <span class="serif">허영민 <span class="heart">♥</span> 김나희</span><br>
+    저희 두 사람의 새로운 시작을 축복해 주셔서 감사합니다
+  </footer>
+
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lbClose">✕</button>
+  <button class="lightbox-nav lightbox-prev" id="lbPrev">‹</button>
+  <img id="lbImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" id="lbNext">›</button>
+  <div class="lightbox-count" id="lbCount"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   CONFIG — 이 블록만 수정하면 청첩장 내용이 바뀝니다.
+   빈 문자열('')로 둔 값은 화면에서 자동으로 숨겨지거나
+   "직접 입력해주세요" 안내 문구로 표시됩니다.
+   자세한 값은 옆의 INFO.md 파일을 참고하세요.
+   ============================================================ */
+const CONFIG = {
+  groom: { name: '허영민', father: '허호진', mother: '윤정은', tel: '' },
+  bride: { name: '김나희', father: '김환규', mother: '조윤희', tel: '' },
+  familyTel: {
+    groomFather: '', groomMother: '',
+    brideFather: '', brideMother: ''
+  },
+
+  weddingDateISO: '2026-11-08T15:30:00+09:00',
+  weddingDateDisplay: '2026년 11월 8일 일요일 오후 3시 30분',
+
+  venue: {
+    name: '서울시립대학교 자작마루',
+    address: '서울특별시 동대문구 서울시립대로 163 (서울시립대학교 내 · 법학관 맞은편)',
+    tel: ''
+  },
+
+  transport: [
+    { label: '지하철', text: '' },
+    { label: '버스', text: '' },
+    { label: '주차', text: '' }
+  ],
+
+  greeting: [
+    '서로 다른 길을 걷던 두 사람이',
+    '이제 같은 방향을 바라보며',
+    '함께 걸어가려 합니다.',
+    '',
+    '저희 두 사람이 사랑으로 하나 되는 날,',
+    '귀한 걸음 하시어 축복해 주시면',
+    '더없이 큰 기쁨으로 간직하겠습니다.'
+  ],
+
+  accounts: {
+    groom: [
+      { who: '신랑 허영민', bank: '우리은행', number: '1002-455-194604' },
+      { who: '신랑 아버지 허호진', bank: '', number: '' },
+      { who: '신랑 어머니 윤정은', bank: '', number: '' }
+    ],
+    bride: [
+      { who: '신부 김나희', bank: '', number: '' },
+      { who: '신부 아버지 김환규', bank: '', number: '' },
+      { who: '신부 어머니 조윤희', bank: '', number: '' }
+    ]
+  },
+
+  gallery: [
+    '1.jpg','2.jpg','3.jpg',
+    'DSCF6590.jpg','DSCF6640.jpg','DSCF6645.jpg','DSCF6691.jpg','DSCF6730.jpg',
+    'DSCF6745.jpg','DSCF6759.jpg','DSCF6783.jpg','DSCF6786.jpg','DSCF6797.jpg',
+    'DSCF6803.jpg','DSCF6811.jpg','DSCF6932.jpg','DSCF6943.jpg','DSCF6967.jpg',
+    'DSCF6982.jpg','DSCF7012.jpg',
+    '색보정본 (1).jpg','색보정본 (2).jpg','색보정본 (3).jpg','색보정본 (4).jpg','색보정본 (5).jpg',
+    '세부보정본 (5).jpg','작가셀렉본 (9).jpg'
+  ],
+  galleryInitialCount: 9
+};
+/* KAKAO_SHARE_KEY: Kakao Developers JS 키를 발급받으면 여기 SDK를 로드하고
+   shareBtn 클릭 핸들러를 Kakao.Share.sendDefault(...) 로 교체하면 됩니다. */
+/* ============================================================ */
+
+const $ = (sel, ctx) => (ctx || document).querySelector(sel);
+const $$ = (sel, ctx) => Array.from((ctx || document).querySelectorAll(sel));
+const enc = (s) => encodeURIComponent(s).replace(/%20/g, '%20');
+
+function toast(msg){
+  const el = $('#toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => el.classList.remove('show'), 1800);
+}
+
+async function copyText(text){
+  try{
+    await navigator.clipboard.writeText(text);
+    return true;
+  }catch(e){
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); }catch(e2){}
+    document.body.removeChild(ta);
+    return true;
+  }
+}
+
+/* ── Hero image ── */
+$('#hero').style.backgroundImage = "url('images/main.jpg')";
+$('#heroDate').textContent = '2026.11.08 SUN';
+
+/* ── Greeting ── */
+$('#greetingText').innerHTML = CONFIG.greeting.map(line =>
+  line === '' ? '<br>' : `<p>${line}</p>`
+).join('');
+$('#signText').innerHTML = `${CONFIG.groom.name} <span class="serif" style="font-family:'Noto Serif KR',serif">·</span> ${CONFIG.bride.name} 올림`;
+
+/* ── Family ── */
+function telHref(tel){ return tel ? `tel:${tel}` : ''; }
+function smsHref(tel){ return tel ? `sms:${tel}` : ''; }
+function familyRow(role, name, tel, isSelf){
+  const actions = tel
+    ? `<div class="family-actions">
+         <a class="icon-btn" href="${telHref(tel)}" aria-label="전화">📞</a>
+         <a class="icon-btn" href="${smsHref(tel)}" aria-label="문자">💬</a>
+       </div>`
+    : '';
+  return `<div class="family-row">
+      <div class="family-role">${role}</div>
+      <div class="family-name">${isSelf ? `<span class="self">${name}</span>` : name}</div>
+      ${actions}
+    </div>`;
+}
+const familyHTML = `
+  <div class="family-block" style="margin-bottom:28px">
+    ${familyRow('신랑', `${CONFIG.groom.father} · ${CONFIG.groom.mother} 의 아들`, '', false)}
+    ${familyRow('', CONFIG.groom.name, CONFIG.groom.tel, true)}
+  </div>
+  <div class="family-block">
+    ${familyRow('신부', `${CONFIG.bride.father} · ${CONFIG.bride.mother} 의 딸`, '', false)}
+    ${familyRow('', CONFIG.bride.name, CONFIG.bride.tel, true)}
+  </div>
+`;
+$('#familyList').innerHTML = familyHTML;
+
+/* ── Calendar ── */
+const weddingDate = new Date(CONFIG.weddingDateISO);
+const y = weddingDate.getFullYear(), m = weddingDate.getMonth(), d = weddingDate.getDate();
+const dowNames = ['일','월','화','수','목','금','토'];
+$('#calBigDate').textContent = `${y}.${String(m+1).padStart(2,'0')}.${String(d).padStart(2,'0')}`;
+$('#calDow').textContent = CONFIG.weddingDateDisplay;
+
+const firstDow = new Date(y, m, 1).getDay();
+const daysInMonth = new Date(y, m+1, 0).getDate();
+let calHTML = dowNames.map(dn => `<div class="dow">${dn}</div>`).join('');
+for(let i=0;i<firstDow;i++) calHTML += `<div class="day blank"></div>`;
+for(let day=1; day<=daysInMonth; day++){
+  calHTML += `<div class="day${day===d?' target':''}">${day}</div>`;
+}
+$('#calGrid').innerHTML = calHTML;
+
+function updateDday(){
+  const now = new Date();
+  const diff = Math.ceil((weddingDate - now) / 86400000);
+  const el = $('#ddayText');
+  if(diff > 0) el.innerHTML = `허영민 <span class="eng">&amp;</span> 김나희의 결혼식까지 <b>D-${diff}</b>`;
+  else if(diff === 0) el.innerHTML = `<b>오늘</b>, 두 사람이 하나가 됩니다`;
+  else el.innerHTML = `<b>${CONFIG.groom.name} · ${CONFIG.bride.name}</b>, 부부가 되었습니다`;
+}
+updateDday();
+
+/* ── Location ── */
+$('#venueName').textContent = CONFIG.venue.name;
+$('#venueAddr').textContent = CONFIG.venue.address || '주소를 입력해주세요';
+const q = enc(`${CONFIG.venue.name} ${CONFIG.venue.address}`.trim());
+$('#mapButtons').innerHTML = `
+  <a class="pill-btn" href="https://map.kakao.com/link/search/${enc(CONFIG.venue.name)}" target="_blank" rel="noopener">카카오맵</a>
+  <a class="pill-btn" href="https://map.naver.com/v5/search/${enc(CONFIG.venue.name)}" target="_blank" rel="noopener">네이버지도</a>
+  <button class="pill-btn" id="copyAddrBtn" type="button">주소 복사</button>
+`;
+$('#copyAddrBtn').addEventListener('click', async () => {
+  await copyText(CONFIG.venue.address || CONFIG.venue.name);
+  toast('주소를 복사했어요');
+});
+$('#transportList').innerHTML = CONFIG.transport.map(t => `
+  <div class="transport-item">
+    <div class="t-label">${t.label}</div>
+    <div class="t-text">${t.text ? t.text : '<span style="color:var(--sub);font-style:italic">안내 예정입니다</span>'}</div>
+  </div>
+`).join('');
+
+/* ── Gallery ── */
+let galleryExpanded = false;
+function renderGallery(){
+  const list = galleryExpanded ? CONFIG.gallery : CONFIG.gallery.slice(0, CONFIG.galleryInitialCount);
+  $('#galleryGrid').innerHTML = list.map((file, i) => `<img src="images/${enc(file)}" loading="lazy" data-index="${i}" alt="웨딩 사진 ${i+1}">`).join('');
+  $$('#galleryGrid img').forEach(img => img.addEventListener('click', () => openLightbox(Number(img.dataset.index))));
+}
+renderGallery();
+const moreBtn = $('#galleryMoreBtn');
+if(CONFIG.gallery.length > CONFIG.galleryInitialCount){
+  moreBtn.style.display = 'block';
+  moreBtn.textContent = `사진 더 보기 (${CONFIG.gallery.length - CONFIG.galleryInitialCount})`;
+  moreBtn.addEventListener('click', () => {
+    galleryExpanded = true;
+    renderGallery();
+    moreBtn.style.display = 'none';
+  });
+}
+
+/* ── Lightbox ── */
+let lbIndex = 0;
+function openLightbox(i){
+  lbIndex = i;
+  updateLightbox();
+  $('#lightbox').classList.add('open');
+}
+function updateLightbox(){
+  const file = CONFIG.gallery[lbIndex];
+  $('#lbImg').src = `images/${enc(file)}`;
+  $('#lbCount').textContent = `${lbIndex+1} / ${CONFIG.gallery.length}`;
+}
+function closeLightbox(){ $('#lightbox').classList.remove('open'); }
+$('#lbClose').addEventListener('click', closeLightbox);
+$('#lightbox').addEventListener('click', (e) => { if(e.target.id === 'lightbox') closeLightbox(); });
+$('#lbPrev').addEventListener('click', () => { lbIndex = (lbIndex - 1 + CONFIG.gallery.length) % CONFIG.gallery.length; updateLightbox(); });
+$('#lbNext').addEventListener('click', () => { lbIndex = (lbIndex + 1) % CONFIG.gallery.length; updateLightbox(); });
+document.addEventListener('keydown', (e) => {
+  if(!$('#lightbox').classList.contains('open')) return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowLeft') $('#lbPrev').click();
+  if(e.key === 'ArrowRight') $('#lbNext').click();
+});
+
+/* ── Account ── */
+function accountItemHTML(item){
+  const hasValue = item.bank && item.number;
+  if(!hasValue){
+    return `<div class="account-item">
+        <div><div class="a-who">${item.who}</div><div class="a-empty">계좌번호를 입력해주세요</div></div>
+      </div>`;
+  }
+  const full = `${item.bank} ${item.number} ${item.who}`;
+  return `<div class="account-item">
+      <div><div class="a-who">${item.who}</div><div class="a-num">${item.bank} ${item.number}</div></div>
+      <button class="copy-btn" data-copy="${item.bank} ${item.number}">복사</button>
+    </div>`;
+}
+$('#groomAccounts').innerHTML = CONFIG.accounts.groom.map(accountItemHTML).join('');
+$('#brideAccounts').innerHTML = CONFIG.accounts.bride.map(accountItemHTML).join('');
+$$('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    await copyText(btn.dataset.copy);
+    btn.textContent = '복사됨';
+    btn.classList.add('copied');
+    toast('계좌번호를 복사했어요');
+    setTimeout(() => { btn.textContent = '복사'; btn.classList.remove('copied'); }, 1600);
+  });
+});
+$('#accountToggle').addEventListener('click', () => {
+  const panel = $('#accountPanel');
+  const open = panel.classList.toggle('open');
+  $('#accountToggle').textContent = open ? '계좌번호 닫기' : '계좌번호 보기';
+});
+
+/* ── Share ── */
+$('#shareBtn').addEventListener('click', async () => {
+  const url = location.href;
+  if(navigator.share){
+    try{
+      await navigator.share({ title: '허영민 ♥ 김나희 결혼합니다', text: CONFIG.weddingDateDisplay, url });
+      return;
+    }catch(e){ /* 사용자가 취소한 경우 등 — 아래 복사로 폴백 */ }
+  }
+  await copyText(url);
+  toast('청첩장 링크를 복사했어요');
+});
+
+/* ── Scroll reveal ── */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.15 });
+$$('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
